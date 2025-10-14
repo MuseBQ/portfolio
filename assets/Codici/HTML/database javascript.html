@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabella Dati</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* Modern Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        th {
+            background-color: #f7f9fc;
+            font-weight: 600;
+            color: #2c3e50;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f8faff;
+            transition: all 0.3s ease;
+        }
+
+        /* Elegant Controls */
+        .controls {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button, label {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(145deg, #2563eb, #3b82f6);
+            color: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        button:hover, label:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+            background: linear-gradient(145deg, #1d4ed8, #2563eb);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Barcode and QR Code */
+        .barcode, .qrcode {
+            width: 120px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Loading Container */
+        #loadingContainer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+                /* Aggiungi stili per il form */
+                #manualInputForm {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f7f9fc;
+            border-radius: 8px;
+        }
+
+        #manualInputForm input {
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        #manualInputForm button {
+            grid-column: 1 / -1;
+            justify-self: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Il resto del codice HTML rimane invariato -->
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Ruolo</th>
+                <th>Luogo di nascita</th>
+                <th>Luogo di residenza</th>
+                <th>ID</th>
+                <th>Sesso</th>
+                <th>N telefono</th>
+                <th>Email</th>
+                <th>Paese</th>
+                <th>Codice Fiscale</th>
+                <th>Barcode</th>
+                <th>QR Code</th>
+                <th>CF</th>
+                <th>CV</th>
+                <th>Ore lavorate</th>
+            </tr>
+        </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+    <div class="controls">
+        <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="loadFile(event)">
+        <label for="fileInput">Carica file Excel</label>
+    </div>
+
+    <div id="loadingContainer" style="display: none;">
+        <p>Caricamento in corso...</p>
+    </div>
+
+    <div class="controls">
+        <button onclick="exportExcel()">Esporta in Excel</button>
+        <button onclick="exportPdf()">Esporta in PDF</button>
+        <button onclick="exportCsv()">Esporta in CSV</button>
+    </div>
+
+    <form id="manualInputForm">
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="text" id="cognome" placeholder="Cognome">
+        <input type="text" id="ruolo" placeholder="Ruolo">
+        <input type="text" id="luogoNascita" placeholder="Luogo di nascita">
+        <input type="text" id="luogoResidenza" placeholder="Luogo di residenza">
+        <input type="text" id="id" placeholder="ID">
+        <input type="text" id="sesso" placeholder="Sesso">
+        <input type="text" id="telefono" placeholder="Telefono">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="paese" placeholder="Paese">
+        <input type="text" id="codiceFiscale" placeholder="Codice Fiscale">
+        <input type="text" id="cf" placeholder="CF">
+        <input type="text" id="cv" placeholder="CV">
+        <input type="text" id="oreLavorate" placeholder="Ore lavorate">
+        <button type="button" onclick="addDataManually()">Aggiungi dati</button>
+    </form>
+
+    <script>
+          // Funzione per visualizzare i dati nella tabella (sia da file che manuali)
+          function displayData(data) {
+            const tableBody = document.getElementById('tableBody');
+            if (Array.isArray(data)) {
+                data.forEach((row, index) => {
+                    addRowToTable(row, index);
+                });
+            } else {
+                addRowToTable(data, tableBody.children.length);
+            }
+        }
+
+        // Funzione per aggiungere una riga alla tabella
+        function addRowToTable(row, index) {
+            const tableBody = document.getElementById('tableBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${row.nome || ''}</td>
+                <td>${row.cognome || ''}</td>
+                <td>${row.ruolo || ''}</td>
+                <td>${row['luogo di nascita'] || ''}</td>
+                <td>${row['luogo di residenza'] || ''}</td>
+                <td>${row.ID || ''}</td>
+                <td>${row.sesso || ''}</td>
+                <td>${row['Telefono'] || ''}</td>
+                <td>${row.Email || ''}</td>
+                <td>${row.Cittadinanza || ''}</td>
+                <td>${row['Codice fiscale'] || ''}</td>
+                <td><svg class="barcode"></svg></td>
+                <td><div class="qrcode"></div></td>
+                <td>${row.CF || ''}</td>
+                <td>${row.CV || ''}</td>
+                <td>${row['Lav/h'] || ''}</td>
+            `;
+            tableBody.appendChild(tr);
+
+            if (row['Codice fiscale']) {
+                JsBarcode(tr.querySelector('.barcode'), row['Codice fiscale'], {
+                    format: 'CODE128',
+                    displayValue: false
+                });
+
+                new QRCode(tr.querySelector('.qrcode'), {
+                    text: row['Codice fiscale'],
+                    width: 60,
+                    height: 60
+                });
+            }
+        }
+
+        // Funzione per aggiungere dati manualmente
+        function addDataManually() {
+            const row = {
+                nome: document.getElementById('nome').value,
+                cognome: document.getElementById('cognome').value,
+                ruolo: document.getElementById('ruolo').value,
+                'luogo di nascita': document.getElementById('luogoNascita').value,
+                'luogo di residenza': document.getElementById('luogoResidenza').value,
+                ID: document.getElementById('id').value,
+                sesso: document.getElementById('sesso').value,
+                Telefono: document.getElementById('telefono').value,
+                Email: document.getElementById('email').value,
+                Cittadinanza: document.getElementById('paese').value,
+                'Codice fiscale': document.getElementById('codiceFiscale').value,
+                CF: document.getElementById('cf').value,
+                CV: document.getElementById('cv').value,
+                'Lav/h': document.getElementById('oreLavorate').value
+            };
+            displayData(row);
+        }
+
+        // Funzione per caricare il file Excel
+        function loadFile(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+    
+                displayData(jsonData);
+            };
+    
+            reader.readAsArrayBuffer(file);
+        }
+    
+        // Funzione per visualizzare i dati nella tabella
+        function displayData(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+    
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${row.nome || ''}</td>
+                    <td>${row.cognome || ''}</td>
+                    <td>${row.ruolo || ''}</td>
+                    <td>${row['luogo di nascita'] || ''}</td>
+                    <td>${row['luogo di residenza'] || ''}</td>
+                    <td>${row.ID || ''}</td>
+                    <td>${row.sesso || ''}</td>
+                    <td>${row['Telefono'] || ''}</td>
+                    <td>${row.Email || ''}</td>
+                    <td>${row.Cittadinanza || ''}</td>
+                    <td>${row['Codice fiscale'] || ''}</td>
+                    <td><svg class="barcode"></svg></td>
+                    <td><div class="qrcode"></div></td>
+                    <td>${row.CF || ''}</td>
+                    <td>${row.CV || ''}</td>
+                    <td>${row['Lav/h'] || ''}</td>
+                `;
+                tableBody.appendChild(tr);
+    
+                if (row['Codice fiscale']) {
+                    JsBarcode(tr.querySelector('.barcode'), row['Codice fiscale'], {
+                        format: 'CODE128',
+                        displayValue: false
+                    });
+    
+                    new QRCode(tr.querySelector('.qrcode'), {
+                        text: row['Codice fiscale'],
+                        width: 60,
+                        height: 60
+                    });
+                }
+            });
+        }
+    
+        // Funzione per esportare in Excel
+        function exportExcel() {
+            const table = document.querySelector('table');
+            const wb = XLSX.utils.table_to_book(table);
+            XLSX.writeFile(wb, 'dati_esportati.xlsx');
+        }
+    
+        // Funzione per esportare in PDF
+        function exportPdf() {
+            window.print();
+        }
+    
+        // Funzione per esportare in CSV
+        function exportCsv() {
+            const table = document.querySelector('table');
+            const wb = XLSX.utils.table_to_book(table);
+            const wbout = XLSX.write(wb, { bookType: 'csv', type: 'binary' });
+    
+            const buf = new ArrayBuffer(wbout.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < wbout.length; i++) {
+                view[i] = wbout.charCodeAt(i) & 0xFF;
+            }
+    
+            const blob = new Blob([buf], { type: 'text/csv' });
+            saveAs(blob, 'dati_esportati.csv');
+        }
+                // Funzione unificata per visualizzare i dati
+                function displayData(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            if (Array.isArray(data)) {
+                data.forEach((row, index) => {
+                    addRowToTable(row, index);
+                });
+            } else {
+                addRowToTable(data, tableBody.children.length);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serramenti in Alluminio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+        .category {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .category h2 {
+            margin-bottom: 1rem;
+            color: #ffc107;
+        }
+
+        .category img {
+            width: 300px;
+            height: auto;
+            border-radius: 1rem;
+        }
+
+        .category li {
+            display: column;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin: 0 0.25rem;
+            background: linear-gradient(45deg, #4caf50, #ade82f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        input, select {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h1 class="mb-4">Pagina Schermature Solari</h1>
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Cerca prodotto...">
+        <select id="filterSelect" class="form-select mb-4">
+            <option value="tutte">Tutte le categorie</option>
+            <option value="Orientabili">Orienta 2.0</option>
+            <option value="Frangisole">Frangisole</option>
+            <option value="Avvolgibili">Avvolgibili</option>
+            <option value="Persiane">Persiane</option>
+        </select>
+
+        <!-- Esempio categoria -->
+        <div class="category" id="Orientabili">
+            <h2><i class="bi bi-sun"></i> Categoria 1: Orienta 2.0</h2>
+            <ul class="list-unstyled">
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/persiana-orienta-2.jpg" alt="Orientabili">
+                    <p class="mb-0 flex-grow-1">Orienta 2.0</p>
+                    <a href="#" class="icon"><i class="bi bi-book"></i></a>
+                    <a href="#" class="icon"><i class="bi bi-file-earmark-text"></i></a>
+                    <a href="#" class="icon"><i class="bi bi-pass"></i></a>
+                    <a href="#" class="icon"><i class="bi bi-pencil-ruler"></i></a>
+                </li>
+            </ul>
+        </div>
+        <!-- Ripeti altre categorie come Frangisole, Avvolgibili, Persiane... -->
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const filterSelect = document.getElementById('filterSelect');
+        const categories = document.querySelectorAll('.category');
+
+        function filterItems() {
+            const searchValue = searchInput.value.toLowerCase();
+            const filterValue = filterSelect.value.toLowerCase();
+
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h2').textContent.toLowerCase();
+                const categoryItems = category.querySelectorAll('li');
+                let hasVisibleItems = false;
+
+                categoryItems.forEach(item => {
+                    const itemTitle = item.querySelector('p').textContent.toLowerCase();
+                    const matchesSearch = itemTitle.includes(searchValue);
+                    item.style.display = matchesSearch ? 'flex' : 'none';
+                    if (matchesSearch) hasVisibleItems = true;
+                });
+
+                const matchesFilter = categoryTitle.includes(filterValue) || filterValue === 'tutte';
+                category.style.display = hasVisibleItems && matchesFilter ? 'block' : 'none';
+            });
+        }
+
+        searchInput.addEventListener('input', filterItems);
+        filterSelect.addEventListener('change', filterItems);
+    </script>
+</body>
+
+</html>

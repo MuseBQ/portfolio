@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabella Prodotti</title>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.image-cell {
+    background-color: #000; /* Casella nera */
+    padding: 5px;
+}
+
+.image-cell img {
+    width: 100px; /* Dimensione dell'immagine */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Catalogo Prodotti</h1>
+        <table id="productsTable">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Immagine</th>
+                    <th>Nome Prodotto</th>
+                    <th>Prezzo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Elettronica</td>
+                    <td class="image-cell">
+                        <img src="path/to/image1.jpg" alt="Immagine Prodotto 1">
+                    </td>
+                    <td>Smartphone</td>
+                    <td>€299,99</td>
+                </tr>
+                <tr>
+                    <td>Abbigliamento</td>
+                    <td class="image-cell">
+                        <img src="path/to/image2.jpg" alt="Immagine Prodotto 2">
+                    </td>
+                    <td>T-shirt</td>
+                    <td>€19,99</td>
+                </tr>
+                <!-- Aggiungi altri prodotti come necessario -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+
+        // Funzione per aggiungere un prodotto alla tabella
+        function addProduct(category, imagePath, productName, price) {
+            const table = document.getElementById('productsTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow(-1);
+            const categoryCell = newRow.insertCell(0);
+            const imageCell = newRow.insertCell(1);
+            const productNameCell = newRow.insertCell(2);
+            const priceCell = newRow.insertCell(3);
+
+            categoryCell.textContent = category;
+            imageCell.innerHTML = `<img src="${imagePath}" alt="Immagine ${productName}">`;
+            productNameCell.textContent = productName;
+            priceCell.textContent = price;
+        }
+
+        // Aggiungi un prodotto alla tabella
+        addProduct('Elettronica', 'path/to/image3.jpg', 'Tablet', '€199,99');
+    </script>
+</body>
+</html>
+
+
+
+

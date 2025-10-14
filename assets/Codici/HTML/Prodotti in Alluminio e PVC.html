@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prodotti in Alluminio e PVC</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- CSS personalizzato -->
+
+    <link rel="stylesheet" href="root.css" />
+    <link rel="stylesheet" href="anim1.css" />
+    <link rel="stylesheet" href="anim2.css" />
+</head>
+
+<body>
+    <div class="container-fluid py-4">
+        <h1 class="text-center mb-4"><i class="bi bi-funnel"></i> Catalogo Prodotti</h1>
+
+        <!-- Barra di Ricerca -->
+        <div class="search-container mb-4">
+            <form class="row g-2 align-items-center" role="search">
+                <div class="col-md-8">
+                    <input class="form-control" type="search" id="searchInput" placeholder="Cerca prodotto per nome..."
+                        aria-label="Search">
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" id="materialFilter">
+                        <option value="all">Tutti i materiali</option>
+                        <option value="alluminio">Alluminio</option>
+                        <option value="pvc">PVC</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center"
+                        type="button" id="searchButton">
+                        <i class="bi bi-search me-2"></i> Cerca
+                    </button>
+                </div>
+            </form>
+            <p class="no-results mt-3 text-center" id="noResultsMessage" style="display: none;">
+                Nessun prodotto trovato. Prova con un termine diverso.
+            </p>
+        </div>
+
+        <!-- Contenuto principale -->
+        <div class="accordion" id="mainAccordion">
+            <!-- Sezione Alluminio -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAlluminio">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseAlluminio" aria-expanded="true" aria-controls="collapseAlluminio">
+                        <i class="bi bi-palette2 me-2"></i> Serramenti in Alluminio
+                    </button>
+                </h2>
+                <div id="collapseAlluminio" class="accordion-collapse collapse show" aria-labelledby="headingAlluminio"
+                    data-bs-parent="#mainAccordion">
+                    <div class="accordion-body p-0">
+                        <div class="accordion" id="accordionAlluminio">
+                            <!-- Le categorie verranno generate dinamicamente da JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione PVC -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPVC">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePVC" aria-expanded="false" aria-controls="collapsePVC">
+                        <i class="bi bi-palette2 me-2"></i> Serramenti in PVC
+                    </button>
+                </h2>
+                <div id="collapsePVC" class="accordion-collapse collapse" aria-labelledby="headingPVC"
+                    data-bs-parent="#mainAccordion">
+                    <div class="accordion-body p-0">
+                        <div class="accordion" id="accordionPVC">
+                            <!-- Le categorie verranno generate dinamicamente da JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dati.js"></script>
+    <script src="funzioni.js"></script>
+</body>
+
+</html>

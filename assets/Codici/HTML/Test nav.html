@@ -1,0 +1,359 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- UNICONS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+
+    <!-- REMIXICONS-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- GOOGLE FONTS-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS RESET */
+        :root {
+            --body-height: 3.5rem;
+
+            --first-color: hsl(132, 66%, 38%);
+            --first-color-lighten: hsl(132, 50%, 58%);
+            --title-color: hsl(0, 0%, 0%);
+            --text-color: hsl(0, 0%, 100%);
+            --body-color: hsl(147, 100%, 93%);
+
+            --font-famyly: 'Roboto', sans-serif;
+
+            --z-tooltip: 10;
+            --z-fixed: 100;
+        }
+
+        @media screen and (min-width: 1024px) {
+            :root {
+                --normal-font-size: 1rem;
+                --small-font-size: .875rem;
+                --smaller-font-size: .813rem;
+            }   
+        }
+
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--normal-font-size);
+            background-color: var(--body-color);
+            color: var(--text-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin-inline: 1.5rem;
+        }
+
+        /* SEARCH BAR */
+        .nav__search {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px 20px;
+            background-color: var(--first-color-lighten);
+            box-shadow: 0 2px 5px hsla(220, 68%, 12%, .1);
+        }
+
+        /* ctrl + spacebar per vedere le opzioni di completamento del codice */
+        .nav {
+            height: 3.5rem;
+            box-shadow: 0 2px 8px hsla(220, 68%, 12%, .1);
+            background-color: var(--first-color);
+            z-index: var(--z-fixed);
+        }
+
+        .nav__data {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav__logo {
+            display: inline-flex;
+            align-items: center;
+            column-gap: .25rem;
+            color: var(--title-color);
+            font-weight: 500;
+            transition: color .3s;
+        }
+
+        .nav__logo i {
+            font-size: 1.25rem;
+        }
+
+        .nav__logo:hover {
+            color: var(--first-color-lighten);
+        }
+
+        .nav__toggle {
+            position: relative;
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav__toggle-menu,
+        .nav__toggle-close {
+            font-size: 1.25rem;
+            color: var(--title-color);
+            position: absolute;
+            display: grid;
+            place-items: center;
+            inset: 0;
+            cursor: pointer;
+            transition: opacity .1s, transform .4s;
+        }
+
+        .nav__toggle-close {
+            opacity: 0;
+        }
+
+        /* NAVIGATION MOBILE DEVICE */
+        @media screen and (max-width: 1118px) {
+            .nav__menu {
+                position: absolute;
+                top: 2.5rem;
+                left: 0;
+                background-color: var(--body-color);
+            }
+
+            .nav__menu.show {
+                transform: translateY(0);
+            }
+
+            .nav__toggle-close {
+                opacity: 1;
+                transform: rotate(180deg);
+            }
+
+            .nav__toggle-menu {
+                opacity: 0;
+            }
+            
+        }
+
+    </style>
+
+<body>
+
+    <!-- SEARCH BAR -->
+    <div class="nav__search">
+        <input type="text" id="searchInput" placeholder="Cerca prodotto...">
+        <i class="ri-search-line"></i>
+        <select id="filterSelect">
+            <option value="tutte">Tutte le categorie</option>
+            <option value="finestre-in-alluminio">Finestre in Alluminio</option>
+            <option value="porte-in-alluminio">Porte in Alluminio</option>
+            <option value="facciate-in-alluminio">Facciate in Alluminio</option>
+            <option value="finestre-in-pvc">Finestre in PVC</option>
+            <option value="scorrevoli-in-pvc">Scorrevoli in PVC</option>
+        </select>
+    </div>
+
+    <div class="nav container" id="nav">
+
+        <div class="nav__data">
+            <a href="#" class="nav__logo">
+                <i class="ri-survey-line"></i>
+                Prodotti</a>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="ri-menu-line nav__toggle-menu"></i>
+                <i class="ri-close-line nav__toggle-close"></i>
+            </div>
+        </div>
+
+        <!-- NAVIGATION MENU-->
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+
+                <!-- DROPDOWN 1 -->
+                <li class="dropdown-item">
+                    <div class="nav__link dropdown__button">
+                        Serramenti in Alluminio <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                    <div class="dropdown__container">
+                        <div class="dropdown__content">
+                            <div class="dropdown__group">
+                                <div class="dropdown__icon">
+
+                                </div>
+                                <span class="dropdown__title">finestre-in-alluminio</span>
+
+                                <ul class="dropdown__list">
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- DROPDOWN 2 -->
+                <li class="dropdown-item">
+                    <div class="nav__link dropdown__button">
+                        Serramenti in PVC <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                    <div class="dropdown__container">
+                        <div class="dropdown__content">
+                            <div class="dropdown__group">
+                                <div class="dropdown__icon">
+
+                                </div>
+                                <span class="dropdown__title"></span>
+
+                                <ul class="dropdown__list">
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- DROPDOWN 3 -->
+                <li class="dropdown-item">
+                    <div class="nav__link dropdown__button">
+                        Schermature Solari <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                    <div class="dropdown__container">
+                        <div class="dropdown__content">
+                            <div class="dropdown__group">
+                                <div class="dropdown__icon">
+
+                                </div>
+                                <span class="dropdown__title"></span>
+
+                                <ul class="dropdown__list">
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- DROPDOWN 4 -->
+                <li class="dropdown-item">
+                    <div class="nav__link dropdown__button">
+                        Sistemi per l'edilizia <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                    <div class="dropdown__container">
+                        <div class="dropdown__content">
+                            <div class="dropdown__group">
+                                <div class="dropdown__icon">
+
+                                </div>
+                                <span class="dropdown__title"></span>
+
+                                <ul class="dropdown__list">
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="dropdown__link"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- MAIN JS -->
+    <script>
+
+    </script>
+</body>
+
+
+<!--
+finestre-in-alluminio <i class="ri-square-line"></i>
+porte-in-alluminio <i class="ri-login-box-line"></i>
+facciate-in-alluminio <i class="ri-rectangle-line"></i> + <i class="ri-rectangle-line"></i>
+finestre-in-pvc <i class="ri-checkbox-multiple-blank-fill"></i>
+scorrevoli-in-pvc <i class="ri-logout-box-fill"></i>
+-->
+<!--                
+                    <a href="${newProductPdfLinks[0]}" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="${newProductPdfLinks[1]}" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="${newProductPdfLinks[2]}" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="${newProductPdfLinks[3]}" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+-->
+
+</html>

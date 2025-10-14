@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogo Prodotti - FOMALP SRL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4caf50;
+            --primary-dark: #3b8d40;
+            --primary-light: #ade82f;
+            --secondary: #32322d;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            padding-top: 60px;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            color: white;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h1 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            border-radius: 2px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 25px;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .badge-material {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .badge-aluminium {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .badge-pvc {
+            background-color: #ff6f00;
+            color: white;
+        }
+
+        .material-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .accordion-button {
+            font-weight: 600;
+            padding: 15px 20px;
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: 10px !important;
+            margin-bottom: 10px;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+
+        .search-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .btn-search {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: var(--transition);
+        }
+
+        .btn-search:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: var(--secondary);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .document-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 6px;
+            color: var(--primary-dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .document-link:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateX(5px);
+        }
+
+        .document-link i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        .not-available {
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-building"></i>
+                FOMALP SRL
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Prodotti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Catalogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contatti</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="mb-4 text-center"><i class="bi bi-brightness-high-fill"></i></i>Schermature Solari</h2>
+        <!-- Barra di Ricerca -->
+        <div class="search-bar text-center">
+            <input type="text" class="form-control" placeholder="Cerca un prodotto..." id="searchInput"
+                onkeyup="filterProducts()" />
+        </div>
+
+        <!-- Accordion per le categorie di prodotti -->
+        <div class="accordion" id="accordionSchermature">
+
+            <!-- Sezione Orienatbili -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOrientabili">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOrientabili" aria-expanded="true" aria-controls="collapseOrientabili">
+                        <i class="bi bi-rewind-btn"></i></i> Orientabili
+                    </button>
+                </h2>
+                <div id="collapseOrientabili" class="accordion-collapse collapse show"
+                    aria-labelledby="headingOrientabili" data-bs-parent="#accordionSchermature">
+                    <div class="accordion-body">
+                        <div class="row g-4" id="Orientabili">
+                            <!-- Ogni card prodotto può essere mantenuta uguale, basta usare id dinamici -->
+                            <!-- ESEMPI DI PRODOTTO -->
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/persiana-orienta-2.jpg"
+                                    alt="Orienta 2.0" class="menu-img img-thumbnail">
+                                <h6>Orienta 2.0</h6>
+                                <div class="submenu">
+                                    <a
+                                        href="https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf"><i
+                                            class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a
+                                        href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf"><i
+                                            class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a
+                                        href="https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf"><i
+                                            class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-CT70.pdf"><i
+                                            class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+                            <!-- Altri prodotti da copiare con struttura simile -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione Frangisole -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFrangisole">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFrangisole" aria-expanded="false" aria-controls="collapseFrangisole">
+                        <i class="bi bi-brightness-alt-high-fill"></i> Frangisole
+                    </button>
+                </h2>
+                <div id="collapseFrangisole" class="accordion-collapse collapse" aria-labelledby="headingFrangisole"
+                    data-bs-parent="#accordionSchermature">
+                    <div class="accordion-body">
+                        <div class="row g-4" id="FrangisoleSection">
+                            <!-- Esempi di prodotti -->
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/gm200_detail_lamellen_geschlossen.jpg"
+                                    alt="GM 200" class="menu-img img-thumbnail">
+                                <h6>GM 200</h6>
+                                <div class="submenu">
+                                    <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/produkt_mv90.jpg"
+                                    alt="MV 90" class="menu-img img-thumbnail">
+                                <h6>MV 90</h6>
+                                <div class="submenu">
+                                    <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/vr90_windstabil_01.jpg"
+                                    alt="VR 90" class="menu-img img-thumbnail">
+                                <h6>VR 90</h6>
+                                <div class="submenu">
+                                    <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione Avvolgibili -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAvvolgibili">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseAvvolgibili" aria-expanded="false" aria-controls="collapseAvvolgibili">
+                        <i class="bi bi-border-width"></i> Avvolgibili
+                    </button>
+                </h2>
+                <div id="collapseAvvolgibili" class="accordion-collapse collapse" aria-labelledby="headingAvvolgibili"
+                    data-bs-parent="#accordionSchermature">
+                    <div class="accordion-body">
+                        <div class="row g-4" id="AvvolgibiliSection">
+                            <!-- Esempi di prodotti -->
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/avvolgibile-alluminio-coibentato-2.jpg"
+                                    alt="Profili in Alluminio Coibentato" class="menu-img img-thumbnail">
+                                <h6>Profili in Alluminio Coibentato</h6>
+                                <div class="submenu">
+                                    <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/avvolgibile-acciaio-coibentato-sicurezza.jpg"
+                                    alt="Profili in Acciaio Coibentato di sicurezza" class="menu-img img-thumbnail">
+                                <h6>Profili in Acciaio Coibentato di sicurezza</h6>
+                                <div class="submenu">
+                                    <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center product-card">
+                                <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/pvc.jpg"
+                                    alt="Profili in PVC" class="menu-img img-thumbnail">
+                                <h6>Profili in PVC</h6>
+                                <div class="submenu">
+                                    <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                    <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                    <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                    <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Filtro JS -->
+    <script>
+        function filterProducts() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const cards = document.querySelectorAll(".product-card");
+
+            cards.forEach(card => {
+                const title = card.querySelector("h6").textContent.toLowerCase();
+                card.style.display = title.includes(input) ? "block" : "none";
+            });
+        }
+
+    </script>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1>Infissi in Alluminio e PVC</h1>
+            <p>Soluzioni innovative per l'efficienza energetica, la sicurezza e il design dei tuoi spazi</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-light btn-lg px-4"></a>Scopri i Prodotti</button>
+                <button class="btn btn-outline-light btn-lg px-4">Richiedi Preventivo</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-container">
+            <h2 class="text-center mb-4">Cerca nel nostro catalogo</h2>
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control form-control-lg"
+                            placeholder="Cerca prodotto per nome...">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select form-select-lg">
+                        <option value="all">Tutti i materiali</option>
+                        <option value="alluminio">Alluminio</option>
+                        <option value="pvc">PVC</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Materials Section -->
+        <div class="row mb-5">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center p-5">
+                        <i class="fas fa-cubes material-icon"></i>
+                        <h3 class="card-title">Infissi in Alluminio</h3>
+                        <p class="card-text">Soluzioni durevoli e moderne che combinano resistenza, leggerezza e design
+                            contemporaneo per qualsiasi tipologia di edificio.</p>
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary">Scopri i prodotti</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center p-5">
+                        <i class="fas fa-th material-icon"></i>
+                        <h3 class="card-title">Infissi in PVC</h3>
+                        <p class="card-text">Massimo isolamento termoacustico con bassa manutenzione. La soluzione
+                            ideale per efficienza energetica e comfort abitativo.</p>
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary">Scopri i prodotti</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <h2 class="section-title">I Nostri Prodotti</h2>
+
+        <!-- Accordion for Products -->
+        <div class="accordion mb-5" id="productsAccordion">
+            <div class="container-fluid py-4">
+                <h1 class="text-center mb-4"><i class="bi bi-funnel"></i> Catalogo Prodotti</h1>
+
+                <!-- Barra di Ricerca -->
+                <div class="search-container mb-4">
+                    <form class="row g-2 align-items-center" role="search">
+                        <div class="col-md-8">
+                            <label for="searchInput" class="form-label visually-hidden">Cerca prodotto per
+                                nome...</label>
+                            <input class="form-control" type="search" id="searchInput"
+                                placeholder="Cerca prodotto per nome..." aria-label="Search">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="materialFilter" class="form-label visually-hidden">Filtra per materiale</label>
+                            <select class="form-select" id="materialFilter">
+                                <option value="all">Tutti i materiali</option>
+                                <option value="alluminio">Alluminio</option>
+                                <option value="pvc">PVC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button
+                                class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center"
+                                type="button" id="searchButton">
+                                <i class="bi bi-search me-2"></i> Cerca
+                            </button>
+                        </div>
+                    </form>
+                    <p class="no-results mt-3 text-center" id="noResultsMessage" style="display: none;">
+                        Nessun prodotto trovato. Prova con un termine diverso.
+                    </p>
+                </div>
+
+                <!-- Contenuto principale -->
+                <div class="accordion" id="mainAccordion">
+                    <!-- Sezione Alluminio -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingAlluminio">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseAlluminio" aria-expanded="true"
+                                aria-controls="collapseAlluminio">
+                                <i class="bi bi-palette2 me-2"></i> Serramenti in Alluminio
+                            </button>
+                        </h2>
+                        <div id="collapseAlluminio" class="accordion-collapse collapse show"
+                            aria-labelledby="headingAlluminio" data-bs-parent="#mainAccordion">
+                            <div class="accordion-body p-0">
+                                <div class="accordion" id="accordionAlluminio">
+                                    <!-- Le categorie verranno generate dinamicamente da JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sezione PVC -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingPVC">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsePVC" aria-expanded="false" aria-controls="collapsePVC">
+                                <i class="bi bi-palette2 me-2"></i> Serramenti in PVC
+                            </button>
+                        </h2>
+                        <div id="collapsePVC" class="accordion-collapse collapse" aria-labelledby="headingPVC"
+                            data-bs-parent="#mainAccordion">
+                            <div class="accordion-body p-0">
+                                <div class="accordion" id="accordionPVC">
+                                    <!-- Le categorie verranno generate dinamicamente da JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container py-5">
+            <h2 class="mb-4 text-center"><i class="bi bi-building"></i>Sistemi per l'Edilizia</h2>
+            <!-- Barra di Ricerca -->
+            <div class="search-bar text-center">
+                <input type="text" class="form-control" placeholder="Cerca un prodotto..." id="searchInput"
+                    onkeyup="filterProducts()" />
+            </div>
+
+            <!-- Accordion per le categorie di prodotti -->
+            <div class="accordion" id="accordionEdilizia">
+
+                <!-- Sezione Cassonetti Termoisolanti-->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingCassonettiTermoisolanti">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseCassonettiTermoisolanti" aria-expanded="true"
+                            aria-controls="collapseCassonettiTermoisolanti">
+                            <i class="bi bi-thermometer-sun"></i>Cassonetti Termoisolanti
+                        </button>
+                    </h2>
+                    <div id="collapseCassonettiTermoisolanti" class="accordion-collapse collapse show"
+                        aria-labelledby="headingCassonettiTermoisolanti" data-bs-parent="#accordionEdilizia">
+                        <div class="accordion-body">
+                            <div class="row g-4" id="Cassonetti TermoisolantiSection">
+                                <!-- Ogni card prodotto può essere mantenuta uguale, basta usare id dinamici -->
+                                <!-- ESEMPI DI PRODOTTO -->
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/Cassonetti-Fomalp-therm.jpg"
+                                        alt="Fomalp Therm" class="menu-img img-thumbnail">
+                                    <h6>Fomalp Therm</h6>
+                                    <div class="submenu">
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf"><i
+                                                class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf"><i
+                                                class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf"><i
+                                                class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-CT70.pdf"><i
+                                                class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <!-- Altri prodotti da copiare con struttura simile -->
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/Cassonetti-Fomalp-Shadow-blok.jpg"
+                                        alt="Fomalp Shadow Blok" class="menu-img img-thumbnail">
+                                    <h6>Fomalp Shadow Blok</h6>
+                                    <div class="submenu">
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf"><i
+                                                class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf"><i
+                                                class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf"><i
+                                                class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-CT70.pdf"><i
+                                                class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/Cassonetti-Fomalp-Therm-AF.jpg"
+                                        alt="Fomalp Therm AF" class="menu-img img-thumbnail">
+                                    <h6>Fomalp Therm AF</h6>
+                                    <div class="submenu">
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf"><i
+                                                class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf"><i
+                                                class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf"><i
+                                                class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-CT70.pdf"><i
+                                                class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/Cassonettp-Fomalp-Vario.jpg"
+                                        alt="Fomalp Vario" class="menu-img img-thumbnail">
+                                    <h6>Fomalp Vario</h6>
+                                    <div class="submenu">
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf"><i
+                                                class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf"><i
+                                                class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a
+                                            href="https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf"><i
+                                                class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-CT70.pdf"><i
+                                                class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sezione Cassonetti Termoisolanti EPS -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingCassonettiTermoisolantiEPS">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseCassonettiTermoisolantiEPS" aria-expanded="false"
+                            aria-controls="collapseCassonettiTermoisolantiEPS">
+                            <i class="bi bi-thermometer-sun"></i>Cassonetti Termoisolanti EPS
+                        </button>
+                    </h2>
+                    <div id="collapseCassonettiTermoisolantiEPS" class="accordion-collapse collapse"
+                        aria-labelledby="headingCassonettiTermoisolantiEPS" data-bs-parent="#accordionEdilizia">
+                        <div class="accordion-body">
+                            <div class="row g-4" id="CassonettiTermoisolantiEPSSection">
+                                <!-- Esempi di prodotti -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sezione Controtelai Termici Fomalp -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingControtelaiTermiciFomalp">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseControtelaiTermiciFomalp" aria-expanded="false"
+                            aria-controls="collapseControtelaiTermiciFomalp">
+                            <i class="bi bi-thermometer-sun"></i>Controtelai Termici Fomalp
+                        </button>
+                    </h2>
+                    <div id="collapseControtelaiTermiciFomalp" class="accordion-collapse collapse"
+                        aria-labelledby="heading ControtelaiTermiciFomalp" data-bs-parent="#accordionSchermature">
+                        <div class="accordion-body">
+                            <div class="row g-4" id="ControtelaiTermiciFomalpSection">
+                                <!-- Esempi di prodotti -->
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelaio-avvolgibile.png"
+                                        alt="Profili in Alluminio Coibentato" class="menu-img img-thumbnail">
+                                    <h6>Controtelaio Avvolgibile</h6>
+                                    <div class="submenu">
+                                        <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelaio-frangisole.png"
+                                        alt="Profili in Acciaio Coibentato di sicurezza" class="menu-img img-thumbnail">
+                                    <h6>Controtelaio Frangisole</h6>
+                                    <div class="submenu">
+                                        <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelaio-persiana-new.png"
+                                        alt="Profili in PVC" class="menu-img img-thumbnail">
+                                    <h6>Controtelaio Persiana</h6>
+                                    <div class="submenu">
+                                        <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelaio-ristrutturazione.png"
+                                        alt="Profili in PVC" class="menu-img img-thumbnail">
+                                    <h6>Controtelaio Ristrutturazione</h6>
+                                    <div class="submenu">
+                                        <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center product-card">
+                                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelaio-serramento.png"
+                                        alt="Profili in PVC" class="menu-img img-thumbnail">
+                                    <h6>Controtelaio Serramento</h6>
+                                    <div class="submenu">
+                                        <a href="#"><i class="fa-solid fa-book me-1"></i> Catalogo</a>
+                                        <a href="#"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>
+                                        <a href="#"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>
+                                        <a href="#"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sezione Sistemi Compact Fomalp -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSistemiCompactFomalp">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSistemiCompactFomalp" aria-expanded="false"
+                            aria-controls="collapseSistemiCompactFomalp">
+                            <i class="bi bi-archive-fill"></i>Sistemi Compact Fomalp
+                        </button>
+                    </h2>
+                    <div id="collapseSistemiCompactFomalp" class="accordion-collapse collapse"
+                        aria-labelledby="heading SistemiCompactFomalp" data-bs-parent="#accordionEdilizia">
+                        <div class="accordion-body">
+                            <div class="row g-4" id="SistemiCompactFomalpSection">
+                                <!-- Esempi di prodotti -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Filtro JS -->
+        <script>
+            function filterProducts() {
+                const input = document.getElementById("searchInput").value.toLowerCase();
+                const cards = document.querySelectorAll(".product-card");
+
+                cards.forEach(card => {
+                    const title = card.querySelector("h6").textContent.toLowerCase();
+                    card.style.display = title.includes(input) ? "block" : "none";
+                });
+            }
+        </script>
+    </div>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <!-- Excel Viewer Section -->
+            <div class="container">
+                <div class="card">
+                    <h1 class="section-title">Visualizzatore Excel</h1>
+                    <p class="section-subtitle">Carica e visualizza file Excel con funzionalità di ricerca</p>
+
+                    <div class="search-box">
+                        <input type="text" id="searchExcel" class="input-field" placeholder="Cerca nei dati...">
+                    </div>
+
+                    <table id="excelTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Cognome</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="controls">
+                        <input type="file" id="excelInput" accept=".xlsx,.xls" class="input-field">
+                        <button class="btn" onclick="exportToExcel()">Esporta Excel</button>
+                        <button class="btn" onclick="exportToCsv()">Esporta CSV</button>
+                        <button class="btn" onclick="exportToPdf()">Esporta PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barcode Generator Section -->
+            <div class="container">
+                <div class="card">
+                    <h1 class="section-title">Generatore Codici</h1>
+                    <p class="section-subtitle">Genera Barcode e QR Code dai dati</p>
+
+                    <table id="codeTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Barcode</th>
+                                <th>QR Code</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Employee Form Section -->
+            <div class="container">
+                <div class="card">
+                    <h1 class="section-title">Nuovo Dipendente</h1>
+                    <p class="section-subtitle">Inserisci i dati del nuovo dipendente</p>
+
+                    <form id="employeeForm" class="input-form">
+                        <input type="text" class="input-field" placeholder="Nome" required>
+                        <input type="text" class="input-field" placeholder="Cognome" required>
+                        <input type="email" class="input-field" placeholder="Email" required>
+                        <input type="tel" class="input-field" placeholder="Telefono" required>
+                        <input type="text" class="input-field" placeholder="Codice Fiscale" required>
+                        <button type="submit" class="btn">Aggiungi</button>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                // Funzione per caricare e visualizzare i dati Excel
+                function loadAndDisplayExcel(fileInputId, tableId) {
+                    const fileInput = document.getElementById(fileInputId);
+                    const table = document.getElementById(tableId).getElementsByTagName('tbody')[0]; // Ottieni il tbody
+                    const codeTable = document.getElementById('codeTable').getElementsByTagName('tbody')[0]; // Ottieni il tbody della tabella dei codici
+
+                    fileInput.addEventListener('change', (event) => {
+                        const file = event.target.files[0];
+                        const reader = new FileReader();
+
+                        reader.onload = (e) => {
+                            const data = new Uint8Array(e.target.result);
+                            const workbook = XLSX.read(data, { type: 'array' });
+                            const sheetName = workbook.SheetNames[0];
+                            const worksheet = workbook.Sheets[sheetName];
+                            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                            // Pulisci le tabelle esistenti
+                            table.innerHTML = '';
+                            codeTable.innerHTML = '';
+
+                            // Popola le tabelle con i dati
+                            jsonData.forEach((row, index) => {
+                                // Tabella principale
+                                let newRow = table.insertRow();
+                                Object.values(row).forEach(cellData => {
+                                    let newCell = newRow.insertCell();
+                                    newCell.textContent = cellData;
+                                });
+
+                                // Tabella dei codici
+                                let newCodeRow = codeTable.insertRow();
+                                let idCell = newCodeRow.insertCell();
+                                let barcodeCell = newCodeRow.insertCell();
+                                let qrCodeCell = newCodeRow.insertCell();
+
+                                idCell.textContent = row.ID || index + 1; // Usa ID se presente, altrimenti indice
+
+                                // Genera Barcode
+                                let barcodeCanvas = document.createElement('canvas');
+                                JsBarcode(barcodeCanvas, row.ID || index + 1, { format: 'CODE128', displayValue: false });
+                                barcodeCell.appendChild(barcodeCanvas);
+
+                                // Genera QR Code
+                                let qrCodeDiv = document.createElement('div');
+                                new QRCode(qrCodeDiv, { text: row['Codice Fiscale'] || `ID: ${row.ID || index + 1}`, width: 100, height: 100 });
+                                qrCodeCell.appendChild(qrCodeDiv);
+                            });
+                        };
+
+                        reader.readAsArrayBuffer(file);
+                    });
+                }
+
+                // Funzione per esportare i dati in Excel
+                function exportToExcel() {
+                    const table = document.getElementById('excelTable');
+                    const wb = XLSX.utils.table_to_book(table);
+                    XLSX.writeFile(wb, 'dipendenti.xlsx');
+                }
+
+                // Funzione per esportare i dati in CSV
+                function exportToCsv() {
+                    const table = document.getElementById('excelTable');
+                    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.table_to_sheet(table));
+                    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                    saveAs(blob, 'dipendenti.csv');
+                }
+                // Funzione per esportare i dati nella forma di PDF
+                function exportToPdf() {
+                    const doc = new jsPDF();
+                    doc.autoTable({ html: '#excelTable' });
+                    doc.save('dipendenti.pdf');
+                }
+
+                // Caricamento dei dati Excel
+                loadAndDisplayExcel('excelInput', 'excelTable');
+
+                // Ricerca dei dati Excel
+                document.getElementById('searchExcel').addEventListener('input', function () {
+                    const filter = this.value.toLowerCase();
+                    const rows = document.getElementById('excelTable').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+                    for (let row of rows) {
+                        let text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(filter) ? '' : 'none';
+                    }
+                });
+                // Funzione per aggiungere un nuovo dipendente
+                document.getElementById('employeeForm').addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    const form = event.target;
+                    const nome = form.elements[0].value;
+                    const cognome = form.elements[1].value;
+                    const email = form.elements[2].value;
+                    const telefono = form.elements[3].value;
+                    const codiceFiscale = form.elements[4].value;
+
+                    // Aggiungi i dati alla tabella principale
+                    const table = document.getElementById('excelTable').getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow();
+                    newRow.insertCell().textContent = 'Nuovo'; // ID temporaneo
+                    newRow.insertCell().textContent = nome;
+                    newRow.insertCell().textContent = cognome;
+                    newRow.insertCell().textContent = email;
+                    newRow.insertCell().textContent = telefono;
+
+                    // Aggiungi i dati alla tabella dei codici
+                    const codeTable = document.getElementById('codeTable').getElementsByTagName('tbody')[0];
+                    const newCodeRow = codeTable.insertRow();
+                    const id = 'Nuovo'; // ID temporaneo
+                    newCodeRow.insertCell().textContent = id;
+
+                    // Genera Barcode
+                    let barcodeCell = newCodeRow.insertCell();
+                    let barcodeCanvas = document.createElement('canvas');
+                    JsBarcode(barcodeCanvas, id, { format: 'CODE128', displayValue: false });
+                    barcodeCell.appendChild(barcodeCanvas);
+
+                    // Genera QR Code
+                    let qrCodeCell = newCodeRow.insertCell();
+                    let qrCodeDiv = document.createElement('div');
+                    new QRCode(qrCodeDiv, { text: codiceFiscale || `ID: ${id}`, width: 100, height: 100 });
+                    qrCodeCell.appendChild(qrCodeDiv);
+
+                    form.reset();
+                });
+
+                // Funzione di ricerca
+                document.getElementById('searchExcel').addEventListener('input', function () {
+                    const filter = this.value.toLowerCase();
+                    const rows = document.getElementById('excelTable').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+                    for (let row of rows) {
+                        let text = row.textContent.toLowerCase();
+                        row.style.display = text.includes(filter) ? '' : 'none';
+                    }
+                });
+
+                // Inizializza la funzione di caricamento Excel
+                loadAndDisplayExcel('excelInput', 'excelTable');
+            </script>
+            <h2 class="section-title">Perché Scegliere i Nostri Infissi</h2>
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-thermometer-half display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Isolamento Termico</h5>
+                            <p class="card-text">Riduci i consumi energetici e mantieni la temperatura ideale in ogni
+                                stagione.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-shield-alt display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Sicurezza</h5>
+                            <p class="card-text">Sistemi di chiusura avanzati per la massima protezione della tua casa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-paint-brush display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Design Personalizzabile</h5>
+                            <p class="card-text">Scegli tra diverse finiture e stili per abbinare l'estetica della tua
+                                casa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+
+            <div class="search-container" role="search">
+                <label for="searchInput" class="visually-hidden">Cerca catalogo...</label>
+                <input type="text" id="searchInput" placeholder="Cerca catalogo...">
+                <label for="categoryFilter" class="visually-hidden">Filtra per categoria</label>
+                <select id="categoryFilter">
+                    <option value="">Tutte le categorie</option>
+                    <option value="infissi">Infissi</option>
+                    <option value="pannelli">Pannelli</option>
+                    <option value="oscuranti">Oscuranti</option>
+                    <option value="controtelai">Controtelai</option>
+                    <option value="presentazione">Presentazione</option>
+                </select>
+            </div>
+
+            <div class="container my-4">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col" data-category="infissi">
+                        <div class="card h-100 slide-in-left">
+                            <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-INFISSI-2018.jpg"
+                                class="card-img-top" alt="Catalogo Infissi 2018">
+                            <div class="card-body">
+                                <h5 class="card-title">Catalogo Infissi 2018</h5>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-INFISSI-2018.pdf"
+                                    class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Visualizza PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" data-category="pannelli">
+                        <div class="card h-100 slide-in-right">
+                            <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-PANNELLI.jpg"
+                                class="card-img-top" alt="Catalogo Pannelli">
+                            <div class="card-body">
+                                <h5 class="card-title">Catalogo Pannelli</h5>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-PANNELLI.pdf"
+                                    class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Visualizza PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" data-category="oscuranti">
+                        <div class="card h-100 slide-in-left">
+                            <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-OSCURANTI-2018.jpg"
+                                class="card-img-top" alt="Catalogo Oscuranti">
+                            <div class="card-body">
+                                <h5 class="card-title">Catalogo Oscuranti</h5>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-OSCURANTI-2018.pdf"
+                                    class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Visualizza PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" data-category="controtelai">
+                        <div class="card h-100 slide-in-right">
+                            <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelai-fomalp.jpg"
+                                class="card-img-top" alt="Catalogo Controtelai">
+                            <div class="card-body">
+                                <h5 class="card-title">Catalogo Controtelai</h5>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/controtelai-fomalp.pdf"
+                                    class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Visualizza PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" data-category="presentazione">
+                        <div class="card h-100 slide-in-left">
+                            <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/presentazione-FOMALP.jpg"
+                                class="card-img-top" alt="Catalogo Presentazione">
+                            <div class="card-body">
+                                <h5 class="card-title">Catalogo Presentazione</h5>
+                            </div>
+                            <div class="card-footer">
+                                <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/presentazione-FOMALP.pdf"
+                                    class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Visualizza PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    function filterCards() {
+                        // Ottiene il termine di ricerca e il filtro categoria in minuscolo
+                        var searchTerm = $('#searchInput').val().toLowerCase();
+                        var categoryFilter = $('#categoryFilter').val().toLowerCase();
+
+                        // Itera su ogni colonna (che contiene una card)
+                        $('.col').each(function () {
+                            var $col = $(this); // Riferimento alla colonna corrente
+                            var cardTitle = $col.find('.card-title').text().toLowerCase();
+                            // Ottiene la categoria dal data attribute
+                            var cardCategory = $col.data('category') ? $col.data('category').toLowerCase() : '';
+
+                            // Verifica se il titolo contiene il termine di ricerca
+                            var textMatch = cardTitle.indexOf(searchTerm) !== -1;
+
+                            // Se è selezionata una categoria, verifica se corrisponde al data attribute della card
+                            // Se nessuna categoria è selezionata (categoryFilter è vuoto), categoryMatch è sempre true
+                            var categoryMatch = categoryFilter ? (cardCategory === categoryFilter) : true;
+
+                            // Mostra o nasconde la card in base ai filtri
+                            if (textMatch && categoryMatch) {
+                                $col.show();
+                            } else {
+                                $col.hide();
+                            }
+                        });
+                    }
+
+                    // Collega la funzione filterCards agli eventi di input e cambio
+                    $('#searchInput').on('keyup', filterCards);
+                    $('#categoryFilter').on('change', filterCards);
+
+                    // Esegue il filtro iniziale al caricamento della pagina
+                    filterCards();
+                });
+            </script>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">FOMALP SRL</h4>
+                    <p>Specialisti in infissi in alluminio e PVC dal 1990. Qualità, innovazione e design per il tuo
+                        comfort abitativo.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">Link Utili</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Prodotti</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Catalogo</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Dove Siamo</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contatti</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">Contatti</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Via Industria, 12, 20010 Milano</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +39 02 1234567</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@fomalp.it</li>
+                        <li class="mb-2"><i class="fas fa-clock me-2"></i> Lun-Ven: 8:30-12:30 / 14:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FOMALP SRL. Tutti i diritti riservati. P.IVA 12345678901</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>Accesso Web App</h1>
+            <input type="text" id="nome" placeholder="Nome">
+            <input type="text" id="cognome" placeholder="Cognome">
+            <input type="email" id="email" placeholder="Email">
+            <input type="text" id="ruolo" placeholder="Ruolo">
+            <input type="text" id="organizzazione" placeholder="Organizzazione">
+            <button onclick="recordTimestamp()">Timbro</button>
+            <button onclick="exportTableToExcel()">Esporta in Excel</button>
+            <input type="file" id="importFile" accept=".xlsx" onchange="importFromExcel(event)">
+            <table id="timestampTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Data e Ora</th>
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                        <th>Email</th>
+                        <th>Ruolo</th>
+                        <th>Organizzazione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Le righe della tabella saranno aggiunte qui dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+        <script>
+            let count = 0;
+
+            function recordTimestamp() {
+                const now = new Date();
+                const timestamp = now.toLocaleString();
+                const nome = document.getElementById('nome').value;
+                const cognome = document.getElementById('cognome').value;
+                const email = document.getElementById('email').value;
+                const ruolo = document.getElementById('ruolo').value;
+                const organizzazione = document.getElementById('organizzazione').value;
+                count++;
+
+                const table = document.getElementById('timestampTable').getElementsByTagName('tbody')[0];
+                const newRow = table.insertRow();
+
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+                const cell3 = newRow.insertCell(2);
+                const cell4 = newRow.insertCell(3);
+                const cell5 = newRow.insertCell(4);
+                const cell6 = newRow.insertCell(5);
+                const cell7 = newRow.insertCell(6);
+
+                cell1.innerText = count;
+                cell2.innerText = timestamp;
+                cell3.innerText = nome;
+                cell4.innerText = cognome;
+                cell5.innerText = email;
+                cell6.innerText = ruolo;
+                cell7.innerText = organizzazione;
+            }
+
+            // Funzione per esportare la tabella in un file Excel
+            function exportTableToExcel() {
+                const table = document.getElementById('timestampTable');
+                const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+                XLSX.writeFile(wb, 'AccessoWebApp.xlsx');
+            }
+
+            // Funzione per importare i dati da un file Excel
+            function importFromExcel(event) {
+                const input = event.target;
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const data = new Uint8Array(reader.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+                    const table = document.getElementById('timestampTable').getElementsByTagName('tbody')[0];
+                    table.innerHTML = ''; // Pulisce la tabella prima di importare
+
+                    jsonData.forEach((row, index) => {
+                        if (index === 0) return; // Salta l'intestazione
+                        const newRow = table.insertRow();
+                        row.forEach((cell, cellIndex) => {
+                            const newCell = newRow.insertCell(cellIndex);
+                            newCell.innerText = cell;
+                        });
+                    });
+                };
+                reader.readAsArrayBuffer(input.files[0]);
+            }
+
+        </script>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card app-card shadow p-4 text-center">
+                        <h2 class="app-title">Manuali e Video</h2>
+                        <a href="https://drive.google.com/drive/folders/1SPEZ-4vg0C2eDqlAM90aUM7p4s4B82x4" // Cambia
+                            questo URL target="_blank" class="app-link">
+                            <div class="d-inline-flex align-items-center">
+                                <span
+                                    class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                    <i class="fa fa-book icon fa-2x"></i>
+                                </span>
+                                <span class="app-description">Accedi ai Manuali e Video</span>
+                            </div>
+                        </a>
+                        <div class="mt-3">
+                            <p class="app-description">Trova guide dettagliate e tutorial video per utilizzare al meglio
+                                i nostri prodotti.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card app-card shadow p-4 text-center">
+                        <h2 class="app-title">Produzione</h2>
+                        <a href="https://drive.google.com/drive/folders/1Ntu5XBuVpLuyyrVUMwjpLxHKfqoJxRFJ?usp=drive_link"
+                            // Cambia questo URL target="_blank" class="app-link">
+                            <div class="d-inline-flex align-items-center">
+                                <span
+                                    class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                    <i class="fa fa-cogs icon fa-2x"></i>
+                                </span>
+                                <span class="app-description">Monitora la Produzione</span>
+                            </div>
+                        </a>
+                        <div class="mt-3">
+                            <p class="app-description">Segui il processo di produzione e lo stato degli ordini in tempo
+                                reale.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card app-card shadow p-4 text-center">
+                        <h2 class="app-title">Installazioni</h2>
+                        <a href="https://drive.google.com/drive/folders/1S2QXLsVeuvXygx1C_WxdanfekkreAfB8?usp=drive_link"
+                            // Cambia questo URL target="_blank" class="app-link">
+                            <div class="d-inline-flex align-items-center">
+                                <span
+                                    class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                    <i class="fa fa-tools icon fa-2x"></i>
+                                </span>
+                                <span class="app-description">Gestisci Installazioni</span>
+                            </div>
+                        </a>
+                        <div class="mt-3">
+                            <p class="app-description">Organizza e traccia le attività di installazione e manutenzione.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple animation for cards on scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+
+
+    <script>
+        // Dati dei prodotti organizzati per materiale e categoria
+        const productsData = [
+            // ALLUMINIO - FINESTRE
+            {
+                name: "Winlab Atlantis 45",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/05/winlab-atlantis-45.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Winlab-Atlantis-45.pdf",
+                capitolato: null,
+                passaporto: null,
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-tecnica-atlantis45.pdf"
+            },
+            {
+                name: "Winlab AW CT 72",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/winlab-72.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-AW-CT-72.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-WINLAB-CT72.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-WINLAB-CT72.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-WindowLab-72.pdf"
+            },
+            {
+                name: "Winlab AW CT 72 BS",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/winlab-72-bs.jpg",
+                catalogo: null,
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/5-Capitolato-WINLAB-72-BS.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-WINDOWLAB-72-BS.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-WindowLab-72-BS.pdf"
+            },
+            {
+                name: "Schüco AWS 75 BS",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-bs.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schueco-Fenstersystem-AWS-75-BS.SI_.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-AWS-75-BS.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-AWS-75-BS.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-Schuco-Aws-75-BS.pdf"
+            },
+            {
+                name: "Schüco AWS 75 HI",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-bs-hi.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_AWS_75_HI.pdf",
+                capitolato: null,
+                passaporto: null,
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_schueco_AWS_75_BSHI_.pdf"
+            },
+            {
+                name: "Schüco AWS 75 SI",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-si.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_AWS_75_HI.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-Aws-75-SI.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Passaporto-di-Sistema-AWS-75-SI.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-Schuco-Aws-75-SI.pdf"
+            },
+
+            // ALLUMINIO - PORTE
+            {
+                name: "Winlab ADS 70 HI",
+                material: "alluminio",
+                category: ["Porte"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ads-70-hi.jpg",
+                catalogo: null,
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ADS-70-HI.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ADS-70-HI.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica_ADS_70.HI_.pdf"
+            },
+            {
+                name: "Winlab ADS 75",
+                material: "alluminio",
+                category: ["Porte"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ads-75.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_shueco_ADS_75.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ADS-75.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ADS-75.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-Schuco-Ads-75-.pdf"
+            },
+
+            // ALLUMINIO - SCORREVOLI
+            {
+                name: "Winlab ASS 41",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ass-41.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo_ass_41_sc.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/capitolato_ASS_41SC.pdf",
+                passaporto: null,
+                schedaTecnica: null
+            },
+            {
+                name: "Winlab ASE 51 PD",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ase-51-pd.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-ASE-51-PD.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/capitolato-ase-51-pd.pdf",
+                passaporto: null,
+                schedaTecnica: null
+            },
+            {
+                name: "Winlab ASE 60",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ase-60.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_ASE_60.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ASE-60.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ASE-60.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica-ASE-60.pdf"
+            },
+            {
+                name: "Winlab ASE 67 PD",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/67-PD.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_ASE_67_PD.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ASE-67PD.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ASE-67PD.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica-ASE-67.pdf"
+            },
+
+            // ALLUMINIO - FACCIATE
+            {
+                name: "Winlab FWS 50-60",
+                material: "alluminio",
+                category: ["Facciate"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fws-50-60.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_shueco_FWS_50_60.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-FWS-50_60.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-FWS-50.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica-FWS-50-60.pdf"
+            },
+            {
+                name: "Winlab FWS 50-60 SG",
+                material: "alluminio",
+                category: ["Facciate"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fws-sg.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_shueco_FWS_50_60_SG_85.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-FWS-50-SG.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-FWS-50_60-SG.pdf",
+                schedaTecnica: null
+            },
+            {
+                name: "Winlab SFC 85",
+                material: "alluminio",
+                category: ["Facciate"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/SFC-85.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/05/SCHUCO-SFC-85-Technical.pdf",
+                capitolato: null,
+                passaporto: null,
+                schedaTecnica: null
+            },
+
+            // PVC - FINESTRE
+            {
+                name: "Schüco Corona CT 70 AS",
+                material: "pvc",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Corona_CT_70_AS_Classic_s3-2048x2048-1.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf",
+                schedaTecnica: null
+            },
+            {
+                name: "Schüco Living 82",
+                material: "pvc",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schueco_LivIng_AS_300dpi-2048x2048-1.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/05/schueco_living_P4150.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Living.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-Schuco-LivIng-IFT-ROSENHEIM.pdf",
+                schedaTecnica: null
+            },
+            {
+                name: "Schüco Symbiotic",
+                material: "pvc",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/symbiotic.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Symbiotic.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-Symbiotic.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-en_Serie416_Schueco_EasySlide_CT_70_HS.pdf",
+                schedaTecnica: null
+            },
+
+            // PVC - SCORREVOLI
+            {
+                name: "Schüco EasySlide New Generation",
+                material: "pvc",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/EasySlide_s_neue_Generation.jpg.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo_schueco_easyslide.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Capitolato-EasySlide.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-en_Serie416_Schueco_EasySlide_CT_70_HS.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/scheda-tecnica-Easy_slide.pdf"
+            },
+            {
+                name: "Schüco SoftSlide",
+                material: "pvc",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/SoftSlide_e_Fixframe_02-1-scaled-1-2048x2048-1.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-SoftSlide.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-SoftSlide-1.pdf",
+                passaporto: null,
+                schedaTecnica: null
+            }
+        ];
+    </script>
+
+    <script>
+        // Funzione per generare le card prodotto
+        function generateProductCard(product) {
+            return `
+                <div class="col-md-4 mb-4 product-card" data-category="${product.category.join(' ')}" data-material="${product.material}">
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top menu-img" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <div class="submenu">
+                                ${product.catalogo ?
+                    `<a href="${product.catalogo}" target="_blank"><i class="fa-solid fa-book me-1"></i> Catalogo</a>` :
+                    '<span class="text-muted"><i class="fa-solid fa-book me-1"></i> Catalogo (mancante)</span>'}
+                                
+                                ${product.capitolato ?
+                    `<a href="${product.capitolato}" target="_blank"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>` :
+                    '<span class="text-muted"><i class="fa-solid fa-file-contract me-1"></i> Capitolato (mancante)</span>'}
+                                
+                                ${product.passaporto ?
+                    `<a href="${product.passaporto}" target="_blank"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>` :
+                    '<span class="text-muted"><i class="bi bi-passport-fill me-1"></i> Passaporto (mancante)</span>'}
+                                
+                                ${product.schedaTecnica ?
+                    `<a href="${product.schedaTecnica}" target="_blank"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>` :
+                    '<span class="text-muted"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec. (mancante)</span>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createProductHTML(product) {
+            let submenuItems = '';
+            if (product.catalogo) {
+                submenuItems += `<a href="${product.catalogo}" target="_blank"><i class="fa-solid fa-book me-1"></i> Catalogo</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="fa-solid fa-book me-1"></i> Catalogo (mancante)</span>';
+            }
+            if (product.capitolato) {
+                submenuItems += `<a href="${product.capitolato}" target="_blank"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="fa-solid fa-file-contract me-1"></i> Capitolato (mancante)</span>';
+            }
+            if (product.passaporto) {
+                submenuItems += `<a href="${product.passaporto}" target="_blank"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="bi bi-passport-fill me-1"></i> Passaporto (mancante)</span>';
+            }
+            if (product.schedaTecnica) {
+                submenuItems += `<a href="${product.schedaTecnica}" target="_blank"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec. (mancante)</span>';
+            }
+
+            return `
+        <div class="col-md-4 mb-4 product-card" data-category="${product.category.join(' ')}" data-material="${product.material}">
+            <div class="card h-100">
+                <img src="${product.image}" class="card-img-top menu-img" alt="${product.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${product.name}</h5>
+                    <div class="submenu">
+                        ${submenuItems}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+        }
+
+        function renderProducts(products, containerId) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                const productHTML = products.map(createProductHTML).join('');
+                container.innerHTML = productHTML;
+            }
+        }
+
+        // Inside generateAccordionSections, replace the map and join with renderProducts
+
+        // Funzione per la ricerca prodotti
+        const searchInput = document.getElementById('searchInput');
+        const materialFilter = document.getElementById('materialFilter');
+        const searchButton = document.getElementById('searchButton');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        const productCards = document.querySelectorAll('.product-card'); // Cache this too!
+
+        function searchProducts() {
+            const searchTerm = searchInput.value.toLowerCase(); // Use cached element
+            const materialFilterValue = materialFilter.value; // Use cached element
+            let visibleCount = 0;
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('.card-title').textContent.toLowerCase();
+                const productMaterial = card.dataset.material;
+
+                const matchesSearch = searchTerm === '' || productName.includes(searchTerm);
+                const matchesMaterial = materialFilterValue === 'all' || productMaterial === materialFilterValue;
+
+                if (matchesSearch && matchesMaterial) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('noResultsMessage').style.display =
+                visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', () => {
+            generateAccordionSections();
+
+            // Event listeners per la ricerca
+            searchButton.addEventListener('click', searchProducts); // Use cached element
+            searchInput.addEventListener('keyup', (e) => { // Use cached element
+                if (e.key === 'Enter') searchProducts();
+            });
+            materialFilter.addEventListener('change', searchProducts); // Use cached element
+        });
+
+        function debounce(func, delay) {
+            let timeoutId;
+            return function () {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        searchInput.addEventListener('keyup', debounce((e) => {
+            searchProducts();
+        }, 250)); // 250ms debounce delay
+    </script>
+</body>
+
+</html>

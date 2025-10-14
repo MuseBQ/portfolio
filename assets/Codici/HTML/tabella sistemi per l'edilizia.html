@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Serramenti in Alluminio</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    
+    <style>
+             /* Google Fonts - Poppins */
+             @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+    --primary-color: #1a1a2e;
+    --accent-color: #4a00e0;
+    --text-color: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--primary-color), #000);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+     .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        h1, h2, p {
+            font-size: 1.2rem;
+            color: #A89F84;
+        }
+        .category {
+            background: linear-gradient(45deg, #272725, #32322D);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 80px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .category img {
+            border-radius: 100px;
+            width: 100px;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .category ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .category li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .category p {
+            flex: 1;
+            margin: 0 20px;
+        }
+
+        .icon {
+            font-size: 30px;
+            margin-left: 4px;
+            margin-right: 4px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .fa-xmark
+        {
+            font-size: 0.5em;
+            margin-top: 4px;
+            margin-left: 4px;
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Pagina Sistemi per l'edilizia</h1>
+        <input type="text" id="searchInput" placeholder="Cerca prodotto...">
+        <select id="filterSelect">
+            <option value="tutte">Tutte le categorie</option>
+            <option value="Cassonetti Termoisolanti">Cassonetti Termoisolanti</option>
+            <option value="Cassonetti EPS">Cassonetti Termoisolanti EPS</option>
+            <option value="Controtelai Termici">Controtelai Termici Fomalp</option>
+            <option value="Sistemi Compact">Sistemi Compact Fomalp</option>
+        </select>
+        <div class="category" id="Cassonetti Termoisolanti">
+            <h2>Categoria 1: Cassonetti Termoisolanti</h2>
+            <ul>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/Cassonetti-Fomalp-therm.jpg" alt="Fomalp-Therm">
+                    <p>Fomalp Therm</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/Cassonetti-Fomalp-Shadow-blok.jpg" alt="Shadow-Blok">
+                    <p>Fomalp Shadow Blok</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/Cassonetti-Fomalp-Therm-AF.jpg" alt="Therm-AF">
+                    <p>Fomalp Therm AF</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/Cassonettp-Fomalp-Vario.jpg" alt="Vario">
+                    <p>Fomalp Vario</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="category" id="Cassonetti EPS">
+            <h2>Categoria 2: Cassonetti Termoisolanti EPS</h2>
+        </div>
+        <div class="category" id="Controtelai Termici">
+            <h2>Categoria 3: Controtelai Termici Fomalp</h2>
+            <ul>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/controtelaio-avvolgibile.png" alt="Controtelaio-Avvolgibile">
+                    <p>Controtelaio Avvolgibile</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/controtelaio-frangisole.png" alt="Controtelaio-Frangisole">
+                    <p>Controtelaio Frangisole</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/controtelaio-persiana-new.png" alt="Controtelaio-Persiana">
+                    <p>Controtelaio Persiana</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/controtelaio-ristrutturazione.png" alt="Controtelaio-Ristrutturazione">
+                    <p>Controtelaio Ristrutturazione</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+                <li>
+                    <img src="https://www.fomalpweb.it/wp-content/uploads/2025/02/controtelaio-serramento.png" alt="Controtelaio-Serramento">
+                    <p>Controtelaio Serramento</p>
+                    <a href="link/to/product1" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon1" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon2" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                    <a href="link/to/icon3" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="category" id="Sistemi Compact">
+            <h2>Categoria 4: Sistemi Compact Fomalp</h2>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const filterSelect = document.getElementById('filterSelect');
+        const categories = document.querySelectorAll('.category');
+
+        searchInput.addEventListener('input', () => {
+            const searchValue = searchInput.value.toLowerCase();
+            const filterValue = filterSelect.value.toLowerCase();
+
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h2').textContent.toLowerCase();
+                const categoryItems = category.querySelectorAll('li');
+
+                if (categoryTitle.includes(filterValue) || filterValue === 'tutte') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+
+                categoryItems.forEach(item => {
+                    const itemTitle = item.querySelector('p').textContent.toLowerCase();
+
+                    if (itemTitle.includes(searchValue)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        filterSelect.addEventListener('change', () => {
+            const searchValue = searchInput.value.toLowerCase();
+            const filterValue = filterSelect.value.toLowerCase();
+
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h2').textContent.toLowerCase();
+                const categoryItems = category.querySelectorAll('li');
+
+                if (categoryTitle.includes(filterValue) || filterValue === 'tutte') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+
+                categoryItems.forEach(item => {
+                    const itemTitle = item.querySelector('p').textContent.toLowerCase();
+
+                    if (itemTitle.includes(searchValue)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

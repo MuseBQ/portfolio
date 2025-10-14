@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodotti - Serramenti in Alluminio e PVC</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .product {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: #e9ecef;
+        }
+
+        .nav-button {
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+        }
+
+        .modal-body img {
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer .btn {
+            min-width: 120px;
+        }
+
+        .feature-list {
+            column-count: 2;
+            column-gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .feature-list {
+                column-count: 1;
+            }
+        }
+    </style>
+ 
+</head>
+
+<body>
+
+    <div class="container py-4 bg-dark text-white py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 class="text-success">catalogoo Prodotti</h2>
+                        <p class="lead">Scopri la nostra gamma di serramenti in alluminio e PVC.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button class="btn btn-warning" onclick="filterProducts('all')">
+                        <i class="fa-solid fa-list me-1"></i> Mostra Tutti
+                    </button>
+                </div>
+            </div>
+
+            <nav class="mt-4 d-flex flex-wrap justify-content-center">
+                <button class="btn btn-success nav-button" onclick="filterProducts('finestre')">
+                    <i class="bi bi-border-all me-2"></i> Finestre
+                </button>
+                <button class="btn btn-success nav-button" onclick="filterProducts('porte')">
+                    <i class="fa-solid fa-door-open me-1"></i> Porte
+                </button>
+                <button class="btn btn-success nav-button" onclick="filterProducts('scorrevoli')">
+                    <i class="bi bi-arrow-left-square me-2"></i> Scorrevoli
+                </button>
+                <button class="btn btn-success nav-button" onclick="filterProducts('facciate')">
+                    <i class="bi bi-layout-three-columns me-2 me-1"></i> Facciate
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container py-4">
+        <div class="row" id="products">
+            <!-- Finestre -->
+            <div class="col-md-4 col-sm-6 product" data-category="finestre"
+                onclick="openProductModal('Winlab Atlantis 45', 'finestre')">
+                <div>
+                    <h5>Winlab Atlantis 45</h5>
+                    <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="finestre"
+                onclick="openProductModal('Winlab AW CT 72', 'finestre')">
+                <div>
+                    <h5>Winlab AW CT 72</h5>
+                    <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="finestre"
+                onclick="openProductModal('Winlab AW CT 72 BS', 'finestre')">
+                <div>
+                    <h5>Winlab AW CT 72 BS</h5>
+                    <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="finestre"
+                onclick="openProductModal('Schuco AWS 75 BS', 'finestre')">
+                <div>
+                    <h5>Schuco AWS 75 BS</h5>
+                    <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="finestre"
+                onclick="openProductModal('Winlab AWS 75 HI', 'finestre')">
+                <div>
+                    <h5>Winlab AWS 75 HI</h5>
+                    <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <!-- Porte -->
+            <div class="col-md-4 col-sm-6 product" data-category="porte"
+                onclick="openProductModal('Winlab ADS 70 HI', 'porte')">
+                <div>
+                    <h5>Winlab ADS 70 HI</h5>
+                    <i class="fa-solid fa-door-open me-1 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="porte"
+                onclick="openProductModal('Winlab ADS 75', 'porte')">
+                <div>
+                    <h5>Winlab ADS 75</h5>
+                    <i class="fa-solid fa-door-open fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <!-- Scorrevoli -->
+            <div class="col-md-4 col-sm-6 product" data-category="scorrevoli"
+                onclick="openProductModal('Winlab ASS 41', 'scorrevoli')">
+                <div>
+                    <h5>Winlab ASS 41</h5>
+                    <i class="bi bi-arrow-left-square me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="scorrevoli"
+                onclick="openProductModal('Winlab ASE 51 PD', 'scorrevoli')">
+                <div>
+                    <h5>Winlab ASE 51 PD</h5>
+                    <i class="bi bi-arrow-left-square me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="scorrevoli"
+                onclick="openProductModal('Winlab ASE 60', 'scorrevoli')">
+                <div>
+                    <h5>Winlab ASE 60</h5>
+                    <i class="bi bi-arrow-left-square me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="scorrevoli"
+                onclick="openProductModal('Winlab ASE 67 PD', 'scorrevoli')">
+                <div>
+                    <h5>Winlab ASE 67 PD</h5>
+                    <i class="bi bi-arrow-left-square me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <!-- Facciate -->
+            <div class="col-md-4 col-sm-6 product" data-category="facciate"
+                onclick="openProductModal('Winlab FWS 50-60', 'facciate')">
+                <div>
+                    <h5>Winlab FWS 50-60</h5>
+                    <i class="bi bi-layout-three-columns me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="facciate"
+                onclick="openProductModal('Winlab FWS 50-60 SG', 'facciate')">
+                <div>
+                    <h5>Winlab FWS 50-60 SG</h5>
+                    <i class="bi bi-layout-three-columns me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 product" data-category="facciate"
+                onclick="openProductModal('Winlab SFC 85', 'facciate')">
+                <div>
+                    <h5>Winlab SFC 85</h5>
+                    <i class="bi bi-layout-three-columns me-2 fa-3x text-primary mt-2"></i>
+                </div>
+            </div>
+
+        <!-- Finestre in PVC -->
+        <div class="col-md-4 col-sm-6 product" data-category="finestre"
+            onclick="openProductModal('Schüco Corona CT 70 AS', 'finestre')">
+            <div>
+                <h5>Schüco Corona CT 70 AS</h5>
+                <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 product" data-category="finestre"
+            onclick="openProductModal('Schüco Living 82', 'finestre')">
+            <div>
+                <h5>Schüco Living 82</h5>
+                <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 product" data-category="finestre"
+            onclick="openProductModal('Schüco Symbiotic', 'finestre')">
+            <div>
+                <h5>Schüco Symbiotic</h5>
+                <i class="bi bi-border-all me-2 fa-3x text-primary mt-2"></i>
+            </div>
+        </div>
+
+        <!-- Scorrevoli in PVC -->
+        <div class="col-md-4 col-sm-6 product" data-category="scorrevoli"
+            onclick="openProductModal('Schüco EasySlide New Generation', 'scorrevoli')">
+            <div>
+                <h5>Schüco EasySlide New Generation</h5>
+                <i class="bi bi-arrow-left-square me-2 fa-3x text-primary mt-2"></i>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 product" data-category="scorrevoli"
+            onclick="openProductModal('Schüco SoftSlide', 'scorrevoli')">
+            <div>
+                <h5>Schüco SoftSlide</h5>
+                <i class="bi bi-arrow-left-square me-2 fa-3x text-primary mt-2"></i>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <!-- Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <span class="badge bg-light text-dark" id="productCategory"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalImage" src="" alt="Product Image" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Caratteristiche Principali:</h4>
+                            <ul class="feature-list" id="productFeatures">
+                                <!-- Features will be added dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a href="#" id="catalogoLink" class="btn btn-success" target="_blank">
+                        <i class="fa-solid fa-book me-1"></i> catalogoo
+                    </a>
+                    <a href="#" id="capitolatoLink" class="btn btn-success" target="_blank">
+                        <i class="fa-solid fa-file-contract me-1"></i> Capitolato
+                    </a>
+                    <a href="#" id="passaportoLink" class="btn btn-success" target="_blank">
+                        <i class="fa-solid fa-passport me-1"></i> Passaporto
+                    </a>
+                    <a href="#" id="schedaTecnicaLink" class="btn btn-success" target="_blank">
+                        <i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tecnica
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Product data - in a real app this would come from a database
+        const products = {
+            'Winlab Atlantis 45': {
+                category: 'finestre',
+                image: 'https://www.fomalpweb.it/wp-content/uploads/2025/05/winlab-atlantis-45.jpg',
+                catalogo: 'https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Winlab-Atlantis-45.pdf',
+                capitolato: 'null',
+                passaporto: 'null',
+                scheda: 'https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-tecnica-atlantis45.pdf',
+                features: [
+                    'Elevate prestazioni termiche',
+                    'Design minimalista',
+                    'Ampia scelta di finiture',
+                    'Isolamento acustico avanzato',
+                    'Materiali di alta qualità'
+                ]
+            },
+            'Winlab AW CT 72': {
+                category: 'finestre',
+                image: 'https://www.fomalpweb.it/wp-content/uploads/2025/04/winlab-72.jpg',
+                catalogo: '/catalogohi/winlab-aw-ct-72.pdf',
+                capitolato: '/capitolati/winlab-aw-ct-72.pdf',
+                passaporto: '/passaporti/winlab-aw-ct-72.pdf',
+                scheda: '/schede-tecniche/winlab-aw-ct-72.pdf',
+                features: [
+                    'Isolamento acustico superiore',
+                    'Resistenza agli agenti atmosferici',
+                    'Manutenzione ridotta',
+                    'Sistema a taglio termico',
+                    'Design moderno'
+                ]
+            },
+            // Add all other products in the same format...
+            'Winlab ADS 70 HI': {
+                category: 'porte',
+                image: 'https://www.fomalpweb.it/wp-content/uploads/2025/04/ads-70-hi.jpg',
+                catalogo: '/catalogohi/winlab-ads-70-hi.pdf',
+                capitolato: '/capitolati/winlab-ads-70-hi.pdf',
+                passaporto: '/passaporti/winlab-ads-70-hi.pdf',
+                scheda: '/schede-tecniche/winlab-ads-70-hi.pdf',
+                features: [
+                    'Alta efficienza energetica',
+                    'Design robusto',
+                    'Serrature di sicurezza',
+                    'Materiali resistenti',
+                    'Facile manutenzione'
+                ]
+            },
+            'Winlab ASE 67 PD': {
+                category: 'scorrevoli',
+                image: 'https://www.fomalpweb.it/wp-content/uploads/2025/04/67-PD.jpg',
+                catalogo: '/catalogohi/winlab-ase-67-pd.pdf',
+                capitolato: '/capitolati/winlab-ase-67-pd.pdf',
+                passaporto: '/passaporti/winlab-ase-67-pd.pdf',
+                scheda: '/schede-tecniche/winlab-ase-67-pd.pdf',
+                features: [
+                    'Alte prestazioni',
+                    'Design elegante',
+                    'Chiusura perimetrale',
+                    'Scorrimento fluido',
+                    'Isolamento termico'
+                ]
+            }
+            // Continue with all other products...
+        };
+
+        // Category labels
+        const categoryLabels = {
+            'finestre': 'Finestra',
+            'porte': 'Porta',
+            'scorrevoli': 'Sistema Scorrevole',
+            'facciate': 'Facciata Continua'
+        };
+
+        // Filter products by category
+        function filterProducts(category) {
+            const productElements = document.querySelectorAll('.product');
+
+            productElements.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                    product.classList.add('animate__animated', 'animate__fadeIn');
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Open product modal with details
+        function openProductModal(productName, category) {
+            const product = products[productName];
+            const modal = new bootstrap.Modal(document.getElementById('productModal'));
+
+            // Set modal content
+            document.getElementById('modalTitle').textContent = productName;
+            document.getElementById('productCategory').textContent = categoryLabels[category];
+            document.getElementById('modalImage').src = product.image;
+
+            // Set document links
+            document.getElementById('catalogoLink').href = product.catalogo;
+            document.getElementById('capitolatoLink').href = product.capitolato;
+            document.getElementById('passaportoLink').href = product.passaporto;
+            document.getElementById('schedaTecnicaLink').href = product.scheda;
+
+            // Add features to list
+            const featuresList = document.getElementById('productFeatures');
+            featuresList.innerHTML = '';
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                featuresList.appendChild(li);
+            });
+
+            // Show modal
+            modal.show();
+        }
+
+        // Initialize - show all products
+        document.addEventListener('DOMContentLoaded', function () {
+            filterProducts('all');
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scopri la Nostra App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .app-card {
+            background: linear-gradient(45deg, #4caf50, #ade82f);
+            border-radius: 1rem;
+            transition: transform 0.3s ease-in-out;
+            color: white;
+            opacity: 0; /* Inizia con opacità 0 */
+            transform: translateY(20px); /* Inizia leggermente spostato verso il basso */
+            animation: fadeIn 0.5s ease-out 0.3s forwards; /* Animazione in entrata */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4eff54, #b0ff05) !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: background 0.3s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .icon-container:hover {
+            background: linear-gradient(45deg, #4caf50, #ade82f) !important;
+            transform: rotate(360deg);
+        }
+
+        .icon {
+            color: #32322d !important;
+            font-size: 2rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .icon:hover {
+            color: #fff !important;
+        }
+
+        .app-link {
+            text-decoration: none !important;
+            color: inherit !important;
+            display: block;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .app-link:hover {
+            color: #32322d !important;
+        }
+
+        .app-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .app-description {
+            color: #fff;
+            margin-left: 1rem;
+        }
+
+        /* Regolazioni per schermi più piccoli */
+        @media (max-width: 768px) {
+            .col-md-8 {
+                width: 90%;
+            }
+
+            .d-inline-flex {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .mr-3 {
+                margin-right: 0 !important;
+                margin-bottom: 1rem !important;
+            }
+
+            .app-description {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .app-title {
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card app-card shadow p-4 text-center">
+                    <h2 class="app-title">Google Drive</h2>
+                    <a href="https://apps.powerapps.com/play/e/default-11689505-b4d8-4054-800f-819e28cb96d7/a/622fb283-0f27-4cd3-9bd1-d686495fbeba?tenantId=11689505-b4d8-4054-800f-819e28cb96d7&hint=ba25cb71-45e2-4163-be32-3434124c75e2&source=sharebutton&sourcetime=1747306813699"
+                        target="_blank" class="app-link">
+                        <div class="d-inline-flex align-items-center">
+                            <span class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                <i class="fa fa-rocket icon fa-2x"></i>
+                            </span>
+                            <span class="app-description">Manuali e Video</span>
+                        </div>
+                    </a>
+                    <div class="mt-3">
+                        <p class="app-description">Scopri la nostra app Google Drive, dove puoi trovare manuali e video
+                            utili per il tuo lavoro.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

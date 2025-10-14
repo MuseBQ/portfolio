@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scopri le Nostre App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .app-card {
+            background: linear-gradient(45deg, #4caf50, #ade82f);
+            border-radius: 1rem;
+            transition: transform 0.3s ease-in-out;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease-out 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4eff54, #b0ff05) !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: background 0.3s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .icon-container:hover {
+            background: linear-gradient(45deg, #4caf50, #ade82f) !important;
+            transform: rotate(360deg);
+        }
+
+        .icon {
+            color: #32322d !important;
+            font-size: 2rem;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .icon:hover {
+            color: #fff !important;
+        }
+
+        .app-link {
+            text-decoration: none !important;
+            color: inherit !important;
+            display: block;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .app-link:hover {
+            color: #32322d !important;
+        }
+
+        .app-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .app-description {
+            color: #fff;
+            margin-left: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-8 {
+                width: 90%;
+            }
+
+            .d-inline-flex {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .mr-3 {
+                margin-right: 0 !important;
+                margin-bottom: 1rem !important;
+            }
+
+            .app-description {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+
+            .app-title {
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card app-card shadow p-4 text-center">
+                    <h2 class="app-title">Manuali e Video</h2>
+                    <a href="https://drive.google.com/drive/folders/1SPEZ-4vg0C2eDqlAM90aUM7p4s4B82x4"  // Cambia questo URL
+                        target="_blank" class="app-link">
+                        <div class="d-inline-flex align-items-center">
+                            <span class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                <i class="fa fa-book icon fa-2x"></i>
+                            </span>
+                            <span class="app-description">Accedi ai Manuali e Video</span>
+                        </div>
+                    </a>
+                    <div class="mt-3">
+                        <p class="app-description">Trova guide dettagliate e tutorial video per utilizzare al meglio i nostri prodotti.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card app-card shadow p-4 text-center">
+                    <h2 class="app-title">Produzione</h2>
+                    <a href="https://drive.google.com/drive/folders/1Ntu5XBuVpLuyyrVUMwjpLxHKfqoJxRFJ?usp=drive_link"  // Cambia questo URL
+                        target="_blank" class="app-link">
+                        <div class="d-inline-flex align-items-center">
+                            <span class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                 <i class="fa fa-cogs icon fa-2x"></i>
+                            </span>
+                            <span class="app-description">Monitora la Produzione</span>
+                        </div>
+                    </a>
+                    <div class="mt-3">
+                        <p class="app-description">Segui il processo di produzione e lo stato degli ordini in tempo reale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card app-card shadow p-4 text-center">
+                    <h2 class="app-title">Installazioni</h2>
+                    <a href="https://drive.google.com/drive/folders/1S2QXLsVeuvXygx1C_WxdanfekkreAfB8?usp=drive_link"  // Cambia questo URL
+                        target="_blank" class="app-link">
+                        <div class="d-inline-flex align-items-center">
+                            <span class="rounded-circle icon-container d-inline-flex justify-content-center align-items-center mr-3">
+                                <i class="fa fa-tools icon fa-2x"></i>
+                            </span>
+                            <span class="app-description">Gestisci Installazioni</span>
+                        </div>
+                    </a>
+                    <div class="mt-3">
+                        <p class="app-description">Organizza e traccia le attività di installazione e manutenzione.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ionic React App with Appflow</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #3880ff;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            background-color: #ebf4ff;
+            border-left: 4px solid #3880ff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .file-structure {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 20px 0;
+        }
+        .platform-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .android {
+            background-color: #3ddc84;
+            color: #000;
+        }
+        .ios {
+            background-color: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Building Hybrid Apps with Ionic React and Appflow</h1>
+        
+        <div class="step">
+            <h2>1. Create a New Ionic React Project</h2>
+            <p>Start by creating a new Ionic React application:</p>
+            <pre><code>ionic start myApp tabs --type=react --capacitor
+cd myApp</code></pre>
+        </div>
+
+        <div class="step">
+            <h2>2. Add Native Platforms</h2>
+            <p>Add Android and iOS platforms using Capacitor:</p>
+            <pre><code>ionic build
+npx cap add android
+npx cap add ios</code></pre>
+        </div>
+
+        <div class="step">
+            <h2>3. Initialize Appflow</h2>
+            <p>Set up your project for Ionic Appflow:</p>
+            <pre><code>ionic integration enable capacitor
+ionic link</code></pre>
+            <p>Follow the prompts to connect your app to Appflow.</p>
+        </div>
+
+        <div class="step">
+            <h2>4. Project Structure</h2>
+            <p>Your Ionic React project will have the following structure:</p>
+            <div class="file-structure">
+src/
+├── components/
+├── pages/
+│   ├── Tab1.tsx
+│   ├── Tab2.tsx
+│   └── Tab3.tsx
+├── services/
+├── App.tsx
+├── main.tsx
+└── ...
+capacitor.config.ts
+ionic.config.json
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>5. Example Page Component</h2>
+            <p>Here's a simple example of an Ionic React page component:</p>
+            <pre><code>import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import './Tab1.css';
+
+const Tab1: React.FC = () => {
+  return (
+    &lt;IonPage&gt;
+      &lt;IonHeader&gt;
+        &lt;IonToolbar&gt;
+          &lt;IonTitle&gt;Tab 1&lt;/IonTitle&gt;
+        &lt;/IonToolbar&gt;
+      &lt;IonHeader&gt;
+      &lt;IonContent fullscreen&gt;
+        &lt;div className="container"&gt;
+          &lt;h1&gt;Welcome to My App&lt;/h1&gt;
+          &lt;IonButton expand="block" onClick={() => console.log('Button clicked!')}&gt;
+            Click Me
+          &lt;/IonButton&gt;
+        &lt;/div&gt;
+      &lt;/IonContent&gt;
+    &lt;/IonPage&gt;
+  );
+};
+
+export default Tab1;
+</code></pre>
+        </div>
+
+        <div class="step">
+            <h2>6. Appflow Configuration</h2>
+            <p>Configure your <code>ionic.config.json</code> for Appflow:</p>
+            <pre><code>{
+  "name": "myApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "your-appflow-app-id"
+}</code></pre>
+        </div>
+
+        <div class="step">
+            <h2>7. Building for Production</h2>
+            <p>Build your app and sync with native platforms:</p>
+            <pre><code>npm run build
+npx cap sync</code></pre>
+        </div>
+
+        <div class="step">
+            <h2>8. Deploying with Appflow</h2>
+            <p>Commit your changes and push to your connected Git repository. Then use the Appflow dashboard to:</p>
+            <ol>
+                <li>Create native builds for <span class="platform-badge android">Android</span> and <span class="platform-badge ios">iOS</span></li>
+                <li>Deploy live updates</li>
+                <li>Manage your app versions</li>
+            </ol>
+        </div>
+
+        <div class="note">
+            <h3>Important Notes</h3>
+            <ul>
+                <li>For iOS builds, you need a Mac with Xcode installed</li>
+                <li>You'll need to set up signing certificates for both platforms</li>
+                <li>Appflow allows you to build iOS apps without a Mac</li>
+                <li>Use Ionic's UI components for a native look and feel on both platforms</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2>9. Next Steps</h2>
+            <p>After setting up your project, consider:</p>
+            <ul>
+                <li>Adding native plugins (Camera, Geolocation, etc.)</li>
+                <li>Setting up authentication</li>
+                <li>Creating a CI/CD pipeline with Appflow</li>
+                <li>Testing on real devices</li>
+                <li>Submitting to app stores</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

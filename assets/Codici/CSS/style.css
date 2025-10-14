@@ -1,0 +1,54 @@
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .product {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dee2e6;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: #e9ecef;
+        }
+        
+        .nav-button {
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .modal-body img {
+            max-height: 300px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer .btn {
+            min-width: 120px;
+        }
+        
+        .feature-list {
+            column-count: 2;
+            column-gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .feature-list {
+                column-count: 1;
+            }
+        }

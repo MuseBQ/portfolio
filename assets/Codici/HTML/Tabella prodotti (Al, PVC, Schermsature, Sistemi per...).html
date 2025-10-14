@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu a Discesa</title>
+    <style>
+        /*container*/
+        #drop-menu {
+            width: 960px;
+            margin: 0 auto;
+            padding: 0;
+            background: linear-gradient(to bottom, #219039 0%,#4caf50 100%);
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px 0px #999;
+        }
+
+        /*menu*/
+        ul#menu {
+            margin: 60px 0 0;
+            padding: 0;
+            list-style: none;
+            float: left;
+            width: 960px;
+            font-size: 80%;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, #219039 0%,#4caf50 100%);
+            box-shadow: 0px 0px 3px 0px #999;
+        }
+
+        ul#menu li {
+            margin: 0;
+            padding: 0;
+            float: left;
+            display: block;
+            border-right: 1px solid #1C2B10;
+            position: relative;
+            transition: all 0.6s ease;
+        }
+
+        ul#menu li a {
+            float: left;
+            display: block;
+            padding: 12px 30px;
+            color: #000000;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.6s ease;
+        }
+
+        ul#menu li a:hover {
+            background: linear-gradient(to bottom, #f9fafe 0%, rgb(255, 255, 255) 100%);
+        }
+
+        ul#menu li:first-child>a {
+            border-radius: 5px 0px 0px 5px;
+        }
+
+        ul#menu ul {
+            margin: 2px 0 0;
+            padding: 0;
+            list-style: none;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 38px;
+            left: 0;
+            z-index: 9999;
+            background: linear-gradient(to bottom, #219039 0%,#4caf50 100%);
+            box-shadow: 0px 2px 3px 0px #999;
+            transition: all 0.6s ease;
+        }
+
+        ul#menu li:hover>ul {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        ul#menu ul li {
+            float: left;
+            display: block;
+            border: none;
+        }
+
+        ul#menu ul a {
+            padding: 10px;
+            width: 130px;
+            display: block;
+            float: left;
+            text-transform: none;
+            border-bottom: 1px solid #1C2B10;
+        }
+
+        ul#menu ul li:last-child>a {
+            border-bottom: none;
+        }
+
+        ul#menu ul ul {
+            top: 0;
+            left: 150px;
+            margin: 0;
+        }
+
+        ul#menu ul a:hover {
+            background: linear-gradient(to bottom, #f9fafe 0%, rgb(255, 255, 255) 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="drop-menu">
+        <ul id="menu">
+            <!--Categoria Alluminio-->
+            <li><a href="#">Serramenti in Alluminio</a>
+                <ul>
+                    <li><a href="#">Finestre</a>
+                        <ul>
+                            <li><a href="#"><img src="#" alt="Atlantis 45">Winlab Atlantis 45</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><img src="#" alt="Winlab AW CT 72">Winlab AW CT 72</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><img src="#" alt="Winlab 72 BS">Winlab 72 BS</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><img src="#" alt="Winlab AWS 75 BS">Winlab AWS 75 BS</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><img src="#" alt="Winlab 75 HI">Winlab AWS 75 HI</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Porte</a>
+                        <ul>
+                            <li><a href="#">Winlab ADS 70 HI</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab ADS 75</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Scorrevoli</a>
+                        <ul>
+                            <li><a href="#">Winlab ASS 41</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab ASS 51</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab ASE 51 PD</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab ASE 60</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab ASE 67 PD</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Facciate</a>
+                        <ul>
+                            <li><a href="#">Winlab FWS 50-60</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab FWS 50-60 SG</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Winlab SFC 85</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <!--Categoria PVC-->
+            <li><a href="#">Serramenti in PVC</a>
+                <ul>
+                    <li><a href="#">Finestre</a>
+                        <ul>
+                            <li><a href="#">Schüco Corona CT 70 AS</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Schüco Living 82</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Schüco Symbiotic</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Scorrevoli</a>
+                        <ul>
+                            <li><a href="#">Schüco EasySlide New Generation</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Schüco SoftSlide</a>
+                                <ul>
+                                    <li><a href="#">Catalogo</a></li>
+                                    <li><a href="#">Capitolato</a></li>
+                                    <li><a href="#">Passaporto</a></li>
+                                    <li><a href="#">Scheda Tecnica</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prodotti in Alluminio e PVC</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- CSS personalizzato -->
+    <style>
+        :root {
+            --gray-darker: #222;
+            --gray-dark: #333;
+            --brand-primary: #ca203f;
+            --green-regular: #4caf50;
+            --green-darker: #3b8d40;
+            --green-lighter: #ade82f;
+            --shadow-green: rgba(76, 175, 80, 0.4);
+            --background-light: #f8f9fa;
+            --text-dark: var(--gray-dark);
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            --transition-short: 0.15s ease-in-out;
+            --transition-medium: 0.3s ease-in-out;
+            --transition-long: 0.3s ease-in-out;
+            /* ... other variables */
+            --animation-duration-card: 0.6s;
+            --animation-duration-icon: 0.5s;
+            --animation-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Corpo e container */
+        body {
+            font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+        }
+
+        .container-fluid {
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+            margin: auto;
+        }
+
+        /* Card prodotto */
+        .product-card .card {
+            transition: all var(--transition-short);
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            overflow: hidden;
+        }
+
+        .product-card .card:hover {
+            transform: translateY(-0.25rem) scale(1.03);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Immagini */
+        .menu-img {
+            height: 300px;
+            object-fit: cover;
+            transition: transform var(--transition-medium);
+        }
+
+        .product-card .card:hover .menu-img {
+            transform: scale(1.05);
+        }
+
+        /* Sottomenù */
+        .submenu a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius-sm);
+            transition: background-color var(--transition-short), color var(--transition-short);
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .submenu a:hover {
+            background-color: var(--shadow-green);
+            color: var(--green-darker);
+        }
+
+        /* Nessun risultato */
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            font-style: italic;
+            color: #6c757d;
+            margin-top: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius-sm);
+            background-color: #f9f9f9;
+        }
+
+        /* Icone con gradiente */
+        .submenu a i,
+        .accordion-button i,
+        .card-title i {
+            background: linear-gradient(45deg, var(--green-darker), var(--green-lighter));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* Accordion personalizzato */
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(45deg, var(--green-regular), var(--green-lighter));
+            color: white;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+        }
+
+        .accordion-button i {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Miglioramenti per dispositivi mobili */
+        @media (max-width: 767px) {
+            .menu-img {
+                height: 300px;
+            }
+
+            .submenu a {
+                font-size: 1.3rem;
+                padding: 1rem;
+            }
+
+            .accordion-button {
+                font-size: 1.4rem;
+                padding: 1.25rem 1.5rem;
+            }
+        }
+    </style>
+
+    <style>
+        /* Aggiungi queste nuove regole di animazione */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes iconBounce {
+            0% {
+                transform: scale(0.8) rotate(-10deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes cardSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Applica le animazioni alle card */
+        .product-card {
+            animation: cardSlideIn var(--animation-duration-card) var(--animation-easing) both;
+        }
+
+        /* Animazione differenziata per ogni card */
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .product-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .product-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .product-card:nth-child(n+6) {
+            animation-delay: 0.6s;
+        }
+
+        /* Animazione per le icone */
+        .submenu i,
+        .accordion-button i,
+        .card-title i {
+            display: inline-block;
+            animation: iconBounce 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+        }
+
+        /* Animazione differenziata per le icone */
+        .submenu a:nth-child(1) i {
+            animation-delay: 0.4s;
+        }
+
+        .submenu a:nth-child(2) i {
+            animation-delay: 0.5s;
+        }
+
+        .submenu a:nth-child(3) i {
+            animation-delay: 0.6s;
+        }
+
+        .submenu a:nth-child(4) i {
+            animation-delay: 0.7s;
+        }
+
+        /* Animazione al hover per le card */
+        .product-card .card {
+            transition:
+                transform var(--transition-medium) ease-out,
+                box-shadow var(--transition-medium) ease-out,
+                filter var(--transition-short) ease-out;
+        }
+
+        .product-card .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            filter: brightness(102%);
+        }
+
+        /* Animazione al hover per le icone */
+        .submenu a:hover i,
+        .accordion-button:hover i {
+            animation: iconBounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            color: var(--green-regular);
+        }
+
+        /* Versione mobile con animazioni più veloci */
+        @media (max-width: 767px) {
+            .product-card {
+                animation: fadeInScale 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            }
+
+            .submenu i,
+            .accordion-button i,
+            .card-title i {
+                animation: iconBounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+            }
+
+            /* Riduci i delay su mobile */
+            .product-card:nth-child(1) {
+                animation-delay: 0.05s;
+            }
+
+            .product-card:nth-child(2) {
+                animation-delay: 0.1s;
+            }
+
+            .product-card:nth-child(3) {
+                animation-delay: 0.15s;
+            }
+
+            .product-card:nth-child(n+4) {
+                animation-delay: 0.2s;
+            }
+
+            .submenu a:nth-child(1) i {
+                animation-delay: 0.2s;
+            }
+
+            .submenu a:nth-child(2) i {
+                animation-delay: 0.25s;
+            }
+
+            .submenu a:nth-child(3) i {
+                animation-delay: 0.3s;
+            }
+
+            .submenu a:nth-child(4) i {
+                animation-delay: 0.35s;
+            }
+        }
+    </style>
+
+    <style>
+        /* ANIMAZIONI PER CARD ALTERNATE */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Applica animazioni alternate alle card */
+        .product-card {
+            animation-duration: 0.6s;
+            animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            animation-fill-mode: both;
+        }
+
+        /* Card dispari (1,3,5...) entrano da sinistra */
+        .product-card:nth-child(odd) {
+            animation-name: slideInFromLeft;
+        }
+
+        /* Card pari (2,4,6...) entrano da destra */
+        .product-card:nth-child(even) {
+            animation-name: slideInFromRight;
+        }
+
+        /* Delay progressivi per creare un effetto a onda */
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .product-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .product-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .product-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .product-card:nth-child(n+7) {
+            animation-delay: 0.7s;
+        }
+
+        /* ANIMAZIONI PER LE ICONE */
+        @keyframes iconPopIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            80% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .submenu i,
+        .accordion-button i,
+        .card-title i {
+            display: inline-block;
+            animation: iconPopIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+        }
+
+        /* Delay per le icone */
+        .submenu a:nth-child(1) i {
+            animation-delay: 0.4s;
+        }
+
+        .submenu a:nth-child(2) i {
+            animation-delay: 0.5s;
+        }
+
+        .submenu a:nth-child(3) i {
+            animation-delay: 0.6s;
+        }
+
+        .submenu a:nth-child(4) i {
+            animation-delay: 0.7s;
+        }
+
+        /* EFFETTI HOVER */
+        .product-card .card {
+            transition:
+                transform 0.3s ease-out,
+                box-shadow 0.3s ease-out;
+        }
+
+        .product-card .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .submenu a:hover i {
+            animation: iconPopIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            color: var(--green-regular);
+        }
+
+        /* VERSIONE MOBILE (animazioni più semplici) */
+        @media (max-width: 767px) {
+            @keyframes mobileSlideIn {
+                0% {
+                    transform: translateY(30px);
+                    opacity: 0;
+                }
+
+                100% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .product-card {
+                animation-name: mobileSlideIn !important;
+                animation-duration: var(--animation-duration-card);
+                animation-timing-function: var(--animation-easing);
+            }
+
+            /* Riduci i delay su mobile */
+            .product-card:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            .product-card:nth-child(2) {
+                animation-delay: 0.15s;
+            }
+
+            .product-card:nth-child(3) {
+                animation-delay: 0.2s;
+            }
+
+            .product-card:nth-child(n+4) {
+                animation-delay: 0.25s;
+            }
+
+            .submenu a i {
+                animation-duration: 0.3s;
+            }
+
+            .submenu a:nth-child(1) i {
+                animation-delay: 0.2s;
+            }
+
+            .submenu a:nth-child(2) i {
+                animation-delay: 0.25s;
+            }
+
+            .submenu a:nth-child(3) i {
+                animation-delay: 0.3s;
+            }
+
+            .submenu a:nth-child(4) i {
+                animation-delay: 0.35s;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid py-4">
+        <h1 class="text-center mb-4"><i class="bi bi-funnel"></i> Catalogo Prodotti</h1>
+
+        <!-- Barra di Ricerca -->
+        <div class="search-container mb-4">
+            <form class="row g-2 align-items-center" role="search">
+                <div class="col-md-8">
+                    <label for="searchInput" class="form-label visually-hidden">Cerca prodotto per nome...</label>
+                    <input class="form-control" type="search" id="searchInput" placeholder="Cerca prodotto per nome..."
+                        aria-label="Search">
+                </div>
+                <div class="col-md-2">
+                    <label for="materialFilter" class="form-label visually-hidden">Filtra per materiale</label>
+                    <select class="form-select" id="materialFilter">
+                        <option value="all">Tutti i materiali</option>
+                        <option value="alluminio">Alluminio</option>
+                        <option value="pvc">PVC</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center"
+                        type="button" id="searchButton">
+                        <i class="bi bi-search me-2"></i> Cerca
+                    </button>
+                </div>
+            </form>
+            <p class="no-results mt-3 text-center" id="noResultsMessage" style="display: none;">
+                Nessun prodotto trovato. Prova con un termine diverso.
+            </p>
+        </div>
+
+        <!-- Contenuto principale -->
+        <div class="accordion" id="mainAccordion">
+            <!-- Sezione Alluminio -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAlluminio">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseAlluminio" aria-expanded="true" aria-controls="collapseAlluminio">
+                        <i class="bi bi-palette2 me-2"></i> Serramenti in Alluminio
+                    </button>
+                </h2>
+                <div id="collapseAlluminio" class="accordion-collapse collapse show" aria-labelledby="headingAlluminio"
+                    data-bs-parent="#mainAccordion">
+                    <div class="accordion-body p-0">
+                        <div class="accordion" id="accordionAlluminio">
+                            <!-- Le categorie verranno generate dinamicamente da JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione PVC -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPVC">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePVC" aria-expanded="false" aria-controls="collapsePVC">
+                        <i class="bi bi-palette2 me-2"></i> Serramenti in PVC
+                    </button>
+                </h2>
+                <div id="collapsePVC" class="accordion-collapse collapse" aria-labelledby="headingPVC"
+                    data-bs-parent="#mainAccordion">
+                    <div class="accordion-body p-0">
+                        <div class="accordion" id="accordionPVC">
+                            <!-- Le categorie verranno generate dinamicamente da JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dati dei prodotti organizzati per materiale e categoria
+        const productsData = [
+            // ALLUMINIO - FINESTRE
+            {
+                name: "Winlab Atlantis 45",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/05/winlab-atlantis-45.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Winlab-Atlantis-45.pdf",
+                capitolato: null,
+                passaporto: null,
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-tecnica-atlantis45.pdf"
+            },
+            {
+                name: "Winlab AW CT 72",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/winlab-72.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-AW-CT-72.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-WINLAB-CT72.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-WINLAB-CT72.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-WindowLab-72.pdf"
+            },
+            {
+                name: "Winlab AW CT 72 BS",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/winlab-72-bs.jpg",
+                catalogo: null,
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/5-Capitolato-WINLAB-72-BS.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-WINDOWLAB-72-BS.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-WindowLab-72-BS.pdf"
+            },
+            {
+                name: "Schüco AWS 75 BS",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-bs.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schueco-Fenstersystem-AWS-75-BS.SI_.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-AWS-75-BS.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-AWS-75-BS.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-Schuco-Aws-75-BS.pdf"
+            },
+            {
+                name: "Schüco AWS 75 HI",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-bs-hi.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_AWS_75_HI.pdf",
+                capitolato: null,
+                passaporto: null,
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_schueco_AWS_75_BSHI_.pdf"
+            },
+            {
+                name: "Schüco AWS 75 SI",
+                material: "alluminio",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-si.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_AWS_75_HI.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-Aws-75-SI.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Passaporto-di-Sistema-AWS-75-SI.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-Schuco-Aws-75-SI.pdf"
+            },
+
+            // ALLUMINIO - PORTE
+            {
+                name: "Winlab ADS 70 HI",
+                material: "alluminio",
+                category: ["Porte"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ads-70-hi.jpg",
+                catalogo: null,
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ADS-70-HI.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ADS-70-HI.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica_ADS_70.HI_.pdf"
+            },
+            {
+                name: "Winlab ADS 75",
+                material: "alluminio",
+                category: ["Porte"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ads-75.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_shueco_ADS_75.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ADS-75.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ADS-75.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Scheda-Tecnica-Schuco-Ads-75-.pdf"
+            },
+
+            // ALLUMINIO - SCORREVOLI
+            {
+                name: "Winlab ASS 41",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ass-41.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo_ass_41_sc.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/capitolato_ASS_41SC.pdf",
+                passaporto: null,
+                schedaTecnica: null
+            },
+            {
+                name: "Winlab ASE 51 PD",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ase-51-pd.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-ASE-51-PD.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/capitolato-ase-51-pd.pdf",
+                passaporto: null,
+                schedaTecnica: null
+            },
+            {
+                name: "Winlab ASE 60",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/ase-60.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_ASE_60.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ASE-60.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ASE-60.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica-ASE-60.pdf"
+            },
+            {
+                name: "Winlab ASE 67 PD",
+                material: "alluminio",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/67-PD.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_Schueco_ASE_67_PD.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-ASE-67PD.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-ASE-67PD.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica-ASE-67.pdf"
+            },
+
+            // ALLUMINIO - FACCIATE
+            {
+                name: "Winlab FWS 50-60",
+                material: "alluminio",
+                category: ["Facciate"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fws-50-60.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_shueco_FWS_50_60.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-FWS-50_60.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-FWS-50.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Scheda-tecnica-FWS-50-60.pdf"
+            },
+            {
+                name: "Winlab FWS 50-60 SG",
+                material: "alluminio",
+                category: ["Facciate"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fws-sg.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/fomalp_shueco_FWS_50_60_SG_85.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-FWS-50-SG.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Passaporto-di-Sistema-FWS-50_60-SG.pdf",
+                schedaTecnica: null
+            },
+            {
+                name: "Winlab SFC 85",
+                material: "alluminio",
+                category: ["Facciate"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/SFC-85.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/05/SCHUCO-SFC-85-Technical.pdf",
+                capitolato: null,
+                passaporto: null,
+                schedaTecnica: null
+            },
+
+            // PVC - FINESTRE
+            {
+                name: "Schüco Corona CT 70 AS",
+                material: "pvc",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Corona_CT_70_AS_Classic_s3-2048x2048-1.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/catalogo-schueco_corona_ct_70_classic.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Capitolato-di-Sistema-CORONA-CT70.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-ct70_en.pdf",
+                schedaTecnica: null
+            },
+            {
+                name: "Schüco Living 82",
+                material: "pvc",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schueco_LivIng_AS_300dpi-2048x2048-1.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/05/schueco_living_P4150.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Living.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-Schuco-LivIng-IFT-ROSENHEIM.pdf",
+                schedaTecnica: null
+            },
+            {
+                name: "Schüco Symbiotic",
+                material: "pvc",
+                category: ["Finestre"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/symbiotic.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-Symbiotic.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-Symbiotic.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-en_Serie416_Schueco_EasySlide_CT_70_HS.pdf",
+                schedaTecnica: null
+            },
+
+            // PVC - SCORREVOLI
+            {
+                name: "Schüco EasySlide New Generation",
+                material: "pvc",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/EasySlide_s_neue_Generation.jpg.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo_schueco_easyslide.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/05/Capitolato-EasySlide.pdf",
+                passaporto: "https://www.fomalpweb.it/wp-content/uploads/2025/04/passaporto-en_Serie416_Schueco_EasySlide_CT_70_HS.pdf",
+                schedaTecnica: "https://www.fomalpweb.it/wp-content/uploads/2025/04/scheda-tecnica-Easy_slide.pdf"
+            },
+            {
+                name: "Schüco SoftSlide",
+                material: "pvc",
+                category: ["Scorrevoli"],
+                image: "https://www.fomalpweb.it/wp-content/uploads/2025/04/SoftSlide_e_Fixframe_02-1-scaled-1-2048x2048-1.jpg",
+                catalogo: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Catalogo-SoftSlide.pdf",
+                capitolato: "https://www.fomalpweb.it/wp-content/uploads/2025/04/Schuco-SoftSlide-1.pdf",
+                passaporto: null,
+                schedaTecnica: null
+            }
+        ];
+    </script>
+
+    <script>
+        // Funzione per generare le card prodotto
+        function generateProductCard(product) {
+            return `
+                <div class="col-md-4 mb-4 product-card" data-category="${product.category.join(' ')}" data-material="${product.material}">
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top menu-img" alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <div class="submenu">
+                                ${product.catalogo ?
+                    `<a href="${product.catalogo}" target="_blank"><i class="fa-solid fa-book me-1"></i> Catalogo</a>` :
+                    '<span class="text-muted"><i class="fa-solid fa-book me-1"></i> Catalogo (mancante)</span>'}
+                                
+                                ${product.capitolato ?
+                    `<a href="${product.capitolato}" target="_blank"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>` :
+                    '<span class="text-muted"><i class="fa-solid fa-file-contract me-1"></i> Capitolato (mancante)</span>'}
+                                
+                                ${product.passaporto ?
+                    `<a href="${product.passaporto}" target="_blank"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>` :
+                    '<span class="text-muted"><i class="bi bi-passport-fill me-1"></i> Passaporto (mancante)</span>'}
+                                
+                                ${product.schedaTecnica ?
+                    `<a href="${product.schedaTecnica}" target="_blank"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>` :
+                    '<span class="text-muted"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec. (mancante)</span>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createProductHTML(product) {
+            let submenuItems = '';
+            if (product.catalogo) {
+                submenuItems += `<a href="${product.catalogo}" target="_blank"><i class="fa-solid fa-book me-1"></i> Catalogo</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="fa-solid fa-book me-1"></i> Catalogo (mancante)</span>';
+            }
+            if (product.capitolato) {
+                submenuItems += `<a href="${product.capitolato}" target="_blank"><i class="fa-solid fa-file-contract me-1"></i> Capitolato</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="fa-solid fa-file-contract me-1"></i> Capitolato (mancante)</span>';
+            }
+            if (product.passaporto) {
+                submenuItems += `<a href="${product.passaporto}" target="_blank"><i class="bi bi-passport-fill me-1"></i> Passaporto</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="bi bi-passport-fill me-1"></i> Passaporto (mancante)</span>';
+            }
+            if (product.schedaTecnica) {
+                submenuItems += `<a href="${product.schedaTecnica}" target="_blank"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec.</a>`;
+            } else {
+                submenuItems += '<span class="text-muted"><i class="fa-solid fa-compass-drafting me-1"></i> Scheda Tec. (mancante)</span>';
+            }
+
+            return `
+        <div class="col-md-4 mb-4 product-card" data-category="${product.category.join(' ')}" data-material="${product.material}">
+            <div class="card h-100">
+                <img src="${product.image}" class="card-img-top menu-img" alt="${product.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${product.name}</h5>
+                    <div class="submenu">
+                        ${submenuItems}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+        }
+
+        function renderProducts(products, containerId) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                const productHTML = products.map(createProductHTML).join('');
+                container.innerHTML = productHTML;
+            }
+        }
+
+        // Inside generateAccordionSections, replace the map and join with renderProducts
+
+        // Funzione per la ricerca prodotti
+        const searchInput = document.getElementById('searchInput');
+        const materialFilter = document.getElementById('materialFilter');
+        const searchButton = document.getElementById('searchButton');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        const productCards = document.querySelectorAll('.product-card'); // Cache this too!
+
+        function searchProducts() {
+            const searchTerm = searchInput.value.toLowerCase(); // Use cached element
+            const materialFilterValue = materialFilter.value; // Use cached element
+            let visibleCount = 0;
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('.card-title').textContent.toLowerCase();
+                const productMaterial = card.dataset.material;
+
+                const matchesSearch = searchTerm === '' || productName.includes(searchTerm);
+                const matchesMaterial = materialFilterValue === 'all' || productMaterial === materialFilterValue;
+
+                if (matchesSearch && matchesMaterial) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('noResultsMessage').style.display =
+                visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', () => {
+            generateAccordionSections();
+
+            // Event listeners per la ricerca
+            searchButton.addEventListener('click', searchProducts); // Use cached element
+            searchInput.addEventListener('keyup', (e) => { // Use cached element
+                if (e.key === 'Enter') searchProducts();
+            });
+            materialFilter.addEventListener('change', searchProducts); // Use cached element
+        });
+
+        function debounce(func, delay) {
+            let timeoutId;
+            return function () {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        searchInput.addEventListener('keyup', debounce((e) => {
+            searchProducts();
+        }, 250)); // 250ms debounce delay
+    </script>
+</body>
+
+</html>

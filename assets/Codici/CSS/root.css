@@ -1,0 +1,127 @@
+  :root {
+            --gray-darker: #222;
+            --gray-dark: #333;
+            --brand-primary: #ca203f;
+            --green-regular: #4caf50;
+            --green-darker: #3b8d40;
+            --green-lighter: #ade82f;
+            --shadow-green: rgba(76, 175, 80, 0.4);
+            --background-light: #f8f9fa;
+            --text-dark: var(--gray-dark);
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            --transition-short: 0.15s ease-in-out;
+            --transition-medium: 0.3s ease-in-out;
+            --transition-long: 0.3s ease-in-out;
+        }
+
+        /* Corpo e container */
+        body {
+            font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+        }
+
+        .container-fluid {
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+            margin: auto;
+        }
+
+        /* Card prodotto */
+        .product-card .card {
+            transition: all var(--transition-short);
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            overflow: hidden;
+        }
+
+        .product-card .card:hover {
+            transform: translateY(-0.25rem) scale(1.03);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Immagini */
+        .menu-img {
+            height: 300px;
+            object-fit: cover;
+            transition: transform var(--transition-medium);
+        }
+
+        .product-card .card:hover .menu-img {
+            transform: scale(1.05);
+        }
+
+        /* Sottomenù */
+        .submenu a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius-sm);
+            transition: background-color var(--transition-short), color var(--transition-short);
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .submenu a:hover {
+            background-color: var(--shadow-green);
+            color: var(--green-darker);
+        }
+
+        /* Nessun risultato */
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            font-style: italic;
+            color: #6c757d;
+            margin-top: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius-sm);
+            background-color: #f9f9f9;
+        }
+
+        /* Icone con gradiente */
+        .submenu a i,
+        .accordion-button i,
+        .card-title i {
+            background: linear-gradient(45deg, var(--green-darker), var(--green-lighter));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* Accordion personalizzato */
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(45deg, var(--green-regular), var(--green-lighter));
+            color: white;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+        }
+
+        .accordion-button i {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Miglioramenti per dispositivi mobili */
+        @media (max-width: 767px) {
+            .menu-img {
+                height: 300px;
+            }
+
+            .submenu a {
+                font-size: 1.6rem;
+                padding: 1rem;
+            }
+
+            .accordion-button {
+                font-size: 1.4rem;
+                padding: 1.25rem 1.5rem;
+            }
+        }

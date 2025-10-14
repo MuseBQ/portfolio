@@ -1,0 +1,135 @@
+     .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+
+        .card {
+            background: #32322D;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px auto;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo .scritta-logo{
+            height: 150px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+            animation-name: spin;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .nav-bar {
+            position: relative;
+        }
+
+        .nav-bar ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .nav-bar li a {
+            color: #A89F84;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #2a2a26, #383833);
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-bar li a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: #A89F84;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background: linear-gradient(145deg, #2a2a26, #383833);
+            border-radius: 15px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+        .search-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #A89F84;
+            color: #32322D;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-form button:hover {
+            background: #958b72;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-bar ul {
+                display: none;
+                grid-template-columns: 1fr;
+            }
+
+            .nav-bar ul.active {
+                display: grid;
+            }
+        }

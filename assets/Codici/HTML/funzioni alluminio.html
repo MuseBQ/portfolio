@@ -1,0 +1,85 @@
+<script>
+        const searchInput = document.getElementById('searchInput');
+        const filterSelect = document.getElementById('filterSelect');
+        const categories = document.querySelectorAll('.category');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+
+        searchInput.addEventListener('input', function() {
+            const searchValue = searchInput.value.toLowerCase();
+            const filterValue = filterSelect.value;
+
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h2').textContent.toLowerCase();
+                const products = category.querySelectorAll('li');
+
+                if (categoryTitle.includes(filterValue) || filterValue === 'tutte') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+
+                products.forEach(product => {
+                    const productTitle = product.querySelector('p').textContent.toLowerCase();
+
+                    if (productTitle.includes(searchValue)) {
+                        product.style.display = 'flex';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        filterSelect.addEventListener('change', function() {
+            const filterValue = filterSelect.value;
+
+            categories.forEach(category => {
+                const categoryTitle = category.querySelector('h2').textContent.toLowerCase();
+                const products = category.querySelectorAll('li');
+
+                if (categoryTitle.includes(filterValue) || filterValue === 'tutte') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+
+                products.forEach(product => {
+                    const productTitle = product.querySelector('p').textContent.toLowerCase();
+
+                    if (productTitle.includes(searchInput.value.toLowerCase())) {
+                        product.style.display = 'flex';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        addCategoryBtn.addEventListener('click', function() {
+            const newCategoryName = prompt('Inserisci il nome della nuova categoria:');
+            const newProductName = prompt('Inserisci il nome del nuovo prodotto:');
+            const newProductImage = prompt('Inserisci il link dell\'immagine del nuovo prodotto (jpg, png):');
+            const newProductPdfLinks = [];
+
+            for (let i = 0; i < 4; i++) {
+                newProductPdfLinks.push(prompt(`Inserisci il link del PDF per l'icona ${i + 1}:`));
+            }
+
+            const newCategory = document.createElement('div');
+            newCategory.classList.add('category');
+            newCategory.innerHTML = `
+                <h2>${newCategoryName}</h2>
+                <ul>
+                    <li>
+                        <img src="${newProductImage}" alt="${newProductName}">
+                        <p>${newProductName}</p>
+                        <a href="${newProductPdfLinks[0]}" class="icon"><i class="fa-solid fa-book"></i><i class="fa-solid fa-xmark"></i></a>
+                        <a href="${newProductPdfLinks[1]}" class="icon"><i class="fa-solid fa-file-contract"></i><i class="fa-solid fa-xmark"></i></a>
+                        <a href="${newProductPdfLinks[2]}" class="icon"><i class="fa-solid fa-passport"></i><i class="fa-solid fa-xmark"></i></a>
+                        <a href="${newProductPdfLinks[3]}" class="icon"><i class="fa-solid fa-compass-drafting"></i><i class="fa-solid fa-xmark"></i></a>
+                    </li>
+                </ul>
+            `;
+            document.querySelector('.container').appendChild(newCategory);
+        });
+</script>

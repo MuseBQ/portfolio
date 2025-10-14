@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOMALP SRL - Catalogo Prodotti Futuristico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ... (your CSS unchanged for brevity) ... */
+        /* Keep your CSS as is, it's already well structured and modern */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .header {
+            background: rgba(18, 18, 18, 0.8);
+            padding: 60px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            color: #1a73e8;
+            text-shadow: 0 0 10px rgba(26, 115, 232, 0.7);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .navbar {
+            background-color: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #1a73e8;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: url('https://www.fomalpweb.it/wp-content/uploads/2025/04/hero-bg.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 100px 0;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #1a73e8;
+            text-shadow: 0 0 10px rgba(26, 115, 232, 0.7);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .hero .btn {
+            font-size: 1.1rem;
+            padding: 12px 24px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(26, 115, 232, 0.7);
+        }
+
+        .card-glow {
+            background-color: rgba(26, 115, 232, 0.1);
+            border: 1px solid #1a73e8;
+            box-shadow: 0 0 15px rgba(26, 115, 232, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-glow:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(26, 115, 232, 0.7);
+        }
+
+        .card-glow .card-title {
+            color: #1a73e8;
+            font-weight: bold;
+        }
+
+        .card-glow .card-text {
+            color: #ffffff;
+        }
+
+        .footer {
+            background-color: #121212;
+            color: #ffffff;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer .footer-title {
+            font-size: 1.5rem;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+
+        .footer a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-modal {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .auth-modal .modal-header {
+            background-color: #121212;
+            border-bottom: 1px solid #1a73e8;
+        }
+
+        .auth-modal .nav-tabs .nav-link {
+            color: #ffffff;
+        }
+
+        .auth-modal .nav-tabs .nav-link.active {
+            background-color: #1a73e8;
+            color: #ffffff;
+        }
+
+        .auth-modal .form-control {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #1a73e8;
+        }
+
+        .auth-modal .form-control:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+        }
+
+        .auth-modal .btn-primary {
+            background-color: #1a73e8;
+            border-color: #1a73e8;
+        }
+
+        .auth-modal .btn-primary:hover {
+            background-color: #155ab6;
+            border-color: #155ab6;
+        }
+
+        .auth-modal .btn-close {
+            filter: invert(1);
+        }
+
+        .glow {
+            text-shadow: 0 0 10px rgba(26, 115, 232, 0.7), 0 0 20px rgba(26, 115, 232, 0.5);
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .material-icon {
+            color: #1a73e8;
+        }
+
+        .search-container {
+            background-color: rgba(18, 18, 18, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(26, 115, 232, 0.5);
+        }
+
+        .search-container h2 {
+            color: #1a73e8;
+            text-shadow: 0 0 10px rgba(26, 115, 232, 0.7);
+        }
+
+        .search-container .form-control,
+        .search-container .form-select {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #1a73e8;
+        }
+
+        .search-container .form-control:focus,
+        .search-container .form-select:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .product-grid .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Particles background -->
+    <div id="particles-js"></div>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Caricamento...</span>
+        </div>
+    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="container text-center">
+            <h1 class="glow">FOMALP SRL</h1>
+            <p class="lead">Infissi in Alluminio e PVC di Alta Qualità</p>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-building"></i>
+                FOMALP SRL
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#prodotti">Prodotti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalogo">Catalogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contatti">Contatti</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#authModal">
+                            <i class="fas fa-user me-1"></i> Accedi
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container text-center">
+            <h1 class="glow">Infissi in Alluminio e PVC</h1>
+            <p class="lead">Soluzioni innovative per l'efficienza energetica, la sicurezza e il design dei tuoi spazi
+            </p>
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="#prodotti" class="btn btn-light btn-lg px-4">Scopri i Prodotti</a>
+                <a href="#contatti" class="btn btn-outline-light btn-lg px-4">Richiedi Preventivo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search" class="py-5">
+        <div class="container">
+            <div class="search-container">
+                <h2 class="text-center mb-4 glow">Cerca nel nostro catalogo</h2>
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-dark text-white"><i
+                                    class="fas fa-search"></i></span>
+                            <input type="text" class="form-control form-control-lg bg-dark text-white border-dark"
+                                placeholder="Cerca prodotto per nome..." id="globalSearch" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select form-select-lg bg-dark text-white border-dark" id="materialFilter">
+                            <option value="all">Tutti i materiali</option>
+                            <option value="alluminio">Alluminio</option>
+                            <option value="pvc">PVC</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="prodotti" class="py-5">
+        <div class="container">
+            <h2 class="section-title glow">I Nostri Prodotti</h2>
+
+            <!-- Materials Section -->
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body text-center p-5">
+                            <i class="fas fa-cubes material-icon display-4 mb-4 text-primary"></i>
+                            <h3 class="card-title">Infissi in Alluminio</h3>
+                            <p class="card-text">Soluzioni durevoli e moderne che combinano resistenza, leggerezza e
+                                design contemporaneo per qualsiasi tipologia di edificio.</p>
+                            <div class="mt-4">
+                                <button class="btn btn-outline-primary" data-bs-toggle="collapse"
+                                    data-bs-target="#alluminioSection" type="button">Scopri i prodotti</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body text-center p-5">
+                            <i class="fas fa-th material-icon display-4 mb-4 text-primary"></i>
+                            <h3 class="card-title">Infissi in PVC</h3>
+                            <p class="card-text">Massimo isolamento termoacustico con bassa manutenzione. La soluzione
+                                ideale per efficienza energetica e comfort abitativo.</p>
+                            <div class="mt-4">
+                                <button class="btn btn-outline-primary" data-bs-toggle="collapse"
+                                    data-bs-target="#pvcSection" type="button">Scopri i prodotti</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alluminio Products -->
+            <div class="mb-5 collapse show" id="alluminioSection">
+                <h3 class="text-center mb-4 glow"><i class="fas fa-cubes me-2"></i>Serramenti in Alluminio</h3>
+                <div class="product-grid">
+                    <!-- Products will be dynamically loaded here -->
+                    <div class="card card-glow animated" data-material="alluminio">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/05/winlab-atlantis-45.jpg"
+                            alt="Winlab Atlantis 45" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Winlab Atlantis 45</h5>
+                            <p class="card-text">Finestra in alluminio ad alte prestazioni energetiche</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-info-circle me-1"></i>
+                                    Dettagli</a>
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-download me-1"></i>
+                                    PDF</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-glow animated" data-material="alluminio">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/winlab-72.jpg"
+                            alt="Winlab AW CT 72" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Winlab AW CT 72</h5>
+                            <p class="card-text">Sistema finestra con alte prestazioni termiche</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-info-circle me-1"></i>
+                                    Dettagli</a>
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-download me-1"></i>
+                                    PDF</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-glow animated" data-material="alluminio">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/aws-75-bs.jpg"
+                            alt="Schüco AWS 75 BS" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Schüco AWS 75 BS</h5>
+                            <p class="card-text">Finestra a battente con elevata sicurezza</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-info-circle me-1"></i>
+                                    Dettagli</a>
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-download me-1"></i>
+                                    PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PVC Products -->
+            <div class="mb-5 collapse" id="pvcSection">
+                <h3 class="text-center mb-4 glow"><i class="fas fa-th me-2"></i>Serramenti in PVC</h3>
+                <div class="product-grid">
+                    <!-- Products will be dynamically loaded here -->
+                    <div class="card card-glow animated" data-material="pvc">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/Corona_CT_70_AS_Classic_s3-2048x2048-1.jpg"
+                            alt="Schüco Corona CT 70 AS" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Schüco Corona CT 70 AS</h5>
+                            <p class="card-text">Finestra in PVC con elevata efficienza energetica</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-info-circle me-1"></i>
+                                    Dettagli</a>
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-download me-1"></i>
+                                    PDF</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-glow animated" data-material="pvc">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/Schueco_LivIng_AS_300dpi-2048x2048-1.jpg"
+                            alt="Schüco Living 82" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Schüco Living 82</h5>
+                            <p class="card-text">Finestra in PVC con design moderno e funzionale</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-info-circle me-1"></i>
+                                    Dettagli</a>
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-download me-1"></i>
+                                    PDF</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-glow animated" data-material="pvc">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/symbiotic.jpg"
+                            alt="Schüco Symbiotic" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Schüco Symbiotic</h5>
+                            <p class="card-text">Sistema finestra con integrazione solare</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-info-circle me-1"></i>
+                                    Dettagli</a>
+                                <a href="#" class="btn btn-sm btn-outline-light"><i class="fas fa-download me-1"></i>
+                                    PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <h2 class="section-title glow">Perché Scegliere i Nostri Infissi</h2>
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-thermometer-half display-4 text-primary mb-3 float-animation"></i>
+                            <h5 class="card-title">Isolamento Termico</h5>
+                            <p class="card-text">Riduci i consumi energetici e mantieni la temperatura ideale in ogni
+                                stagione.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-shield-alt display-4 text-primary mb-3 float-animation"></i>
+                            <h5 class="card-title">Sicurezza</h5>
+                            <p class="card-text">Sistemi di chiusura avanzati per la massima protezione della tua casa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body text-center p-4">
+                            <i class="fas fa-paint-brush display-4 text-primary mb-3 float-animation"></i>
+                            <h5 class="card-title">Design Personalizzabile</h5>
+                            <p class="card-text">Scegli tra diverse finiture e stili per abbinare l'estetica della tua
+                                casa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalogo" class="py-5">
+        <div class="container">
+            <h2 class="section-title glow">Catalogo Digitale</h2>
+            <p class="text-center mb-5">Esplora i nostri cataloghi digitali per scoprire tutte le soluzioni disponibili
+            </p>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="card card-glow h-100 animated">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-INFISSI-2018.jpg"
+                            class="card-img-top" alt="Catalogo Infissi 2018">
+                        <div class="card-body">
+                            <h5 class="card-title">Catalogo Infissi 2018</h5>
+                            <p class="card-text">Tutti i nostri prodotti di infissi in un unico catalogo</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-INFISSI-2018.pdf"
+                                class="btn btn-primary w-100" target="_blank" rel="noopener">
+                                <i class="fas fa-eye me-2"></i> Visualizza
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card card-glow h-100 animated">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-PANNELLI.jpg"
+                            class="card-img-top" alt="Catalogo Pannelli">
+                        <div class="card-body">
+                            <h5 class="card-title">Catalogo Pannelli</h5>
+                            <p class="card-text">Soluzioni per facciate continue e pannelli</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-PANNELLI.pdf"
+                                class="btn btn-primary w-100" target="_blank" rel="noopener">
+                                <i class="fas fa-eye me-2"></i> Visualizza
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card card-glow h-100 animated">
+                        <img src="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-OSCURANTI-2018.jpg"
+                            class="card-img-top" alt="Catalogo Oscuranti">
+                        <div class="card-body">
+                            <h5 class="card-title">Catalogo Oscuranti</h5>
+                            <p class="card-text">Sistemi di oscuramento e protezione solare</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a href="https://www.fomalpweb.it/wp-content/uploads/2025/04/CATALOGO-OSCURANTI-2018.pdf"
+                                class="btn btn-primary w-100" target="_blank" rel="noopener">
+                                <i class="fas fa-eye me-2"></i> Visualizza
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contatti" class="py-5">
+        <div class="container">
+            <h2 class="section-title glow">Contattaci</h2>
+            <div class="row mt-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body">
+                            <h4 class="mb-4">Informazioni di contatto</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Via Industria,
+                                    12, 20010 Milano</li>
+                                <li class="mb-3"><i class="fas fa-phone me-2 text-primary"></i> +39 02 1234567</li>
+                                <li class="mb-3"><i class="fas fa-envelope me-2 text-primary"></i> info@fomalp.it</li>
+                                <li class="mb-3"><i class="fas fa-clock me-2 text-primary"></i> Lun-Ven: 8:30-12:30 /
+                                    14:00-18:00</li>
+                            </ul>
+                            <div class="mt-4">
+                                <a href="#" class="social-icon me-2" aria-label="Facebook"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-icon me-2" aria-label="Instagram"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-icon me-2" aria-label="LinkedIn"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card card-glow h-100 animated">
+                        <div class="card-body">
+                            <h4 class="mb-4">Richiedi un preventivo</h4>
+                            <form autocomplete="off">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control bg-dark text-white border-dark"
+                                        placeholder="Nome" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control bg-dark text-white border-dark"
+                                        placeholder="Email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="tel" class="form-control bg-dark text-white border-dark"
+                                        placeholder="Telefono">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control bg-dark text-white border-dark" rows="4"
+                                        placeholder="Messaggio" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Invia Richiesta</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">FOMALP SRL</h4>
+                    <p>Specialisti in infissi in alluminio e PVC dal 1990. Qualità, innovazione e design per il tuo
+                        comfort abitativo.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">Link Utili</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#prodotti" class="text-white text-decoration-none">Prodotti</a></li>
+                        <li class="mb-2"><a href="#catalogo" class="text-white text-decoration-none">Catalogo</a></li>
+                        <li class="mb-2"><a href="#contatti" class="text-white text-decoration-none">Contatti</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h4 class="footer-title">Newsletter</h4>
+                    <p>Iscriviti per ricevere aggiornamenti sui nostri prodotti e promozioni.</p>
+                    <form autocomplete="off">
+                        <div class="input-group">
+                            <input type="email" class="form-control bg-dark text-white border-dark"
+                                placeholder="La tua email" required>
+                            <button class="btn btn-primary" type="submit">Iscriviti</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright mt-5">
+                <p>&copy; 2023 FOMALP SRL. Tutti i diritti riservati. P.IVA 12345678901</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content auth-modal">
+                <div class="auth-header text-center position-relative">
+                    <h3 class="modal-title text-white" id="authModalLabel">Accedi al Portale</h3>
+                    <button type="button" class="btn-close btn-close-white position-absolute end-0 top-0 m-3"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <ul class="nav nav-tabs auth-tabs mb-4" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login"
+                                type="button" role="tab">Accedi</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register"
+                                type="button" role="tab">Registrati</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="authTabsContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <form autocomplete="off">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control bg-dark text-white border-dark"
+                                        id="loginEmail" placeholder="nome@esempio.com" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control bg-dark text-white border-dark"
+                                        id="loginPassword" placeholder="Password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">Ricordami</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Accedi</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="register" role="tabpanel">
+                            <form autocomplete="off">
+                                <div class="mb-3">
+                                    <label for="registerName" class="form-label">Nome completo</label>
+                                    <input type="text" class="form-control bg-dark text-white border-dark"
+                                        id="registerName" placeholder="Nome e cognome" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control bg-dark text-white border-dark"
+                                        id="registerEmail" placeholder="nome@esempio.com" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control bg-dark text-white border-dark"
+                                        id="registerPassword" placeholder="Crea una password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerConfirmPassword" class="form-label">Conferma Password</label>
+                                    <input type="password" class="form-control bg-dark text-white border-dark"
+                                        id="registerConfirmPassword" placeholder="Conferma password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Registrati</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Particles JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        // Initialize Particles.js
+        document.addEventListener('DOMContentLoaded', function () {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#1a73e8"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#1a73e8",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+
+        // Animation for cards on scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, 100 * Array.from(cards).indexOf(entry.target));
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Search functionality
+        document.getElementById('globalSearch').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const cards = document.querySelectorAll('#alluminioSection .card, #pvcSection .card');
+            const sections = document.querySelectorAll('#alluminioSection, #pvcSection');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Hide empty sections
+            sections.forEach(section => {
+                const sectionCards = section.querySelectorAll('.card');
+                const visibleCards = Array.from(sectionCards).some(card =>
+                    card.style.display !== 'none'
+                );
+                section.style.display = visibleCards ? '' : 'none';
+            });
+        });
+
+        // Material filter
+        document.getElementById('materialFilter').addEventListener('change', function () {
+            const material = this.value;
+            const alluminioSection = document.getElementById('alluminioSection');
+            const pvcSection = document.getElementById('pvcSection');
+
+            if (material === 'all') {
+                alluminioSection.classList.add('show');
+                pvcSection.classList.add('show');
+                alluminioSection.style.display = '';
+                pvcSection.style.display = '';
+            } else if (material === 'alluminio') {
+                alluminioSection.classList.add('show');
+                pvcSection.classList.remove('show');
+                alluminioSection.style.display = '';
+                pvcSection.style.display = 'none';
+            } else if (material === 'pvc') {
+                alluminioSection.classList.remove('show');
+                pvcSection.classList.add('show');
+                alluminioSection.style.display = 'none';
+                pvcSection.style.display = '';
+            }
+        });
+
+        // Material section buttons
+        document.querySelector('[data-bs-target="#alluminioSection"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            const alluminioSection = document.getElementById('alluminioSection');
+            const pvcSection = document.getElementById('pvcSection');
+
+            alluminioSection.classList.add('show');
+            pvcSection.classList.remove('show');
+            alluminioSection.style.display = '';
+            pvcSection.style.display = 'none';
+            document.getElementById('materialFilter').value = 'alluminio';
+        });
+
+        document.querySelector('[data-bs-target="#pvcSection"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            const alluminioSection = document.getElementById('alluminioSection');
+            const pvcSection = document.getElementById('pvcSection');
+
+            alluminioSection.classList.remove('show');
+            pvcSection.classList.add('show');
+            alluminioSection.style.display = 'none';
+            pvcSection.style.display = '';
+            document.getElementById('materialFilter').value = 'pvc';
+        });
+
+        // Login simulation
+        const loginForm = document.querySelector('#login form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                if (email && password) {
+                    alert('Accesso effettuato con successo!');
+                    document.querySelector('#authModal .btn-close').click();
+                } else {
+                    alert('Per favore, compila tutti i campi.');
+                }
+            });
+        }
+
+        // Register simulation
+        const registerForm = document.querySelector('#register form');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+                if (!name || !email || !password || !confirmPassword) {
+                    alert('Per favore, compila tutti i campi.');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    alert('Le password non corrispondono.');
+                    return;
+                }
+
+                alert('Registrazione completata con successo!');
+                document.querySelector('#authModal .btn-close').click();
+            });
+        }
+    </script>
+</body>
+
+</html>

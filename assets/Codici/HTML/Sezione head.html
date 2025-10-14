@@ -1,0 +1,121 @@
+<html>
+<head>
+    <!--Font-awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Unicons CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+<style>
+
+</style>
+
+<nav class="nav">
+    <a href="https://www.fomalpweb.it/">
+        <div class="logo">Fomalp</div>
+    </a>
+
+    <button class="navOpenBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links">
+        <button class="navCloseBtn">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Your existing nav items here -->
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.fomalpweb.it/pagina-dei-prodotti/"><i class="fas fa-box"></i> Prodotti</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-list"></i> Seleziona tipo di prodotto
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+              <a class="dropdown-item" href="https://www.fomalpweb.it/serramenti-in-alluminio/"><i class="fas fa-window-maximize"></i> Serramenti in Alluminio</a>
+              <a class="dropdown-item" href="https://www.fomalpweb.it/serramenti-in-pvc/"><i class="fas fa-window-maximize"></i> Serramenti in pvc</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://www.fomalpweb.it/schermature-solari/"><i class="fas fa-sun"></i> Schermature Solari</a>
+              <a class="dropdown-item" href="https://www.fomalpweb.it/sistemi-per-ledilizia/"><i class="fas fa-building"></i> Sistemi per l'Edilizia</a>
+            </div>
+            </li><li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-folder-open"></i> Seleziona tipo di sezione
+                </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                <a class="dropdown-item" href="https://www.fomalpweb.it/129-2/"><i class="fas fa-project-diagram"></i> Progetti</a>
+                <a class="dropdown-item" href="https://www.fomalpweb.it/pagina-commesse/"><i class="fas fa-tasks"></i> Commesse</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="https://www.fomalpweb.it/cataloghi/"><i class="fas fa-book"></i> Cataloghi</a>
+                <a class="dropdown-item" href="https://www.fomalpweb.it/168-2/"><i class="fas fa-images"></i> Realizzazioni</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="https://ncdn2.swing2app.co.kr/public/APK/13916333/FOMALP-Interno-0_2_debug.apk"><i class="fas fa-mobile-alt"></i> App</a>
+            </li>
+    </ul>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const navOpenBtn = document.querySelector('.navOpenBtn');
+    const navCloseBtn = document.querySelector('.navCloseBtn');
+    const navLinks = document.querySelector('.nav-links');
+
+    navOpenBtn.addEventListener('click', () => {
+        navLinks.classList.add('active');
+    });
+
+    navCloseBtn.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !navOpenBtn.contains(e.target)) {
+            navLinks.classList.remove('active');
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // ... (Your existing JavaScript code) ...
+
+    // Dropdown functionality
+    const dropdownToggles = document.querySelectorAll('.nav-item.dropdown .nav-link');
+
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor behavior
+            const dropdownMenu = toggle.nextElementSibling;
+            dropdownMenu.classList.toggle('show');
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.matches('.nav-item.dropdown .nav-link')) {
+            const dropdowns = document.querySelectorAll('.dropdown-menu');
+            dropdowns.forEach(dropdown => {
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+    });
+
+    // Close dropdown when link is clicked inside dropdown.
+    const dropdownItems = document.querySelectorAll(".dropdown-item");
+    dropdownItems.forEach(item => {
+        item.addEventListener("click", () => {
+            item.parentElement.classList.remove("show");
+        });
+    });
+
+});
+</script>
+</head>
+
+<body>
+</body>
+</html>
