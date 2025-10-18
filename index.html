@@ -1,15 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MuseBQ - Grafico Creativo</title>
     <!-- Font from google fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+    <!-- Header -->
+     <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>Portfolio Professionale</h1>
+                <p class="subtitle">Graphic Design, Computer Graphics & Multimedia Solutions</p>
+                
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">Tutti i Progetti</button>
+                    <button class="category-btn" data-category="computer-graphic">Computer Graphic</button>
+                    <button class="category-btn" data-category="loghi">Logo Design</button>
+                    <button class="category-btn" data-category="fotografie">Fotografia</button>
+                    <button class="category-btn" data-category="icone">Icon Design</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--Main-->
+    <main>
+        <div class="category-info" id="category-info">
+            <h2>Portfolio Completo</h2>
+            <p>Esplora la mia collezione di progetti di graphic design, computer graphics, logo design, fotografia e icon design. Ogni categoria rappresenta una specializzazione diversa con tecniche e approcci unici.</p>
+        </div>
+
+        <div class="masonry-container" id="masonry-container">
+            <!-- Gli elementi Masonry verranno generati dinamicamente con JavaScript -->
+        </div>
+    </main>
+
+    <!--Footer-->
+    <footer>
+        <div class="footer-content">
+            <p>Portfolio Professionale &copy; 2025 - Tutti i diritti riservati</p>
+            <div class="contact-info">
+                <p>Contatti: <a href="mailto:mattiabogdanquarta@gmail.com">Email di contatto o per richieste.</a>
+            </div>
+        </div>
+    </footer>
 
     <!-- GSAP Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -17,4 +59,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
