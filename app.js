@@ -2,115 +2,93 @@
 const gsap = window.gsap // Declare gsap variable
 const ScrollTrigger = window.ScrollTrigger // Declare ScrollTrigger variable
 
-// Dati delle stampe e copertine
 const items = [
-    {
-        id: 1,
-        title: "Leone",
-        category: "computer-graphic",
-        description: "Tecnica del ritaglio fotografico, con l'aggiunta di luci e ombre.",
-        image: "assets/Computer graphic/Fotoritocco Leone.jpg"
-    },
-    {
-        id: 2,
-        title: "Astronauta",
-        category: "computer-graphic",
-        description: "Ritaglio fotografico e modifica dei colori del sogetto e dello sfondo.",
-        image: "assets/Computer graphic/Fotoritocco astronauta.jpg"
-    },
-    {
-        id: 3,
-        title: "Scarpa Jordan",
-        category: "computer-graphic",
-        description: "Vettorializzazione in formato .SVG, di una scarpa Jordan.",
-        image: "assets/Computer graphic/scarpa-air-jordan.jpg"
-    },
-        {
-        id: 4,
-        title: "Spider-man",
-        category: "computer-graphic",
-        description: "Composizione con diversi elementi di fotografie.",
-        image: "assets/Computer graphic/spiderman colore 1.jpg"
-    },
-    {
-        id: 5,
-        title: "Busto Uomo",
-        category: "computer-graphic",
-        description: "Rappresentazione moderna di un poster con colori vivaci e brillanti.",
-        image: "assets/Computer graphic/fotoritocco busto uomo 1.png"
-    },
-    {
-        id: 6,
-        title: "Copertina Rivista",
-        category: "loghi",
-        description: "Riproduzione di una copertina di rivista degli anni '60.",
-        image: "assets/Loghi/logo 7dayswalk2.jpg"
-    },
-    {
-        id: 7,
-        title: "Espressione Colore",
-        category: "loghi",
-        description: "Esplosione di colori su sfondo neutro.",
-        image: "assets/Loghi/logo illustrazione.png"
-    },
-    {
-        id: 8,
-        title: "Minimalismo",
-        category: "loghi",
-        description: "Opera minimalista con pochi elementi essenziali.",
-        image: "assets/Loghi/logo musebq.png"
-    },
-    {
-        id: 9,
-        title: "Sogni Astratti",
-        category: "loghi",
-        description: "Rappresentazione onirica di forme e colori.",
-        image: "assets/Favicon/favicon.png"
-    },
-    {
-        id: 10,
-        title: "Classico Rivisitato",
-        category: "loghi",
-        description: "Rivisitazione in chiave moderna di un classico.",
-        image: "assets/Favicon/favicon2.png"
-    },
-    {
-        id: 11,
-        title: "Pattern Geometrico",
-        category: "fotografie",
-        description: "Composizione con pattern geometrici ripetuti.",
-        image: "assets/Fotografie/giallo - blu.jpg"
-    },
-    {
-        id: 12,
-        title: "Manifesto Vintage",
-        category: "fotografie",
-        description: "Riproduzione fedele di un manifesto pubblicitario d'epoca.",
-        image: "assets/Fotografie/IMG_9775.jpg"
-    },
-        {
-        id: 13,
-        title: "Pianeta",
-        category: "icone",
-        description: "Riproduzione fedele di un manifesto pubblicitario d'epoca.",
-        image: "assets/Icone/planet.jpg"
-    },
-        {
-        id: 14,
-        title: "Diavolo",
-        category: "icone",
-        description: "Riproduzione fedele di un manifesto pubblicitario d'epoca.",
-        image: "assets/Icone/devil.jpg"
-    },
-        {
-        id: 15,
-        title: "Icona Catalogo",
-        category: "icone",
-        description: "Composizione astratta con forme geometriche sovrapposte.",
-        image: "assets/Icone/Colore bianco/icona catalogo var.png"
-    },
-    
+  {
+    id: 1,
+    title: "Fotografia Leone – Ritaglio e Composizione (PH)",
+    category: "computer-graphic",
+    description: "Ritaglio fotografico avanzato con inserimento di sfondo, luci e ombre per un effetto realistico.",
+    image: "assets/Computer graphic/Fotoritocco Leone.jpg"
+  },
+  {
+    id: 2,
+    title: "Astronauta – Editing Tonale e Sfondo (PH)",
+    category: "computer-graphic",
+    description: "Rielaborazione fotografica con ritaglio preciso e modifica delle tonalità cromatiche di soggetto e sfondo.",
+    image: "assets/Computer graphic/Fotoritocco astronauta.jpg"
+  },
+  {
+    id: 3,
+    title: "Spider-Man – Composizione Creativa",
+    category: "computer-graphic",
+    description: "Montaggio grafico con il celebre personaggio dei fumetti, ambientato in uno sfondo coerente e stilizzato.",
+    image: "assets/Computer graphic/spiderman colore 1.jpg"
+  },
+  {
+    id: 4,
+    title: "Busto Uomo – Poster Moderno",
+    category: "computer-graphic",
+    description: "Poster digitale con colori vivaci e contrastanti, ispirato a uno stile contemporaneo.",
+    image: "assets/Computer graphic/fotoritocco busto uomo 1.png"
+  },
+  {
+    id: 5,
+    title: "Logo Gruppo Musicale – Volto e Nota",
+    category: "loghi",
+    description: "Logo concettuale per band musicale, con fusione creativa tra volto umano e nota musicale.",
+    image: "assets/Loghi/logo 7dayswalk2.jpg"
+  },
+  {
+    id: 6,
+    title: "Logo Personale – Vettorializzazione Creativa",
+    category: "loghi",
+    description: "Logo realizzato a partire da una fotografia, vettorializzato con lo strumento CreaForme di Illustrator.",
+    image: "assets/Loghi/logo illustrazione.png"
+  },
+  {
+    id: 7,
+    title: "Logo Minimalista – Spazio 3D",
+    category: "loghi",
+    description: "Design essenziale con pochi elementi, che creano un ambiente tridimensionale per un logo pulito e moderno.",
+    image: "assets/Loghi/logo musebq.png"
+  },
+  {
+    id: 8,
+    title: "Colori – Editing RAW (PH)",
+    category: "fotografie",
+    description: "Modifica dei valori cromatici di un file RAW digitale, con interventi mirati su tonalità e saturazione.",
+    image: "assets/Fotografie/giallo - blu.jpg"
+  },
+  {
+    id: 9,
+    title: "Bianco e Nero – Composizione Artistica",
+    category: "fotografie",
+    description: "Fotografia in bianco e nero con interventi artistici sui valori tonali e sulla composizione visiva.",
+    image: "assets/Fotografie/IMG_9775.jpg"
+  },
+  {
+    id: 10,
+    title: "Icona Pianeta – Design Orbitale",
+    category: "icone",
+    description: "Icona stilizzata di un pianeta con asteroidi orbitanti, disposti lungo un'ellisse.",
+    image: "assets/Icone/planet.jpg"
+  },
+  {
+    id: 11,
+    title: "Icona Diavolo – Simbolo Personalizzato",
+    category: "icone",
+    description: "Proposta grafica per un'icona simbolica, con elementi personalizzati e stile distintivo.",
+    image: "assets/Icone/devil.jpg"
+  },
+  {
+    id: 12,
+    title: "Icona Catalogo – Pack Web Design",
+    category: "icone",
+    description: "Icona progettata per integrarsi con un pack grafico dedicato al Web Design, in stile coerente e versatile.",
+    image: "assets/Icone/Colore bianco/icona catalogo var.png"
+  }
 ];
+
 
 // Funzione per generare gli elementi Masonry
 function generateMasonryItems(itemsToShow = items) {
