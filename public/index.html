@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printify Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .shop-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            background: #f8f9fa;
+        }
+        .shop-card h3 {
+            color: #333;
+            margin-top: 0;
+        }
+        .loading {
+            color: #007bff;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏪 I Miei Negozio Printify</h1>
+        <p>Gestisci i tuoi negozi Printify direttamente da qui</p>
+        
+        <button onclick="loadShops()" id="loadBtn">🔄 Carica i miei negozi</button>
+        
+        <div id="status"></div>
+        <div id="shops-container"></div>
+        <div id="products-container" style="display: none;">
+            <h3>📦 Prodotti del negozio</h3>
+            <button onclick="showShops()">← Torna ai negozi</button>
+            <div id="products-list"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentShopId = null;
+
+        async function loadShops() {
+            const btn = document.getElementById('loadBtn');
+            const status = document.getElementById('status');
+            const shopsContainer = document.getElementById('shops-container');
+            
+            // Disabilita il pulsante e mostra caricamento
+            btn.disabled = true;
+            btn.textContent = 'Caricamento in corso...';
+            status.innerHTML = '<p class="loading">🔄 Sto caricando i tuoi negozi...</p>';
+            shopsContainer.innerHTML = '';
+            
+            try {
+                console.log('Invio richiesta al server...');
+                const response = await fetch('/api/shops');
+                
+                if (!response.ok) {
+                    throw new Error(`Errore HTTP: ${response.status} - ${response.statusText}`);
+                }
+                
+                const shops = await response.json();
+                console.log('Dati ricevuti:', shops);
+                
+                if (shops.length === 0) {
+                    status.innerHTML = '<p class="error">❌ Nessun negozio trovato</p>';
+                } else {
+                    status.innerHTML = `<p class="success">✅ Trovati ${shops.length} negozi</p>`;
+                    displayShops(shops);
+                }
+                
+            } catch (error) {
+                console.error('Errore completo:', error);
+                status.innerHTML = `<p class="error">❌ Errore: ${error.message}</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 Carica i miei negozi';
+            }
+        }
+
+        function displayShops(shops) {
+            const container = document.getElementById('shops-container');
+            
+            let html = '<h2>I tuoi negozi:</h2>';
+            
+            shops.forEach(shop => {
+                html += `
+                    <div class="shop-card">
+                        <h3>${shop.title || 'Nessun nome'}</h3>
+                        <p><strong>ID:</strong> ${shop.id}</p>
+                        <p><strong>Stato:</strong> ${shop.is_connected ? '✅ Connesso' : '❌ Non connesso'}</p>
+                        <p><strong>Creato il:</strong> ${shop.created_at ? new Date(shop.created_at).toLocaleDateString('it-IT') : 'Sconosciuto'}</p>
+                        
+                        <div style="margin-top: 15px;">
+                            <button onclick="loadProducts('${shop.id}')" style="background-color: #28a745;">
+                                📦 Visualizza Prodotti
+                            </button>
+                            
+                            ${shop.sales_channel && shop.sales_channel.url ? 
+                                `<button onclick="window.open('${shop.sales_channel.url}', '_blank')" style="background-color: #17a2b8;">
+                                    🌐 Visita Negozio Online
+                                </button>` 
+                                : ''
+                            }
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        async function loadProducts(shopId) {
+            currentShopId = shopId;
+            
+            // Mostra il container dei prodotti
+            document.getElementById('shops-container').style.display = 'none';
+            document.getElementById('products-container').style.display = 'block';
+            
+            const productsList = document.getElementById('products-list');
+            productsList.innerHTML = '<p class="loading">🔄 Caricamento prodotti...</p>';
+            
+            try {
+                const response = await fetch(`/api/shops/${shopId}/products`);
+                
+                if (!response.ok) {
+                    throw new Error(`Errore: ${response.status}`);
+                }
+                
+                const productsData = await response.json();
+                displayProducts(productsData);
+                
+            } catch (error) {
+                console.error('Errore prodotti:', error);
+                productsList.innerHTML = `<p class="error">❌ Errore nel caricamento prodotti: ${error.message}</p>`;
+            }
+        }
+
+        function displayProducts(productsData) {
+            const productsList = document.getElementById('products-list');
+            
+            if (!productsData.data || productsData.data.length === 0) {
+                productsList.innerHTML = '<p>📭 Nessun prodotto trovato in questo negozio</p>';
+                return;
+            }
+            
+            let html = `<p><strong>${productsData.data.length}</strong> prodotti trovati:</p>`;
+            
+            productsData.data.forEach(product => {
+                html += `
+                    <div class="shop-card">
+                        <h4>${product.title || 'Senza titolo'}</h4>
+                        <p><strong>ID:</strong> ${product.id}</p>
+                        <p><strong>Stato:</strong> ${product.is_locked ? '🔒 Bloccato' : '✅ Attivo'}</p>
+                        <p><strong>Visibile:</strong> ${product.visible ? '👁️ Sì' : '🙈 No'}</p>
+                        <p><strong>Varianti:</strong> ${product.variants ? product.variants.length : 0}</p>
+                        ${product.description ? `<p><strong>Descrizione:</strong> ${product.description.substring(0, 100)}...</p>` : ''}
+                    </div>
+                `;
+            });
+            
+            productsList.innerHTML = html;
+        }
+
+        function showShops() {
+            document.getElementById('products-container').style.display = 'none';
+            document.getElementById('shops-container').style.display = 'block';
+        }
+
+        // Carica automaticamente i negozi all'apertura della pagina
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Pagina caricata, pronto a caricare i negozi!');
+            // loadShops(); // Scommenta se vuoi il caricamento automatico
+        });
+    </script>
+</body>
+</html>
