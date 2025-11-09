@@ -1,64 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MuseBQ - Grafico Creativo</title>
-    <!-- Font from google fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet" />
+    <meta name="description"
+        content="Portfolio professionale di MuseBQ - Grafico Creativo specializzato in Computer Graphic, Logo Design, Fotografia e Tipografia">
+    <meta name="keywords" content="grafica, portfolio, design, computer graphic, logo, fotografia, tipografia">
+    <title>MuseBQ - Portfolio Grafico Creativo</title>
 
+    <!-- Preload delle font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Preload delle risorse critiche -->
+    <link rel="preload" href="style.css" as="style">
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
     <!-- Header -->
-     <header>
+    <header>
         <div class="container">
             <div class="header-content">
-                <h1>Portfolio Professionale</h1>
-                <p class="subtitle">Seleziona una categoria per filtrare la ricerca</p>
-                
-                <div class="category-filters">
-                    <button class="category-btn active" data-category="all">Tutti i Progetti</button>
-                    <button class="category-btn" data-category="computer-graphic">Computer Graphic</button>
-                    <button class="category-btn" data-category="loghi">Logo Design</button>
-                    <button class="category-btn" data-category="fotografie">Fotografia</button>
-                    <button class="category-btn" data-category="icone">Icon Design</button>
+                <div class="logo-title-wrapper">
+                    <div class="logo-container">
+                        <img src="/images/logo-p-4.png" alt="Logo MuseBQ" class="logo-img animate-logo"
+                            id="logoClickable" />
+                        <div class="logo-hover-effect"></div>
+                    </div>
+                    <div class="title-container">
+                        <h1 class="logo-title animate-title">Portfolio Creativo</h1>
+                        <p class="subtitle">Esplora il mondo del design attraverso i miei progetti</p>
+                    </div>
                 </div>
+
+                <!-- Modale per ingrandimento -->
+                <div id="logoModal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="logoModalImg" alt="Logo MuseBQ ingrandito" />
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">
+                        <span class="btn-icon"><i class="fa-regular fa-images"></i></span>
+                        Tutti i Progetti
+                    </button>
+                    <button class="category-btn" data-category="computer-graphic">
+                        <span class="btn-icon"><i class="fa-regular fa-object-group"></i></span>
+                        Computer Graphic
+                    </button>
+                    <button class="category-btn" data-category="loghi">
+                        <span class="btn-icon"><i class="fa-regular fa-pen-to-square"></i></span>
+                        Logo Design
+                    </button>
+                    <button class="category-btn" data-category="fotografie">
+                        <span class="btn-icon"><i class="fa-regular fa-image"></i></span>
+                        Fotografia
+                    </button>
+                    <button class="category-btn" data-category="icone">
+                        <span class="btn-icon"><i class="fa-regular fa-circle-dot"></i></span>
+                        Graphic Design
+                    </button>
+                    <button class="category-btn" data-category="poster tipografico">
+                        <span class="btn-icon"><i class="fa-regular fa-a"></i></span>
+                        Tipografia
+                    </button>
+                </div>
+
             </div>
+        </div>
         </div>
     </header>
 
     <!--Main-->
     <main>
         <div class="category-info" id="category-info">
-            <h2>Esplora i miei progetti</h2>
-            <p>La mia collezione presenta progetti personali e per l'accademia. Ogni categoria rappresenta una specializzazione diversa con tecniche e approcci unici.</p>
+            <div class="info-content">
+                <h2>Esplora i miei progetti creativi</h2>
+                <p>Ogni categoria rappresenta una specializzazione diversa con tecniche e approcci unici. Scopri il mio
+                    lavoro attraverso progetti personali e accademici che dimostrano la mia passione per il design.</p>
+            </div>
         </div>
 
         <div class="masonry-container" id="masonry-container">
             <!-- Gli elementi Masonry verranno generati dinamicamente con JavaScript -->
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="loading-indicator" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            <p>Caricamento progetti...</p>
         </div>
     </main>
 
     <!--Footer-->
     <footer>
         <div class="footer-content">
-            <p>Portfolio Professionale &copy; 2025 - Tutti i diritti riservati</p>
-            <div class="contact-info">
-                <p>Contatti: <a href="mailto:mattiabogdanquarta@gmail.com">Email di contatto o per richieste.</a>
-                <p>Portfolio: <a href="https://musebq.github.io/portfolio/">Portfolio</a></p>
+            <div class="footer-section">
+                <h3>Portfolio Professionale</h3>
+                <p>&copy; 2025 - Tutti i diritti riservati</p>
             </div>
-            <div class="social-container">
-                <a href="https://it.pinterest.com/Muse_bq/" class="pinterest">
-                    <i class="fa fa-pinterest"></i>
-                </a>
-                <a href="https://github.com/MuseBQ" class="github">
-                    <i class="fa fa-github"></i>
-                </a>
+
+            <div class="footer-section">
+                <h4>Contatti</h4>
+                <p><a href="mailto:mattiabogdanquarta@gmail.com">Email professionale</a></p>
+                <p><a href="https://musebq.github.io/portfolio/">Portfolio completo</a></p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Seguimi</h4>
+                <div class="social-container">
+                    <a href="https://it.pinterest.com/Muse_bq/" class="pinterest" aria-label="Profilo Pinterest">
+                        <i class="fa fa-pinterest"></i>
+                    </a>
+                    <a href="https://github.com/MuseBQ" class="github" aria-label="Profilo GitHub">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
