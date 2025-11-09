@@ -7,103 +7,117 @@
     <meta name="description"
         content="Portfolio professionale di MuseBQ - Grafico Creativo specializzato in Computer Graphic, Logo Design, Fotografia e Tipografia">
     <meta name="keywords" content="grafica, portfolio, design, computer graphic, logo, fotografia, tipografia">
+    <meta name="author" content="MuseBQ">
     <title>MuseBQ - Portfolio Grafico Creativo</title>
 
-    <!-- Preload delle font -->
+    <!-- Preload critico -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Preload delle risorse critiche -->
-    <link rel="preload" href="style.css" as="style">
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- Favicon-->
+    <!-- Favicon -->
     <link rel="icon" href="/images/favicon (1).png" type="image/png">
 </head>
 
 <body>
     <!-- Header -->
-    <header>
+    <header role="banner">
         <div class="container">
             <div class="header-content">
                 <div class="logo-title-wrapper">
                     <div class="logo-container">
-                        <img src="/images/logo-p-4.png" alt="Logo MuseBQ" class="logo-img animate-logo"
-                            id="logoClickable" />
-                        <div class="logo-hover-effect"></div>
+                        <img src="/images/logo-p-4.png" alt="Logo MuseBQ" class="logo-img" id="logoClickable"
+                            width="180" height="180" />
+                        <div class="logo-hover-effect" aria-hidden="true"></div>
                     </div>
                     <div class="title-container">
-                        <h1 class="logo-title animate-title">Portfolio Creativo</h1>
+                        <h1 class="logo-title">Portfolio Creativo</h1>
                         <p class="subtitle">Esplora il mondo del design attraverso i miei progetti</p>
                     </div>
                 </div>
 
-                <!-- Modale per ingrandimento -->
-                <div id="logoModal" class="modal">
-                    <span class="close">&times;</span>
+                <!-- Modale -->
+                <div id="logoModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                    <span class="close" role="button" aria-label="Chiudi modale">&times;</span>
                     <img class="modal-content" id="logoModalImg" alt="Logo MuseBQ ingrandito" />
                 </div>
 
-                <div class="category-filters">
-                    <button class="category-btn active" data-category="all">
-                        <span class="btn-icon"><i class="fa-regular fa-images"></i></span>
+                <!-- Filtri Categorie -->
+                <nav class="category-filters" role="navigation" aria-label="Filtri portfolio">
+                    <button class="category-btn active" data-category="all" aria-pressed="true">
+                        <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-images"></i></span>
                         Tutti i Progetti
                     </button>
-                    <button class="category-btn" data-category="computer-graphic">
-                        <span class="btn-icon"><i class="fa-regular fa-object-group"></i></span>
+                    <button class="category-btn" data-category="computer-graphic" aria-pressed="false">
+                        <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-object-group"></i></span>
                         Computer Graphic
                     </button>
-                    <button class="category-btn" data-category="loghi">
-                        <span class="btn-icon"><i class="fa-regular fa-pen-to-square"></i></span>
+                    <button class="category-btn" data-category="loghi" aria-pressed="false">
+                        <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-pen-to-square"></i></span>
                         Logo Design
                     </button>
-                    <button class="category-btn" data-category="fotografie">
-                        <span class="btn-icon"><i class="fa-regular fa-image"></i></span>
+                    <button class="category-btn" data-category="fotografie" aria-pressed="false">
+                        <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-image"></i></span>
                         Fotografia
                     </button>
-                    <button class="category-btn" data-category="icone">
-                        <span class="btn-icon"><i class="fa-regular fa-circle-dot"></i></span>
+                    <button class="category-btn" data-category="icone" aria-pressed="false">
+                        <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-circle-dot"></i></span>
                         Graphic Design
                     </button>
-                    <button class="category-btn" data-category="poster tipografico">
-                        <span class="btn-icon"><i class="fa-regular fa-a"></i></span>
+                    <button class="category-btn" data-category="poster tipografico" aria-pressed="false">
+                        <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-a"></i></span>
                         Tipografia
                     </button>
-                </div>
-
+                </nav>
             </div>
-        </div>
         </div>
     </header>
 
-    <!--Main-->
-    <main>
-        <div class="category-info" id="category-info">
+    <!-- Main Content -->
+    <main role="main">
+        <section class="category-info" id="category-info" aria-labelledby="categoryInfoTitle">
             <div class="info-content">
-                <h2>Esplora i miei progetti creativi</h2>
+                <h2 id="categoryInfoTitle">Esplora i miei progetti creativi</h2>
                 <p>Ogni categoria rappresenta una specializzazione diversa con tecniche e approcci unici. Scopri il mio
                     lavoro attraverso progetti personali e accademici che dimostrano la mia passione per il design.</p>
             </div>
-        </div>
+        </section>
 
-        <div class="masonry-container" id="masonry-container">
+        <section class="masonry-container" id="masonry-container" role="region" aria-label="Galleria progetti">
             <!-- Gli elementi Masonry verranno generati dinamicamente con JavaScript -->
+        </section>
+
+        <!-- Loading Indicator -->
+        <div class="loading-indicator" id="loadingIndicator" aria-live="polite" aria-label="Caricamento in corso">
+            <div class="loading-spinner" aria-hidden="true"></div>
+            <p>Caricamento progetti...</p>
         </div>
 
-        <!-- Loading indicator -->
-        <div class="loading-indicator" id="loadingIndicator">
-            <div class="loading-spinner"></div>
-            <p>Caricamento progetti...</p>
+        <!-- Modale per le immagini del portfolio -->
+        <div id="portfolioModal" class="modal portfolio-modal" role="dialog" aria-labelledby="portfolioModalTitle"
+            aria-hidden="true">
+            <div class="modal-container">
+                <span class="close portfolio-close" role="button" aria-label="Chiudi modale">&times;</span>
+                <div class="modal-header">
+                    <h3 id="portfolioModalTitle" class="modal-title"></h3>
+                    <span class="modal-category"></span>
+                </div>
+                <img class="modal-content portfolio-modal-content" id="portfolioModalImg" alt="" />
+                <div class="modal-footer">
+                    <p class="modal-description"></p>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!--Footer-->
-    <footer>
+    <!-- Footer -->
+    <footer role="contentinfo">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Portfolio Professionale</h3>
@@ -112,25 +126,29 @@
 
             <div class="footer-section">
                 <h4>Contatti</h4>
-                <p><a href="mailto:mattiabogdanquarta@gmail.com">Email professionale</a></p>
-                <p><a href="https://musebq.github.io/portfolio/">Portfolio completo</a></p>
+                <p><a href="mailto:mattiabogdanquarta@gmail.com" aria-label="Invia email a Mattia Bogdan Quarta">Email
+                        professionale</a></p>
+                <p><a href="https://musebq.github.io/portfolio/" aria-label="Visita il portfolio completo">Portfolio
+                        completo</a></p>
             </div>
 
             <div class="footer-section">
                 <h4>Seguimi</h4>
                 <div class="social-container">
-                    <a href="https://it.pinterest.com/Muse_bq/" class="pinterest" aria-label="Profilo Pinterest">
-                        <i class="fa fa-pinterest"></i>
+                    <a href="https://it.pinterest.com/Muse_bq/" class="pinterest"
+                        aria-label="Visita il profilo Pinterest di MuseBQ" target="_blank" rel="noopener">
+                        <i class="fa-brands fa-pinterest" aria-hidden="true"></i>
                     </a>
-                    <a href="https://github.com/MuseBQ" class="github" aria-label="Profilo GitHub">
-                        <i class="fa fa-github"></i>
+                    <a href="https://github.com/MuseBQ" class="github" aria-label="Visita il profilo GitHub di MuseBQ"
+                        target="_blank" rel="noopener">
+                        <i class="fa-brands fa-github" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- GSAP Plugins -->
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
