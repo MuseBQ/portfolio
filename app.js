@@ -1,664 +1,10 @@
-// Configurazione
-const CONFIG = {
-  IMAGE_LOAD_DELAY: 100,
-  ANIMATION_STAGGER: 20,
-  LAZY_LOAD_THRESHOLD: 0.01,
-  RESIZE_DEBOUNCE: 150,
-  PRELOAD_IMAGES: 3
-};
-
-// GSAP plugins
+// GSAP plugins are already loaded via CDN in the HTML file
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
 
-if (gsap) {
-  gsap.registerPlugin(ScrollTrigger);
-}
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
-// Cache DOM
-const DOM = (() => {
-  const elements = {
-    container: document.getElementById("masonry-container"),
-    categoryButtons: document.querySelectorAll(".category-btn"),
-    categoryInfo: document.getElementById("category-info"),
-    loadingIndicator: document.getElementById("loadingIndicator"),
-    logoModal: document.getElementById("logoModal"),
-    logoModalImg: document.getElementById("logoModalImg"),
-    logoCloseBtn: document.querySelector("#logoModal .close"),
-    logo: document.getElementById("logoClickable"),
-    portfolioModal: document.getElementById("portfolioModal"),
-    portfolioModalImg: document.getElementById("portfolioModalImg"),
-    portfolioCloseBtn: document.querySelector(".portfolio-close"),
-    portfolioModalTitle: document.getElementById("portfolioModalTitle"),
-    portfolioModalCategory: document.querySelector(".modal-category"),
-    portfolioModalDescription: document.querySelector(".modal-description"),
-    currentYear: document.getElementById("current-year"),
-    modalPrevBtn: document.querySelector(".prev-btn"),
-    modalNextBtn: document.querySelector(".next-btn"),
-    currentImageIndex: document.getElementById("currentImageIndex"),
-    totalImages: document.getElementById("totalImages")
-  };
-  
-  return {
-    get: (key) => elements[key],
-    getAll: () => elements
-  };
-})();
-
-// State management
-const state = (() => {
-  let currentCategory = "all";
-  let isAnimating = false;
-  let masonryItems = [];
-  let currentPortfolioItem = null;
-  let visibleItems = [];
-  let imageObserver = null;
-  let resizeTimeout = null;
-
-  return {
-    getCurrentCategory: () => currentCategory,
-    setCurrentCategory: (category) => { currentCategory = category; },
-    getIsAnimating: () => isAnimating,
-    setIsAnimating: (animating) => { isAnimating = animating; },
-    getMasonryItems: () => masonryItems,
-    setMasonryItems: (items) => { masonryItems = items; },
-    getCurrentPortfolioItem: () => currentPortfolioItem,
-    setCurrentPortfolioItem: (item) => { currentPortfolioItem = item; },
-    getVisibleItems: () => visibleItems,
-    setVisibleItems: (items) => { visibleItems = items; },
-    getImageObserver: () => imageObserver,
-    setImageObserver: (observer) => { imageObserver = observer; },
-    getResizeTimeout: () => resizeTimeout,
-    setResizeTimeout: (timeout) => { resizeTimeout = timeout; }
-  };
-})();
-
-// Utility functions
-const utils = {
-  debounce: (func, wait) => {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  },
-
-  throttle: (func, limit) => {
-    let inThrottle;
-    return function(...args) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
-  },
-
-  getCategoryDisplayName: (category) => {
-    const names = {
-      all: "tutti i progetti",
-      "computer-graphic": "Computer Graphic",
-      loghi: "Logo Design",
-      fotografie: "Fotografia",
-      icone: "Graphic Design",
-      "poster tipografico": "Tipografia"
-    };
-    return names[category] || category;
-  },
-
-  preloadImage: (src) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = src;
-    });
-  },
-
-  createImagePlaceholder: () => {
-    const placeholder = document.createElement('div');
-    placeholder.className = 'image-placeholder';
-    placeholder.innerHTML = `
-      <i class="fas fa-image"></i>
-      <p>Caricamento immagine...</p>
-    `;
-    return placeholder;
-  }
-};
-
-// Image Manager
-const imageManager = (() => {
-  const loadedImages = new Set();
-  
-  return {
-    loadImage: async (imgElement) => {
-      const src = imgElement.dataset.src;
-      
-      if (!src || loadedImages.has(src)) return;
-      
-      try {
-        loadedImages.add(src);
-        await utils.preloadImage(src);
-        imgElement.src = src;
-        imgElement.classList.add('loaded');
-        
-        // Smooth transition
-        requestAnimationFrame(() => {
-          imgElement.style.opacity = '0';
-          requestAnimationFrame(() => {
-            imgElement.style.transition = 'opacity 0.3s ease';
-            imgElement.style.opacity = '1';
-          });
-        });
-      } catch (error) {
-        console.warn('Failed to load image:', src);
-        this.handleImageError(imgElement);
-      }
-    },
-    
-    handleImageError: (imgElement) => {
-      const placeholder = utils.createImagePlaceholder();
-      imgElement.style.display = 'none';
-      imgElement.parentNode.insertBefore(placeholder, imgElement);
-    },
-    
-    preloadCriticalImages: () => {
-      const criticalImages = [
-        '/images/logo-p-4.png',
-        items[0]?.image,
-        items[1]?.image
-      ].filter(Boolean);
-      
-      criticalImages.forEach(src => {
-        if (!loadedImages.has(src)) {
-          utils.preloadImage(src).catch(() => {
-            console.warn('Failed to preload critical image:', src);
-          });
-        }
-      });
-    }
-  };
-})();
-
-// Masonry Generator
-const masonryGenerator = {
-  createItemElement: (item, index) => {
-    const element = document.createElement('article');
-    element.className = 'masonry-item';
-    element.setAttribute('data-category', item.category);
-    element.setAttribute('data-id', item.id);
-    element.setAttribute('role', 'article');
-    element.setAttribute('aria-label', item.title);
-    
-    element.innerHTML = `
-      <div class="image-wrapper">
-        <img 
-          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3C/svg%3E"
-          data-src="${item.image}"
-          alt="${item.title}"
-          class="masonry-img lazy"
-          width="400"
-          height="300"
-          loading="lazy"
-          decoding="async"
-          tabindex="0"
-        >
-      </div>
-      <div class="masonry-content">
-        <span class="masonry-category" aria-label="Categoria: ${item.category}">
-          ${utils.getCategoryDisplayName(item.category)}
-        </span>
-        <h3 class="masonry-title">${item.title}</h3>
-        <p class="masonry-description">${item.description}</p>
-      </div>
-    `;
-    
-    // Staggered animation
-    setTimeout(() => {
-      element.classList.add('visible');
-    }, CONFIG.IMAGE_LOAD_DELAY + (index * CONFIG.ANIMATION_STAGGER));
-    
-    return element;
-  },
-  
-  generate: (itemsToShow = items) => {
-    const container = DOM.get('container');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    state.setMasonryItems([]);
-    state.setVisibleItems(itemsToShow);
-    
-    const fragment = document.createDocumentFragment();
-    
-    itemsToShow.forEach((item, index) => {
-      const element = this.createItemElement(item, index);
-      fragment.appendChild(element);
-      state.getMasonryItems().push(element);
-    });
-    
-    container.appendChild(fragment);
-    
-    // Initialize interactions
-    this.initImageClickHandlers();
-    lazyLoader.init();
-    animations.initMasonryAnimations();
-  },
-  
-  initImageClickHandlers: () => {
-    document.querySelectorAll('.masonry-img').forEach((img, index) => {
-      const item = img.closest('.masonry-item');
-      const itemId = item?.getAttribute('data-id');
-      const portfolioItem = items.find(i => i.id == itemId);
-      
-      if (!portfolioItem) return;
-      
-      // Click handler
-      img.addEventListener('click', () => modalManager.openPortfolioModal(portfolioItem));
-      
-      // Keyboard handler
-      img.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          modalManager.openPortfolioModal(portfolioItem);
-        }
-      });
-      
-      // Focus styles
-      img.addEventListener('focus', () => {
-        img.style.outline = `2px solid var(--primary)`;
-        img.style.outlineOffset = '2px';
-      });
-      
-      img.addEventListener('blur', () => {
-        img.style.outline = 'none';
-      });
-    });
-  }
-};
-
-// Lazy Loader
-const lazyLoader = {
-  init: () => {
-    if (!('IntersectionObserver' in window)) {
-      this.loadAllImages();
-      return;
-    }
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              imageManager.loadImage(img);
-              observer.unobserve(img);
-            }
-          }
-        });
-      },
-      {
-        rootMargin: '0px',
-        threshold: CONFIG.LAZY_LOAD_THRESHOLD
-      }
-    );
-    
-    state.setImageObserver(observer);
-    this.observeImages();
-  },
-  
-  observeImages: () => {
-    const observer = state.getImageObserver();
-    if (!observer) return;
-    
-    document.querySelectorAll('img[data-src]').forEach(img => {
-      observer.observe(img);
-    });
-  },
-  
-  loadAllImages: () => {
-    document.querySelectorAll('img[data-src]').forEach(img => {
-      imageManager.loadImage(img);
-    });
-  }
-};
-
-// Modal Manager
-const modalManager = (() => {
-  let currentModal = null;
-  
-  return {
-    openPortfolioModal: (item) => {
-      if (!item) return;
-      
-      const modal = DOM.get('portfolioModal');
-      if (!modal) return;
-      
-      state.setCurrentPortfolioItem(item);
-      currentModal = 'portfolio';
-      
-      // Update modal content
-      DOM.get('portfolioModalImg').src = item.image;
-      DOM.get('portfolioModalImg').alt = item.title;
-      DOM.get('portfolioModalTitle').textContent = item.title;
-      DOM.get('portfolioModalCategory').textContent = utils.getCategoryDisplayName(item.category);
-      DOM.get('portfolioModalDescription').textContent = item.description;
-      
-      // Update counter
-      const currentIndex = state.getVisibleItems().findIndex(i => i.id === item.id) + 1;
-      DOM.get('currentImageIndex').textContent = currentIndex;
-      DOM.get('totalImages').textContent = state.getVisibleItems().length;
-      
-      // Show modal
-      modal.style.display = 'flex';
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      DOM.get('portfolioCloseBtn').focus();
-      
-      // Animation
-      if (gsap) {
-        gsap.fromTo(
-          modal.querySelector('.modal-container'),
-          { opacity: 0, y: 50, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'back.out(1.7)' }
-        );
-      }
-    },
-    
-    closePortfolioModal: () => {
-      const modal = DOM.get('portfolioModal');
-      if (!modal) return;
-      
-      modal.style.display = 'none';
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = 'auto';
-      state.setCurrentPortfolioItem(null);
-      currentModal = null;
-    },
-    
-    navigatePortfolioModal: (direction) => {
-      const currentItem = state.getCurrentPortfolioItem();
-      if (!currentItem) return;
-      
-      const currentIndex = state.getVisibleItems().findIndex(item => item.id === currentItem.id);
-      let newIndex = currentIndex + direction;
-      
-      // Circular navigation
-      if (newIndex < 0) newIndex = state.getVisibleItems().length - 1;
-      if (newIndex >= state.getVisibleItems().length) newIndex = 0;
-      
-      const newItem = state.getVisibleItems()[newIndex];
-      if (newItem) {
-        this.openPortfolioModal(newItem);
-      }
-    },
-    
-    getCurrentModal: () => currentModal
-  };
-})();
-
-// Filter Manager
-const filterManager = {
-  filterByCategory: utils.throttle(function(category) {
-    if (state.getIsAnimating() || state.getCurrentCategory() === category) return;
-    
-    state.setIsAnimating(true);
-    state.setCurrentCategory(category);
-    
-    // Update buttons
-    DOM.get('categoryButtons').forEach(btn => {
-      const isActive = btn.getAttribute('data-category') === category;
-      btn.setAttribute('aria-pressed', isActive.toString());
-      btn.classList.toggle('active', isActive);
-    });
-    
-    // Filter items
-    const filteredItems = category === 'all' 
-      ? items 
-      : items.filter(item => item.category === category);
-    
-    state.setVisibleItems(filteredItems);
-    
-    // Animation
-    const allItems = state.getMasonryItems();
-    const visibleItems = category === 'all'
-      ? allItems
-      : allItems.filter(item => item.getAttribute('data-category') === category);
-    
-    if (gsap) {
-      gsap.to(allItems, {
-        opacity: 0,
-        y: 20,
-        duration: 0.2,
-        stagger: 0.01,
-        onComplete: () => {
-          allItems.forEach(item => {
-            item.classList.toggle('hidden', !visibleItems.includes(item));
-          });
-          
-          gsap.fromTo(
-            visibleItems,
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.4,
-              stagger: 0.02,
-              onComplete: () => {
-                state.setIsAnimating(false);
-                masonryGenerator.initImageClickHandlers();
-                accessibility.announceFilterChange(category);
-              }
-            }
-          );
-        }
-      });
-    } else {
-      // Fallback senza GSAP
-      allItems.forEach(item => {
-        item.classList.toggle('hidden', !visibleItems.includes(item));
-      });
-      state.setIsAnimating(false);
-      masonryGenerator.initImageClickHandlers();
-      accessibility.announceFilterChange(category);
-    }
-  }, 300),
-  
-  initCategoryButtons: () => {
-    DOM.get('categoryButtons').forEach(button => {
-      button.addEventListener('click', () => {
-        const category = button.getAttribute('data-category');
-        this.filterByCategory(category);
-      });
-      
-      button.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const category = button.getAttribute('data-category');
-          this.filterByCategory(category);
-        }
-      });
-    });
-  }
-};
-
-// Animations Manager
-const animations = {
-  initMasonryAnimations: () => {
-    const masonryItems = state.getMasonryItems();
-    
-    if (!gsap) {
-      this.initFallbackAnimations();
-      return;
-    }
-    
-    // Hover animations
-    masonryItems.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        if (!state.getIsAnimating()) {
-          gsap.to(item, {
-            y: -5,
-            duration: 0.2,
-            ease: 'power2.out'
-          });
-        }
-      });
-      
-      item.addEventListener('mouseleave', () => {
-        if (!state.getIsAnimating()) {
-          gsap.to(item, {
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.out'
-          });
-        }
-      });
-    });
-    
-    // Scroll animations (desktop only)
-    if (window.innerWidth > 768 && ScrollTrigger) {
-      gsap.utils.toArray('.masonry-item').forEach(item => {
-        gsap.fromTo(
-          item,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 85%',
-              end: 'bottom 15%',
-              toggleActions: 'play none none reverse',
-              markers: false
-            }
-          }
-        );
-      });
-    }
-  },
-  
-  initFallbackAnimations: () => {
-    // CSS-only animations
-    state.getMasonryItems().forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        if (!state.getIsAnimating()) {
-          item.style.transform = 'translateY(-5px)';
-        }
-      });
-      
-      item.addEventListener('mouseleave', () => {
-        if (!state.getIsAnimating()) {
-          item.style.transform = 'translateY(0)';
-        }
-      });
-    });
-  }
-};
-
-// Accessibility Manager
-const accessibility = {
-  announceFilterChange: (category) => {
-    const announcement = document.getElementById('filter-announcement') || this.createAnnouncementElement();
-    const categoryName = utils.getCategoryDisplayName(category);
-    const itemCount = document.querySelectorAll('.masonry-item:not(.hidden)').length;
-    
-    announcement.textContent = `Mostrando ${categoryName}. ${itemCount} progetti visualizzati.`;
-  },
-  
-  createAnnouncementElement: () => {
-    const element = document.createElement('div');
-    element.id = 'filter-announcement';
-    element.className = 'sr-only';
-    element.setAttribute('aria-live', 'polite');
-    element.setAttribute('aria-atomic', 'true');
-    document.body.appendChild(element);
-    return element;
-  },
-  
-  initKeyboardNavigation: () => {
-    document.addEventListener('keydown', (e) => {
-      // ESC to close modals
-      if (e.key === 'Escape') {
-        if (DOM.get('portfolioModal').style.display === 'flex') {
-          modalManager.closePortfolioModal();
-        } else if (DOM.get('logoModal').style.display === 'block') {
-          // Close logo modal function would go here
-        }
-      }
-      
-      // Arrow navigation in portfolio modal
-      if (DOM.get('portfolioModal').style.display === 'flex' && state.getCurrentPortfolioItem()) {
-        if (e.key === 'ArrowLeft') {
-          modalManager.navigatePortfolioModal(-1);
-        } else if (e.key === 'ArrowRight') {
-          modalManager.navigatePortfolioModal(1);
-        }
-      }
-    });
-  }
-};
-
-// Initialization
-const init = () => {
-  // Set current year in footer
-  if (DOM.get('currentYear')) {
-    DOM.get('currentYear').textContent = new Date().getFullYear();
-  }
-  
-  // Generate masonry
-  masonryGenerator.generate();
-  
-  // Initialize category filters
-  filterManager.initCategoryButtons();
-  
-  // Initialize accessibility
-  accessibility.initKeyboardNavigation();
-  
-  // Preload critical images
-  imageManager.preloadCriticalImages();
-  
-  // Initial animations
-  if (gsap) {
-    gsap.fromTo(
-      DOM.get('categoryInfo'),
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, delay: 0.3 }
-    );
-  }
-};
-
-// Event Listeners
-document.addEventListener('DOMContentLoaded', init);
-
-// Optimized resize handler
-window.addEventListener('resize', utils.debounce(() => {
-  if (ScrollTrigger) {
-    ScrollTrigger.refresh();
-  }
-}, CONFIG.RESIZE_DEBOUNCE));
-
-// Error handling
-window.addEventListener('error', (e) => {
-  if (e.target.tagName === 'IMG') {
-    console.warn('Image failed to load:', e.target.src);
-    imageManager.handleImageError(e.target);
-  }
-}, true);
-
-// Service Worker registration
-if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(console.warn);
-  });
-}
-
-// Items array (mantenuto come nel codice originale)
 const items = [
   {
     id: 1,
@@ -813,3 +159,624 @@ const items = [
     image: "assets/Stampe + Font/Poster PDF Carattere Baskerville v1.png",
   },
 ];
+
+// Cache ottimizzata degli elementi DOM
+const DOM = {
+  container: document.getElementById("masonry-container"),
+  categoryButtons: document.querySelectorAll(".category-btn"),
+  categoryInfo: document.getElementById("category-info"),
+  loadingIndicator: document.getElementById("loadingIndicator"),
+  // Modal del logo
+  logoModal: document.getElementById("logoModal"),
+  logoModalImg: document.getElementById("logoModalImg"),
+  logoCloseBtn: document.querySelector(".close"),
+  logo: document.getElementById("logoClickable"),
+  // Modal del portfolio
+  portfolioModal: document.getElementById("portfolioModal"),
+  portfolioModalImg: document.getElementById("portfolioModalImg"),
+  portfolioCloseBtn: document.querySelector(".portfolio-close"),
+  portfolioModalTitle: document.getElementById("portfolioModalTitle"),
+  portfolioModalCategory: document.querySelector(".modal-category"),
+  portfolioModalDescription: document.querySelector(".modal-description"),
+};
+
+// Stato dell'applicazione ottimizzato
+const state = {
+  currentCategory: "all",
+  isAnimating: false,
+  masonryItems: [],
+  currentPortfolioItem: null,
+  visibleItems: [],
+};
+
+// Intersection Observer per lazy loading
+let imageObserver;
+
+// Funzione per generare gli elementi Masonry con immagini clickable
+function generateMasonryItems(itemsToShow = items) {
+  DOM.container.innerHTML = "";
+  state.masonryItems = [];
+  state.visibleItems = itemsToShow;
+
+  DOM.loadingIndicator.style.display = "flex";
+
+  requestAnimationFrame(() => {
+    const fragment = document.createDocumentFragment();
+
+    itemsToShow.forEach((item, index) => {
+      const masonryItem = createMasonryElement(item, index);
+      fragment.appendChild(masonryItem);
+      state.masonryItems.push(masonryItem);
+    });
+
+    DOM.container.appendChild(fragment);
+    DOM.loadingIndicator.style.display = "none";
+
+    initMasonryAnimations();
+    initImageClickHandlers();
+    initLazyLoading();
+  });
+}
+
+// Funzione helper per creare elementi masonry
+function createMasonryElement(item, index) {
+  const masonryItem = document.createElement("div");
+  masonryItem.className = "masonry-item";
+  masonryItem.setAttribute("data-category", item.category);
+  masonryItem.setAttribute("data-id", item.id);
+  masonryItem.setAttribute("role", "article");
+  masonryItem.setAttribute("aria-label", item.title);
+
+  masonryItem.innerHTML = `
+    <img 
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3C/svg%3E" 
+        data-src="${item.image}" 
+        alt="${item.title}" 
+        class="masonry-img" 
+        width="400" 
+        height="300" 
+        tabindex="0"
+    >
+    <div class="masonry-content">
+      <span class="masonry-category">${item.category}</span>
+      <h3 class="masonry-title">${item.title}</h3>
+      <p class="masonry-description">${item.description}</p>
+    </div>
+  `;
+
+  setTimeout(() => {
+    masonryItem.classList.add("visible");
+  }, 100 + index * 30);
+
+  return masonryItem;
+}
+
+// Inizializza i click handler per le immagini
+function initImageClickHandlers() {
+  const masonryImages = document.querySelectorAll(".masonry-img");
+
+  masonryImages.forEach((img, index) => {
+    const masonryItem = img.closest(".masonry-item");
+    const itemId = masonryItem.getAttribute("data-id");
+    const item = items.find((i) => i.id == itemId);
+
+    if (item) {
+      // Click con mouse
+      img.addEventListener("click", () => {
+        openPortfolioModal(item);
+      });
+
+      // Enter key per accessibilità
+      img.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openPortfolioModal(item);
+        }
+      });
+
+      // Aggiungi indicatore visivo per focus
+      img.addEventListener("focus", () => {
+        img.style.outline = `2px solid var(--primary)`;
+        img.style.outlineOffset = "2px";
+      });
+
+      img.addEventListener("blur", () => {
+        img.style.outline = "none";
+      });
+    }
+  });
+}
+
+// Funzione per aprire la modal del portfolio
+function openPortfolioModal(item) {
+  if (!item || !DOM.portfolioModal) return;
+
+  state.currentPortfolioItem = item;
+
+  // Imposta il contenuto della modal
+  DOM.portfolioModalImg.src = item.image;
+  DOM.portfolioModalImg.alt = item.title;
+  DOM.portfolioModalTitle.textContent = item.title;
+  DOM.portfolioModalCategory.textContent = getCategoryDisplayName(
+    item.category
+  );
+  DOM.portfolioModalDescription.textContent = item.description;
+
+  // Mostra la modal
+  DOM.portfolioModal.style.display = "flex";
+  DOM.portfolioModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+  // Focus sul pulsante di chiusura per accessibilità
+  DOM.portfolioCloseBtn.focus();
+
+  // Animazione di entrata
+  gsap.fromTo(
+    DOM.portfolioModal.querySelector(".modal-container"),
+    { opacity: 0, y: 50, scale: 0.9 },
+    { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "back.out(1.7)" }
+  );
+}
+
+// Funzione per chiudere la modal del portfolio
+function closePortfolioModal() {
+  DOM.portfolioModal.style.display = "none";
+  DOM.portfolioModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "auto";
+  state.currentPortfolioItem = null;
+}
+
+// Navigazione tra immagini nella modal
+function navigatePortfolioModal(direction) {
+  if (!state.currentPortfolioItem) return;
+
+  const currentIndex = state.visibleItems.findIndex(
+    (item) => item.id === state.currentPortfolioItem.id
+  );
+  let newIndex = currentIndex + direction;
+
+  // Gestione loop
+  if (newIndex < 0) {
+    newIndex = state.visibleItems.length - 1;
+  } else if (newIndex >= state.visibleItems.length) {
+    newIndex = 0;
+  }
+
+  const newItem = state.visibleItems[newIndex];
+  if (newItem) {
+    openPortfolioModal(newItem);
+  }
+}
+
+// Gestione della modal del logo
+function initLogoModal() {
+  if (!DOM.logo || !DOM.logoModal) return;
+
+  DOM.logo.addEventListener("click", openLogoModal);
+  DOM.logo.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openLogoModal();
+    }
+  });
+
+  DOM.logoCloseBtn.addEventListener("click", closeLogoModal);
+  DOM.logoCloseBtn.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      closeLogoModal();
+    }
+  });
+
+  DOM.logoModal.addEventListener("click", (e) => {
+    if (e.target === DOM.logoModal) {
+      closeLogoModal();
+    }
+  });
+}
+
+function openLogoModal() {
+  DOM.logoModal.style.display = "block";
+  DOM.logoModalImg.src = DOM.logo.src;
+  DOM.logoModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  DOM.logoCloseBtn.focus();
+}
+
+function closeLogoModal() {
+  DOM.logoModal.style.display = "none";
+  DOM.logoModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "auto";
+}
+
+// Inizializza la modal del portfolio
+function initPortfolioModal() {
+  if (!DOM.portfolioModal) return;
+
+  DOM.portfolioCloseBtn.addEventListener("click", closePortfolioModal);
+  DOM.portfolioCloseBtn.addEventListener("keypress", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      closePortfolioModal();
+    }
+  });
+
+  DOM.portfolioModal.addEventListener("click", (e) => {
+    if (e.target === DOM.portfolioModal) {
+      closePortfolioModal();
+    }
+  });
+}
+
+// Gestione tasti da tastiera per entrambe le modal
+function initKeyboardHandlers() {
+  document.addEventListener("keydown", (e) => {
+    // ESC per chiudere le modal
+    if (e.key === "Escape") {
+      if (DOM.portfolioModal.style.display === "flex") {
+        closePortfolioModal();
+      } else if (DOM.logoModal.style.display === "block") {
+        closeLogoModal();
+      }
+    }
+
+    // Freccia sinistra/destra per navigazione tra immagini (solo nella modal portfolio)
+    if (
+      DOM.portfolioModal.style.display === "flex" &&
+      state.currentPortfolioItem
+    ) {
+      if (e.key === "ArrowLeft") {
+        navigatePortfolioModal(-1); // Precedente
+      } else if (e.key === "ArrowRight") {
+        navigatePortfolioModal(1); // Successiva
+      }
+    }
+  });
+}
+
+// Funzione per filtrare per categoria
+function filterByCategory(category) {
+  if (state.isAnimating || state.currentCategory === category) return;
+
+  state.isAnimating = true;
+  state.currentCategory = category;
+
+  // Aggiorna attributi ARIA per accessibilità
+  DOM.categoryButtons.forEach((btn) => {
+    const isActive = btn.getAttribute("data-category") === category;
+    btn.setAttribute("aria-pressed", isActive);
+    btn.classList.toggle("active", isActive);
+  });
+
+  // Filtra gli elementi visibili
+  state.visibleItems =
+    category === "all"
+      ? items
+      : items.filter((item) => item.category === category);
+
+  const allItems = state.masonryItems;
+  const visibleItems =
+    category === "all"
+      ? allItems
+      : allItems.filter(
+          (item) => item.getAttribute("data-category") === category
+        );
+
+  // Animazione di transizione
+  gsap.to(allItems, {
+    opacity: 0,
+    y: 20,
+    duration: 0.2,
+    stagger: 0.01,
+    onComplete: () => {
+      allItems.forEach((item) => {
+        item.classList.toggle("hidden", !visibleItems.includes(item));
+      });
+
+      gsap.fromTo(
+        visibleItems,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          stagger: 0.02,
+          onComplete: () => {
+            state.isAnimating = false;
+            // Re-inizializza i click handlers per le nuove immagini visibili
+            initImageClickHandlers();
+            // Annuncia il cambiamento per screen readers
+            announceFilterChange(category);
+          },
+        }
+      );
+    },
+  });
+}
+
+// Funzione per annunciare cambiamenti filtro (accessibilità)
+function announceFilterChange(category) {
+  const announcement =
+    document.getElementById("filter-announcement") ||
+    createAnnouncementElement();
+  const categoryName = getCategoryDisplayName(category);
+  announcement.textContent = `Mostrando ${categoryName}. ${getVisibleItemsCount()} progetti visualizzati.`;
+}
+
+function createAnnouncementElement() {
+  const announcement = document.createElement("div");
+  announcement.id = "filter-announcement";
+  announcement.className = "sr-only";
+  announcement.setAttribute("aria-live", "polite");
+  announcement.setAttribute("aria-atomic", "true");
+  document.body.appendChild(announcement);
+  return announcement;
+}
+
+function getCategoryDisplayName(category) {
+  const names = {
+    all: "tutti i progetti",
+    "computer-graphic": "Computer Graphic",
+    loghi: "Logo Design",
+    fotografie: "Fotografia",
+    icone: "Graphic Design",
+    "poster tipografico": "Tipografia",
+  };
+  return names[category] || category;
+}
+
+function getVisibleItemsCount() {
+  return document.querySelectorAll(".masonry-item:not(.hidden)").length;
+}
+
+// Inizializza le animazioni GSAP
+function initMasonryAnimations() {
+  const masonryItems = state.masonryItems;
+
+  // Animazione al passaggio del mouse
+  masonryItems.forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      if (!state.isAnimating) {
+        gsap.to(item, {
+          y: -5,
+          duration: 0.2,
+          ease: "power2.out",
+        });
+      }
+    });
+
+    item.addEventListener("mouseleave", () => {
+      if (!state.isAnimating) {
+        gsap.to(item, {
+          y: 0,
+          duration: 0.2,
+          ease: "power2.out",
+        });
+      }
+    });
+  });
+
+  // Animazione allo scroll con ScrollTrigger (solo su desktop)
+  if (window.innerWidth > 768) {
+    gsap.utils.toArray(".masonry-item").forEach((item) => {
+      gsap.fromTo(
+        item,
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 90%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse",
+            markers: false,
+          },
+        }
+      );
+    });
+  }
+}
+
+// Lazy loading ottimizzato
+function initLazyLoading() {
+  if ("IntersectionObserver" in window) {
+    imageObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            // Se l'immagine ha un data-src, caricala
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove("lazy");
+              imageObserver.unobserve(img);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: "0px 0px",
+        threshold: 0.01,
+      }
+    );
+
+    // Osserva tutte le immagini con data-src
+    document.querySelectorAll("img[data-src]").forEach((img) => {
+      imageObserver.observe(img);
+    });
+  }
+}
+
+// Precaricamento delle immagini critiche
+function preloadCriticalImages() {
+  const criticalImages = [
+    "/images/logo-p-4.png",
+    items[0].image,
+    items[1].image,
+  ];
+
+  criticalImages.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
+// Gestione del ridimensionamento della finestra
+let resizeTimeout;
+function handleResize() {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    // Ricrea gli ScrollTrigger
+    ScrollTrigger.refresh();
+  }, 150);
+}
+
+// Inizializzazione principale
+function init() {
+  // Genera gli elementi Masonry
+  generateMasonryItems();
+
+  // Aggiungi event listener ai pulsanti di categoria
+  DOM.categoryButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const category = this.getAttribute("data-category");
+      filterByCategory(category);
+    });
+
+    button.addEventListener("keypress", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const category = button.getAttribute("data-category");
+        filterByCategory(category);
+      }
+    });
+  });
+
+  // Inizializza le modal
+  initLogoModal();
+  initPortfolioModal();
+  initKeyboardHandlers();
+
+  // Animazione iniziale per il contenuto
+  gsap.fromTo(
+    DOM.categoryInfo,
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 0.6, delay: 0.3 }
+  );
+
+  // Animazione per il logo e titolo
+  gsap.fromTo(
+    ".animate-logo",
+    { opacity: 0, scale: 0.8, rotation: -10 },
+    {
+      opacity: 1,
+      scale: 1,
+      rotation: 0,
+      duration: 0.8,
+      ease: "back.out(1.7)",
+      delay: 0.1,
+    }
+  );
+
+  gsap.fromTo(
+    ".animate-title",
+    { opacity: 0, y: -20 },
+    { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.3 }
+  );
+}
+
+// Event Listeners
+document.addEventListener("DOMContentLoaded", init);
+window.addEventListener("load", preloadCriticalImages);
+window.addEventListener("resize", handleResize);
+
+// Service Worker per caching (opzionale - da implementare se necessario)
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("SW registered: ", registration);
+      })
+      .catch((registrationError) => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  });
+}
+
+// Gestione errori per immagini
+document.addEventListener(
+  "error",
+  function (e) {
+    if (e.target.tagName === "IMG") {
+      console.warn("Immagine non caricata:", e.target.src);
+      e.target.style.display = "none";
+      // Mostra un placeholder
+      const placeholder = document.createElement("div");
+      placeholder.className = "image-placeholder";
+      placeholder.innerHTML =
+        '<i class="fas fa-image"></i><p>Immagine non disponibile</p>';
+      placeholder.style.cssText = `
+      width: 100%;
+      height: 200px;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+    `;
+      e.target.parentNode.insertBefore(placeholder, e.target);
+    }
+  },
+  true
+);
+
+// Pulsanti di navigazione per la modal (opzionali - da aggiungere nell'HTML se desiderati)
+function createNavigationButtons() {
+  const navContainer = document.createElement("div");
+  navContainer.className = "modal-navigation";
+  navContainer.innerHTML = `
+    <button class="nav-btn prev-btn" aria-label="Immagine precedente">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="nav-btn next-btn" aria-label="Immagine successiva">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  `;
+
+  const modalContainer = DOM.portfolioModal.querySelector(".modal-container");
+  modalContainer.appendChild(navContainer);
+
+  // Aggiungi event listeners
+  const prevBtn = navContainer.querySelector(".prev-btn");
+  const nextBtn = navContainer.querySelector(".next-btn");
+
+  prevBtn.addEventListener("click", () => navigatePortfolioModal(-1));
+  nextBtn.addEventListener("click", () => navigatePortfolioModal(1));
+}
+
+// Utility per il debug
+function debugState() {
+  console.log("Current State:", {
+    currentCategory: state.currentCategory,
+    isAnimating: state.isAnimating,
+    masonryItemsCount: state.masonryItems.length,
+    visibleItemsCount: state.visibleItems.length,
+    currentPortfolioItem: state.currentPortfolioItem,
+  });
+}
+
+// Esporta funzioni per debug (solo in sviluppo)
+if (process.env.NODE_ENV === "development") {
+  window.appDebug = {
+    state,
+    items,
+    debugState,
+    filterByCategory,
+    openPortfolioModal,
+  };
+}

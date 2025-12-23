@@ -1,103 +1,78 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#FEA800">
-    <meta name="description" content="Portfolio professionale di MuseBQ - Grafico Creativo specializzato in Computer Graphic, Logo Design, Fotografia e Tipografia">
+    <meta name="description"
+        content="Portfolio professionale di MuseBQ - Grafico Creativo specializzato in Computer Graphic, Logo Design, Fotografia e Tipografia">
     <meta name="keywords" content="grafica, portfolio, design, computer graphic, logo, fotografia, tipografia">
     <meta name="author" content="MuseBQ">
     <title>MuseBQ - Portfolio Grafico Creativo</title>
 
-    <!-- Font preload ottimizzati -->
+    <!-- Preload critico -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-    
-    <!-- CSS ottimizzato -->
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <!-- Preload risorse critiche -->
-    <link rel="preload" href="images/logo-p-4.png" as="image" type="image/png">
-    <link rel="icon" href="/images/favicon (1).png" type="image/png">
-    
-    <!-- Fallback CSS se JavaScript è disabilitato -->
-    <noscript>
-        <style>
-            .masonry-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 20px;
-            }
-            .masonry-item {
-                opacity: 1;
-                transform: none;
-            }
-        </style>
-    </noscript>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/images/favicon (1).png" loading="lazy" type="image/png">
 </head>
 
 <body>
-    <!-- Skip link per accessibilità -->
-    <a href="#main-content" class="skip-link">Salta alla navigazione principale</a>
-
     <!-- Header -->
     <header role="banner">
         <div class="container">
             <div class="header-content">
                 <div class="logo-title-wrapper">
-                    <div class="logo-container" aria-label="Logo MuseBQ - clicca per ingrandire">
-                        <img src="images/logo-p-4.png" 
-                             loading="eager" 
-                             alt="Logo MuseBQ" 
-                             id="logoClickable"
-                             width="150" 
-                             height="150"
-                             class="logo-img"
-                             decoding="async">
+                    <div class="logo-container">
+                        <div class="logo-img"><img src="images/logo-p-4.png" loading="lazy" alt="Logo MuseBQ" id="logoClickable"
+                            width="150" height="180" /></div>
                         <div class="logo-hover-effect" aria-hidden="true"></div>
                     </div>
                     <div class="title-container">
-                        <h1 class="logo-title animate-title">Portfolio Creativo</h1>
+                        <h1 class="logo-title">Portfolio Creativo</h1>
                         <p class="subtitle">Esplora il mondo del design attraverso i miei progetti</p>
                     </div>
                 </div>
 
-                <!-- Modale Logo -->
-                <div id="logoModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true" tabindex="-1">
-                    <button class="close" aria-label="Chiudi modale" tabindex="0">&times;</button>
-                    <div class="modal-container">
-                        <img class="modal-content" id="logoModalImg" alt="Logo MuseBQ ingrandito" loading="lazy" />
-                    </div>
+                <!-- Modale -->
+                <div id="logoModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                    <span class="close" role="button" aria-label="Chiudi modale">&times;</span>
+                    <img class="modal-content" id="logoModalImg" alt="Logo MuseBQ ingrandito" />
                 </div>
 
                 <!-- Filtri Categorie -->
                 <nav class="category-filters" role="navigation" aria-label="Filtri portfolio">
-                    <button class="category-btn active" data-category="all" aria-pressed="true" tabindex="0">
+                    <button class="category-btn active" data-category="all" aria-pressed="true">
                         <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-images"></i></span>
-                        <span class="btn-text">Tutti i Progetti</span>
+                        Tutti i Progetti
                     </button>
-                    <button class="category-btn" data-category="computer-graphic" aria-pressed="false" tabindex="0">
+                    <button class="category-btn" data-category="computer-graphic" aria-pressed="false">
                         <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-object-group"></i></span>
-                        <span class="btn-text">Computer Graphic</span>
+                        Computer Graphic
                     </button>
-                    <button class="category-btn" data-category="loghi" aria-pressed="false" tabindex="0">
+                    <button class="category-btn" data-category="loghi" aria-pressed="false">
                         <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-pen-to-square"></i></span>
-                        <span class="btn-text">Logo Design</span>
+                        Logo Design
                     </button>
-                    <button class="category-btn" data-category="fotografie" aria-pressed="false" tabindex="0">
+                    <button class="category-btn" data-category="fotografie" aria-pressed="false">
                         <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-image"></i></span>
-                        <span class="btn-text">Fotografia</span>
+                        Fotografia
                     </button>
-                    <button class="category-btn" data-category="icone" aria-pressed="false" tabindex="0">
+                    <button class="category-btn" data-category="icone" aria-pressed="false">
                         <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-circle-dot"></i></span>
-                        <span class="btn-text">Graphic Design</span>
+                        Graphic Design
                     </button>
-                    <button class="category-btn" data-category="poster tipografico" aria-pressed="false" tabindex="0">
+                    <button class="category-btn" data-category="poster tipografico" aria-pressed="false">
                         <span class="btn-icon" aria-hidden="true"><i class="fa-regular fa-a"></i></span>
-                        <span class="btn-text">Tipografia</span>
+                        Tipografia
                     </button>
                 </nav>
             </div>
@@ -105,7 +80,7 @@
     </header>
 
     <!-- Main Content -->
-    <main id="main-content" role="main">
+    <main role="main">
         <section class="category-info" id="category-info" aria-labelledby="categoryInfoTitle">
             <div class="info-content">
                 <h2 id="categoryInfoTitle">Esplora i miei progetti creativi</h2>
@@ -119,33 +94,23 @@
         </section>
 
         <!-- Loading Indicator -->
-        <div class="loading-indicator" id="loadingIndicator" aria-live="polite" aria-label="Caricamento in corso" hidden>
+        <div class="loading-indicator" id="loadingIndicator" aria-live="polite" aria-label="Caricamento in corso">
             <div class="loading-spinner" aria-hidden="true"></div>
             <p>Caricamento progetti...</p>
         </div>
 
-        <!-- Modale Portfolio -->
-        <div id="portfolioModal" class="modal portfolio-modal" role="dialog" aria-labelledby="portfolioModalTitle" aria-hidden="true" tabindex="-1">
+        <!-- Modale per le immagini del portfolio -->
+        <div id="portfolioModal" class="modal portfolio-modal" role="dialog" aria-labelledby="portfolioModalTitle"
+            aria-hidden="true">
             <div class="modal-container">
-                <button class="close portfolio-close" aria-label="Chiudi modale" tabindex="0">&times;</button>
+                <span class="close portfolio-close" role="button" aria-label="Chiudi modale">&times;</span>
                 <div class="modal-header">
                     <h3 id="portfolioModalTitle" class="modal-title"></h3>
                     <span class="modal-category"></span>
                 </div>
-                <div class="modal-image-container">
-                    <button class="modal-nav prev-btn" aria-label="Immagine precedente" tabindex="0">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <img class="modal-content portfolio-modal-content" id="portfolioModalImg" alt="" loading="lazy" />
-                    <button class="modal-nav next-btn" aria-label="Immagine successiva" tabindex="0">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+                <img class="modal-content portfolio-modal-content" id="portfolioModalImg" alt="" />
                 <div class="modal-footer">
                     <p class="modal-description"></p>
-                    <div class="modal-counter">
-                        <span id="currentImageIndex">1</span> di <span id="totalImages">19</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -153,17 +118,17 @@
 
     <!-- Footer -->
     <footer role="contentinfo">
-        <div class="footer-content container">
+        <div class="footer-content">
             <div class="footer-section">
                 <h3>Portfolio Professionale</h3>
-                <p>&copy; <span id="current-year">2025</span> - Tutti i diritti riservati</p>
+                <p>&copy; 2025 - Tutti i diritti riservati</p>
             </div>
 
             <div class="footer-section">
                 <h4>Contatti</h4>
                 <p><a href="mailto:mattiabogdanquarta@gmail.com" aria-label="Invia email a Mattia Bogdan Quarta">Email
                         professionale</a></p>
-                <p><a href="https://musebq.github.io/portfolio/" aria-label="Visita il portfolio completo" target="_blank" rel="noopener noreferrer">Portfolio
+                <p><a href="https://musebq.github.io/portfolio/" aria-label="Visita il portfolio completo">Portfolio
                         completo</a></p>
             </div>
 
@@ -171,11 +136,11 @@
                 <h4>Seguimi</h4>
                 <div class="social-container">
                     <a href="https://it.pinterest.com/Muse_bq/" class="pinterest"
-                        aria-label="Visita il profilo Pinterest di MuseBQ" target="_blank" rel="noopener noreferrer">
+                        aria-label="Visita il profilo Pinterest di MuseBQ" target="_blank" rel="noopener">
                         <i class="fa-brands fa-pinterest" aria-hidden="true"></i>
                     </a>
                     <a href="https://github.com/MuseBQ" class="github" aria-label="Visita il profilo GitHub di MuseBQ"
-                        target="_blank" rel="noopener noreferrer">
+                        target="_blank" rel="noopener">
                         <i class="fa-brands fa-github" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -183,18 +148,11 @@
         </div>
     </footer>
 
-    <!-- GSAP con fallback -->
-    <script>
-        // Fallback se GSAP non carica
-        if (typeof gsap === 'undefined') {
-            console.warn('GSAP non caricato, utilizzo fallback CSS');
-            document.documentElement.classList.add('no-js-animations');
-        }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <!-- App JavaScript -->
-    <script src="app.js" defer></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
